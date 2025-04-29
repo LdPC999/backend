@@ -1,0 +1,318 @@
+{
+    "Ingredientes": [
+        {
+            "nombre": "Aceitunas",
+            "tipo": "Encurtidos"
+        },
+        {
+            "nombre": "Aguacate",
+            "tipo": "Fruta"
+        },
+        {
+            "nombre": "Ajo",
+            "tipo": "Verdura"
+        },
+        {
+            "nombre": "Alcachofa",
+            "tipo": "Verdura"
+        },
+        {
+            "nombre": "AOVE",
+            "tipo": "Aceites y grasas"
+        },
+        {
+            "nombre": "Apio",
+            "tipo": "Verdura"
+        },
+        {
+            "nombre": "Bacalao",
+            "tipo": "Pescados",
+            "Alergeno": "Pescado"
+        },
+        {
+            "nombre": "Bacon",
+            "tipo": "Carne"
+        },
+        {
+            "nombre": "Berberechos",
+            "tipo": "Moluscos",
+            "Alergeno": "Moluscos"
+        },
+        {
+            "nombre": "Burrata",
+            "tipo": "Lácteos",
+            "Alergeno": "Lácteos"
+        },
+        {
+            "nombre": "Calabacín",
+            "tipo": "Verdura"
+        },
+        {
+            "nombre": "Calabaza",
+            "tipo": "Fruta"
+        },
+        {
+            "nombre": "Calamares",
+            "tipo": "Moluscos",
+            "Alergeno": "Moluscos"
+        },
+        {
+            "nombre": "Caldo de Verdura",
+            "tipo": "Caldos y bases"
+        },
+        {
+            "nombre": "Carne picada de cerdo",
+            "tipo":"Carne"
+        },
+        {
+            "nombre": "Carne picada de ternera",
+            "tipo": "Carne"
+        },
+        {
+            "nombre": "Carrillera de cerdo",
+            "tipo":"Carne"
+        },
+        {
+            "nombre": "Carne de jarrete",
+            "tipo": "Carne"
+        },
+        {
+            "nombre": "Cebolla",
+            "tipo": "Verdura"
+        },
+        {
+            "nombre": "Cebollino",
+            "tipo": "Verdura"
+        },
+        {
+            "nombre": "Clavo",
+            "tipo":"Especias y hierbas"
+        },
+        {
+            "nombre": "Coliflor",
+            "tipo": "Verdura"
+        },
+        {
+            "nombre": "Comino",
+            "tipo": "Especias y hierbas"
+        },
+        {
+            "nombre": "Contramuslos de pollo",
+            "tipo": "Carne"
+        },
+        {
+            "nombre": "Costilla salada",
+            "tipo": "Carne"
+        },
+        {
+            "nombre": "Cúrcuma",
+            "tipo":"Especias y hierbas"
+        },
+        {
+            "nombre": "Fideos",
+            "tipo": "Cereales",
+            "Alergeno": "Gluten"
+        },
+        {
+            "nombre": "Fumet de marisco",
+            "tipo": "Caldos y bases",
+            "Alergeno": "Marisco"
+        },
+        {
+            "nombre": "Gambas",
+            "tipo": "Marisco",
+            "Alergeno": "Marisco"
+        },
+        {
+            "nombre": "Garbanzos",
+            "tipo": "Legumbre"
+        },
+        {
+            "nombre": "Hueso blanco",
+            "tipo": "Carne"
+        },
+        {
+            "nombre": "Huevo",
+            "tipo": "Huevo",
+            "Alergeno": "Huevo"
+        },
+        {
+            "nombre": "Jamón serrano",
+            "tipo": "Carne"
+        },
+        {
+            "nombre": "Leche de coco",
+            "tipo": "Condimentos y salsas"
+        },
+        {
+            "nombre": "Leche evaporada",
+            "tipo": "Lácteos",
+            "Alergeno": "Lácteos"
+        },
+        {
+            "nombre": "Lima",
+            "tipo": "Fruta"
+        },
+        {
+            "nombre": "Limón",
+            "tipo": "Fruta"
+        },
+        {
+            "nombre": "Lubina",
+            "tipo": "Pescados",
+            "Alergeno": "Pescado"
+        },
+        {
+            "nombre": "Maíz dulce",
+            "tipo": "Verdura"
+        },
+        {
+            "nombre": "Mayonesa",
+            "tipo": "Condimentos y salsas",
+            "Alergeno": "Huevo"
+        },
+        {
+            "nombre": "Mostaza",
+            "tipo": "Condimentos y salsas"
+        },
+        {
+            "nombre": "Muslos de pollo",
+            "tipo": "Carne"
+        },
+        {
+            "nombre": "Nabo",
+            "tipo": "Verdura"
+        },
+        {
+            "nombre": "Nata",
+            "tipo": "Lácteos",
+            "Alergeno": "Lácteos"
+        },
+        {
+            "nombre": "Nuez moscada",
+            "tipo": "Especias y hierbas"
+        },   
+        {
+            "nombre": "Orégano",
+            "tipo": "Especias y hierbas"
+        },
+        {
+            "nombre": "Pan",
+            "tipo": "Cereales",
+            "Alergeno": "Gluten"
+        },
+        {
+            "nombre": "Pasta",
+            "tipo": "Cereales",
+            "Alergeno": "Gluten"
+        },
+        {
+            "nombre": "Patata",
+            "tipo": "Verdura"
+        },
+        {
+            "nombre": "Pepino",
+            "tipo": "Verdura"
+        },
+        {
+            "nombre": "Perejil",
+            "tipo": "Especias y hierbas"
+        },
+        {
+            "nombre": "Pimentón dulce",
+            "tipo": "Especias y hierbas"
+        },
+        {
+            "nombre": "Pimienta",
+            "tipo": "Especias y hierbas"
+        },
+        {
+            "nombre": "Pimiento rojo",
+            "tipo":"Verdura"
+        },
+        {
+            "nombre": "Pimiento verde",
+            "tipo": "Verdura"
+        },
+        {
+            "nombre": "Puerro",
+            "tipo": "Verdura"
+        },
+        {
+            "nombre": "Mozzarella",
+            "tipo": "Lácteos",
+            "Alergeno": "Lácteos"
+        },
+        {
+            "nombre": "Parmesano",
+            "tipo": "Lácteos",
+            "Alergeno": "Lácteos"
+        },
+        {
+            "nombre": "Sal",
+            "tipo": "Condimentos y salsas"
+        },
+        {
+            "nombre": "Salmón",
+            "tipo": "Pescados",
+            "Alergeno": "Pescado"
+        },
+        {
+            "nombre": "Salsa de soja",
+            "tipo": "Condimentos y salsas",
+            "Alergeno": "Soja"
+        },
+        {
+            "nombre": "Sésamo",
+            "tipo": "Especias y hierbas",
+            "Alergeno": "Sésamo"
+        },
+        {
+            "nombre": "Sriracha",
+            "tipo": "Condimentos y salsas"
+        },
+        {
+            "nombre": "Tahini",
+            "tipo": "Condimentos y salsas",
+            "Alergeno": "Sésamo"
+        },
+        {
+            "nombre": "Tocino entreverado",
+            "tipo": "Carne"
+        },
+        {
+            "nombre": "Tocino fresco",
+            "tipo": "Carne"
+        },
+        {
+            "nombre": "Tomate",
+            "tipo": "Fruta"
+        },
+        {
+            "nombre": "Tomate triturado",
+            "tipo": "Fruta"
+        },
+        {
+            "nombre": "Tomate frito",
+            "tipo":"Condimentos y salsas"
+        },
+        {
+            "nombre": "Vinagre",
+            "tipo": "Condimentos y salsas"
+        },
+        {
+            "nombre": "Vino blanco",
+            "tipo": "Bebidas alcohólicas",
+            "Alergeno": "Sulfitos"
+        },
+        {
+            "nombre": "Vino tinto",
+            "tipo": "Bebidas alcohólicas",
+            "Alergeno": "Sulfitos"
+        },
+        {
+            "nombre": "Zanahoria",
+            "tipo": "Verdura"
+        }
+    ]
+}

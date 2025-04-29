@@ -3,6 +3,8 @@ import { Document } from "mongoose";
 
 export type UserDocument = User & Document;
 
+// Modelo de datos
+// Definimos el esquema de usuario para la BBDD
 @Schema()
 export class User {
     @Prop({ required: true})
