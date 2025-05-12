@@ -1,30 +1,34 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
-
-import { RecipesModule } from './recipes/recipes.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
-import { Recipe } from './recipes/entities/recipe.entity';
-import { Ingredient } from './ingredients/entities/ingredient.entity';
+import { RecipesModule } from './recipes/recipes.module';
+import { UsersModule } from './users/users.module';
+import { FirebaseAuthGuard } from './auth/firebase-auth.guard'; 
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(), // para poder leer .env
+    ConfigModule.forRoot({ isGlobal: true }), // Para usar variables de entorno
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',      
-      password: 'LDpc17578',
-      database: 'tfgdb',
-      entities: [Recipe, Ingredient],
-      synchronize: true, // solo en desarrollo
+      host: process.env.DB_HOST || 'localhost',
+      port: Number(process.env.DB_PORT) || 5432,
+      username: process.env.DB_USERNAME || 'postgres',
+      password: process.env.DB_PASSWORD || 'LDpc17578',
+      database: process.env.DB_NAME || 'tfgdb',
       autoLoadEntities: true,
+      synchronize: true,
     }),
-    TypeOrmModule.forFeature([Recipe, Ingredient]),
-
-    RecipesModule,
     IngredientsModule,
+    RecipesModule,
+    UsersModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: FirebaseAuthGuard, 
+    },
   ],
 })
 export class AppModule {}
