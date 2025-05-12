@@ -1,20 +1,30 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { UsersModule } from './users/users.module';
+
+import { RecipesModule } from './recipes/recipes.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
-import { Ingredient } from './ingredients/schemas/ingredients.schema';
+import { Recipe } from './recipes/entities/recipe.entity';
+import { Ingredient } from './ingredients/entities/ingredient.entity';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(), // Con esto leemos .env para la conexión con Atlas
-    MongooseModule.forRoot(process.env.MONGO_URI as string),
-    UsersModule,
+    ConfigModule.forRoot(), // para poder leer .env
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',      
+      password: 'LDpc17578',
+      database: 'tfgdb',
+      entities: [Recipe, Ingredient],
+      synchronize: true, // solo en desarrollo
+      autoLoadEntities: true,
+    }),
+    TypeOrmModule.forFeature([Recipe, Ingredient]),
+
+    RecipesModule,
     IngredientsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

@@ -1,35 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common";
-import { IngredientsService } from "./ingredients.service";
-import { CreateIngredientDto } from "./dto/create-ingrtedient.dto";
-import { UpdateIngredientDto } from "./dto/update-ingredient.dto";
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { IngredientsService } from './ingredients.service';
+import { Ingredient } from './entities/ingredient.entity';
+import { CreateIngredientDto } from './dto/create-ingredient.dto';
 
 @Controller('ingredients')
 export class IngredientsController {
-    constructor(private readonly ingredientsService: IngredientsService){}
+  constructor(private readonly ingredientsService: IngredientsService) {}
 
-    @Post()
-    create(@Body() createIngredientDto: CreateIngredientDto){
-        return this.ingredientsService.create(createIngredientDto);
-    }
+  @Get()
+  findAll(): Promise<Ingredient[]> {
+    return this.ingredientsService.findAll();
+  }
 
-    @Get()
-    findAll(){
-        return this.ingredientsService.findAll();
-    }
+  @Get(':id')
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<Ingredient | null> {
+    return this.ingredientsService.findOne(id);
+  }
 
-    @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.ingredientsService.findOne(id);
-    }
+  @Post()
+  create(@Body() createIngredientDto: CreateIngredientDto): Promise<Ingredient> {
+    return this.ingredientsService.create(createIngredientDto);
+  }
 
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() updateIngredientDto: UpdateIngredientDto){
-        return this.ingredientsService.update(id, updateIngredientDto);
-    }
-
-    @Delete(':id')
-    remove(@Param('id') id: string){
-        return this.ingredientsService.remove(id);
-    }
-    
+  @Delete(':id')
+  remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.ingredientsService.remove(id);
+  }
 }

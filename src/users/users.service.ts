@@ -1,37 +1,39 @@
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { User, UserDocument } from './schemas/user.schema';
-import { CreateUserDto } from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './entities/user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
-export class UsersService{
-    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>){}
+export class UsersService {
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {}
 
-    // Guardamos usuario
-    async create(createUserDto: CreateUserDto): Promise<User>{
-        const newUser = new this.userModel(createUserDto);
-        return newUser.save();
-    }
+  findAll(): Promise<User[]> {
+    return this.userRepository.find();
+  }
 
-    // Mostramos usuarios
-    async findAll(): Promise<User[]> {
-        return this.userModel.find().exec();
-    }
+  findOne(id: number): Promise<User | null> {
+    return this.userRepository.findOneBy({ id });
+  }
 
-    // Mostramos usuario por id
-    async findOne(id: string): Promise<User | null>{
-        return this.userModel.findById(id).exec();
-    }
+  async create(dto: CreateUserDto): Promise<User> {
+    const newUser = this.userRepository.create(dto);
+    return this.userRepository.save(newUser);
+  }
 
-    // Actualizamos usuario
-    async update(id: string, UpdateUserDto: UpdateUserDto): Promise<User | null>{
-        return this.userModel.findByIdAndUpdate(id, UpdateUserDto, {new:true}).exec();
-    }
+  async update(id: number, dto: UpdateUserDto): Promise<User> {
+    const user = await this.userRepository.findOneBy({ id });
+    if (!user) throw new Error('User not found');
 
-    // Eliminamos usuario
-    async remove(id: string): Promise<User | null>{
-        return this.userModel.findByIdAndDelete(id).exec();
-    }
+    Object.assign(user, dto);
+    return this.userRepository.save(user);
+  }
+
+  async remove(id: number): Promise<void> {
+    await this.userRepository.delete(id);
+  }
 }

@@ -1,32 +1,30 @@
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { Ingredient, IngredientDocument } from "./schemas/ingredients.schema";
-import { CreateIngredientDto } from "./dto/create-ingrtedient.dto";
-import { UpdateIngredientDto } from "./dto/update-ingredient.dto";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Ingredient } from './entities/ingredient.entity';
+import { CreateIngredientDto } from './dto/create-ingredient.dto';
 
 @Injectable()
 export class IngredientsService {
-    constructor(@InjectModel(Ingredient.name) private ingredientModel: Model<IngredientDocument>){}
+  constructor(
+    @InjectRepository(Ingredient)
+    private ingredientRepo: Repository<Ingredient>,
+  ) {}
 
-    async create(createIngredientDto: CreateIngredientDto): Promise<Ingredient> {
-        const newIngredient = new this.ingredientModel(createIngredientDto);
-        return newIngredient.save();
-    }
+  findAll(): Promise<Ingredient[]> {
+    return this.ingredientRepo.find();
+  }
 
-    async findAll(): Promise<Ingredient[]> {
-        return this.ingredientModel.find().exec();
-    }
+  findOne(id: number): Promise<Ingredient | null> {
+    return this.ingredientRepo.findOneBy({ id });
+  }
 
-    async findOne(id: string): Promise<Ingredient | null> {
-        return this.ingredientModel.findById(id).exec();
-    }
+  async create(createIngredientDto: CreateIngredientDto): Promise<Ingredient> {
+    const newIngredient = this.ingredientRepo.create(createIngredientDto);
+    return this.ingredientRepo.save(newIngredient);
+  }
 
-    async update(id: string, updateIngredientDto: UpdateIngredientDto): Promise<Ingredient | null> {
-        return this.ingredientModel.findByIdAndUpdate(id, updateIngredientDto, { new: true }).exec();
-    }
-
-    async remove(id: string): Promise<Ingredient | null>{
-        return this.ingredientModel.findByIdAndDelete(id).exec();
-    }
+  async remove(id: number): Promise<void> {
+    await this.ingredientRepo.delete(id);
+  }
 }

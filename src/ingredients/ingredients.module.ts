@@ -1,13 +1,12 @@
-import { Module } from "@nestjs/common";
-import { MongooseModule } from "@nestjs/mongoose";
-import { IngredientsService } from "./ingredients.service";
-import { IngredientsController } from "./ingredients.controller";
-import { Ingredient, IngredientSchema } from './schemas/ingredients.schema';
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Ingredient } from './entities/ingredient.entity';
+import { IngredientsService } from './ingredients.service';
+import { IngredientsController } from './ingredients.controller';
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: Ingredient.name, schema: IngredientSchema}])],
-    controllers: [IngredientsController],
-    providers: [IngredientsService]
+  imports: [TypeOrmModule.forFeature([Ingredient])],
+  controllers: [IngredientsController],
+  providers: [IngredientsService],
 })
-
 export class IngredientsModule {}
