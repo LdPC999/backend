@@ -6,6 +6,9 @@ import { RecipesModule } from './recipes/recipes.module';
 import { UsersModule } from './users/users.module';
 import { FirebaseAuthGuard } from './auth/firebase-auth.guard'; 
 import { ConfigModule } from '@nestjs/config';
+import { AuthController } from './auth/auth.controller';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -24,11 +27,12 @@ import { ConfigModule } from '@nestjs/config';
     RecipesModule,
     UsersModule,
   ],
+  controllers:[
+    AppController,
+    AuthController,
+  ],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: FirebaseAuthGuard, 
-    },
+    AppService,
   ],
 })
 export class AppModule {}

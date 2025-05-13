@@ -19,4 +19,8 @@ export class User {
 
   @Column({ default: 'user' })
   role!: 'user' | 'admin';
+
+  @Column('text', { array: true, nullable: true})
+  alergenos?: string[];
+
 }
