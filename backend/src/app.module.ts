@@ -4,11 +4,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { IngredientsModule } from './ingredients/ingredients.module';
 import { RecipesModule } from './recipes/recipes.module';
 import { UsersModule } from './users/users.module';
-import { FirebaseAuthGuard } from './auth/firebase-auth.guard'; 
 import { ConfigModule } from '@nestjs/config';
-import { AuthController } from './auth/auth.controller';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -26,10 +25,10 @@ import { AppService } from './app.service';
     IngredientsModule,
     RecipesModule,
     UsersModule,
+    AuthModule,
   ],
   controllers:[
     AppController,
-    AuthController,
   ],
   providers: [
     AppService,

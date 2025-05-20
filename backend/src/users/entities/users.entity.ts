@@ -23,4 +23,5 @@ export class User {
   @Column('text', { array: true, nullable: true})
   alergenos?: string[];
 
+
 }

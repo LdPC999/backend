@@ -1,17 +1,22 @@
-import { Controller, Get, Post, Body, Param, Patch, Delete, UseGuards, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { FirebaseAuthGuard } from '../auth/firebase-auth.guard';
-import { Roles } from '../auth/roles.decorator';
-import { RolesGuard } from '../auth/roles.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(FirebaseAuthGuard, RolesGuard)
-  @Roles('admin')
+
+
   @Get()
   findAll() {
     return this.usersService.findAll();
@@ -19,7 +24,11 @@ export class UsersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+    const parsedId = parseInt(id, 10);
+    if (isNaN(parsedId)) {
+      throw new Error(`ID inválido: ${id}`);
+    }
+    return this.usersService.findOne(parsedId);
   }
 
   @Post()
@@ -37,25 +46,19 @@ export class UsersController {
     return this.usersService.remove(+id);
   }
 
+  /**
+   * 📦 Registro directo en PostgreSQL
+   */
   @Post('register')
-  async register(@Body() dto: CreateUserDto){
+  async register(@Body() dto: CreateUserDto) {
     return this.usersService.register(dto);
   }
 
-  @Get('profile')
-  @UseGuards(FirebaseAuthGuard)
-  getProfile(@Req()req){
-    return {
-      message: 'Usuario autenticado',
-      user: req.user,
-    };
+  /**
+   * 🔐 Login con email/contraseña desde base de datos (sin Firebase)
+   */
+  @Post('login')
+  async login(@Body() credentials: { email: string; password: string }) {
+    return this.usersService.loginWithCredentials(credentials);
   }
-
-  @Get('sync')
-@UseGuards(FirebaseAuthGuard)
-async syncUser(@Req() req: any) {
-  return this.usersService.syncFirebaseUser(req.user);
-}
-
-  
 }

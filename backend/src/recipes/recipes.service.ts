@@ -16,6 +16,7 @@ export class RecipesService {
     private readonly ingredientRepository: Repository<Ingredient>,
   ) {}
 
+  // Crear receta con ingredientes relacionados (por ID)
   async create(createRecipeDto: CreateRecipeDto): Promise<Recipe> {
     const ingredients = await this.ingredientRepository.findBy({
       id: In(createRecipeDto.ingredientes),
@@ -29,33 +30,36 @@ export class RecipesService {
     return this.recipeRepository.save(recipe);
   }
 
+  // Obtener todas las recetas con ingredientes
   findAll(): Promise<Recipe[]> {
     return this.recipeRepository.find({ relations: ['ingredientes'] });
   }
 
+  // Obtener una receta por ID
   findOne(id: number): Promise<Recipe | null> {
-    return this.recipeRepository.findOne({ where: { id }, relations: ['ingredientes'] });
+    return this.recipeRepository.findOne({
+      where: { id },
+      relations: ['ingredientes'],
+    });
   }
 
+  // Actualizar receta por ID
   async update(id: number, updateRecipeDto: UpdateRecipeDto): Promise<Recipe> {
-    const recipe = await this.recipeRepository.findOne({ where: { id }, relations: ['ingredientes'] });
-
-    if (!recipe) {
-      throw new NotFoundException(`Receta con ID ${id} no encontrada`);
-    }
+    const receta = await this.recipeRepository.findOneBy({ id });
+    if (!receta) throw new NotFoundException('Receta no encontrada');
 
     if (updateRecipeDto.ingredientes) {
-      const ingredients = await this.ingredientRepository.findBy({
+      const ingredientes = await this.ingredientRepository.findBy({
         id: In(updateRecipeDto.ingredientes),
       });
-      recipe.ingredientes = ingredients;
+      receta.ingredientes = ingredientes;
     }
 
-    Object.assign(recipe, updateRecipeDto);
-
-    return this.recipeRepository.save(recipe);
+    Object.assign(receta, updateRecipeDto);
+    return this.recipeRepository.save(receta);
   }
 
+  // Eliminar receta
   async remove(id: number): Promise<void> {
     await this.recipeRepository.delete(id);
   }
