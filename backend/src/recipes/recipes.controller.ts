@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Param, Patch, Delete, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  Delete,
+  ParseIntPipe,
+  Query,
+} from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
@@ -13,8 +23,22 @@ export class RecipesController {
   }
 
   @Get()
-  findAll() {
-    return this.recipesService.findAll();
+  findAll(
+    @Query('ingrediente') ingredienteNombre?: string,
+    @Query('ingredienteId') ingredienteId?: number,
+    @Query('sinIngrediente') sinIngrediente?: string,
+    @Query('tipo') tipo?: string,
+    @Query('sinTipo') sinTipo?: string,
+    @Query('sinAlergeno') sinAlergeno?: string,
+  ) {
+    return this.recipesService.findAllWithFilters(
+      ingredienteNombre,
+      ingredienteId,
+      sinIngrediente,
+      tipo,
+      sinTipo,
+      sinAlergeno,
+    );
   }
 
   @Get(':id')

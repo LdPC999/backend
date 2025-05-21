@@ -1,31 +1,39 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
-  // 🧱 Contenedor general
+  // 🧱 Contenedor general en escritorio
   container: {
     flex: 1,
-    flexDirection: 'row', // divide la pantalla en dos columnas en web
+    flexDirection: 'row',
   },
 
-  // 🎨 Fondos laterales para diseño en escritorio
+  // 🎨 Fondos izquierdo y derecho para vista escritorio
   leftBackground: {
     flex: 1,
-    backgroundColor: '#6096B4', // azul principal para registro
+    backgroundColor: '#6096B4', // Azul para registro
   },
   rightBackground: {
     flex: 1,
-    backgroundColor: '#EEE9DA', // crema claro para login
+    backgroundColor: '#EEE9DA', // Crema claro para login
   },
 
-  // 📱 Contenedor para móviles
-  mobileContainer: {
+  // 📱 Contenedor para vista móvil modo login
+  mobileLogin: {
     flex: 1,
-    backgroundColor: '#EEE9DA',
+    backgroundColor: '#EEE9DA', // Fondo claro
     justifyContent: 'center',
     padding: 20,
   },
 
-  // 📦 Caja animada que se mueve horizontalmente en escritorio
+  // 📱 Contenedor para vista móvil modo registro
+  mobileRegister: {
+    flex: 1,
+    backgroundColor: '#2C3034', 
+    justifyContent: 'center',
+    padding: 20,
+  },
+
+  // 📦 Caja animada flotante para escritorio
   formBox: {
     position: 'absolute',
     top: 0,
@@ -46,22 +54,22 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
 
-  // 🌓 Fondos según modo login/registro
+  // 🌓 Fondo interior según modo
   dark: {
-    backgroundColor: '#2C3034', // fondo oscuro para registro
+    backgroundColor: '#2C3034', // Gris oscuro
   },
   light: {
-    backgroundColor: '#EEE9DA', // fondo claro para login
+    backgroundColor: '#EEE9DA', // Crema claro
   },
 
-  // 🔤 Encabezado de formulario
+  // 🏷️ Título del formulario
   header: {
     fontSize: 40,
     fontWeight: '300',
     marginBottom: 20,
   },
 
-  // 🏷️ Etiquetas de input
+  // 🏷️ Etiquetas
   labelLight: {
     fontSize: 14,
     color: '#EEE9DA',
@@ -75,7 +83,7 @@ export default StyleSheet.create({
     textTransform: 'uppercase',
   },
 
-  // ✍️ Campos de texto (inputs)
+  // ✍️ Inputs
   inputLight: {
     borderBottomWidth: 1,
     borderBottomColor: '#EEE9DA',
@@ -93,7 +101,7 @@ export default StyleSheet.create({
     fontSize: 18,
   },
 
-  // 🔘 Botón principal
+  // 🔘 Botones
   button: {
     paddingVertical: 12,
     paddingHorizontal: 24,
@@ -101,8 +109,6 @@ export default StyleSheet.create({
     marginBottom: 10,
     alignSelf: 'flex-start',
   },
-
-  // 🎨 Estilos del botón según login/registro
   signup: {
     backgroundColor: '#EEE9DA',
   },
@@ -110,7 +116,7 @@ export default StyleSheet.create({
     backgroundColor: '#6096B4',
   },
 
-  // ✏️ Texto del botón
+  // 🔤 Texto de botones
   buttonTextLogin: {
     color: '#EEE9DA',
     fontWeight: '600',
@@ -122,7 +128,7 @@ export default StyleSheet.create({
     textTransform: 'uppercase',
   },
 
-  // 🔗 Enlace para cambiar entre formularios
+  // 🔗 Enlace inferior para alternar
   linkButton: {
     color: '#6096B4',
     fontWeight: 'bold',
@@ -130,7 +136,7 @@ export default StyleSheet.create({
     marginTop: 10,
   },
 
-  // ✅ Checkbox de términos
+  // ✅ Checkbox y texto
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',

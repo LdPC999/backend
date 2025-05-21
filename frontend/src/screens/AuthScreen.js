@@ -6,14 +6,14 @@ import styles from "../styles/AuthStyles";
 import { login, register } from "../services/AuthService";
 
 export default function AuthScreen() {
-  const [isLogin, setIsLogin] = useState(true);
-  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [isLogin, setIsLogin] = useState(true); // Estado para alternar login/registro
+  const [termsAccepted, setTermsAccepted] = useState(false); // Checkbox de términos
   const navigation = useNavigation();
 
-  const screenWidth = Dimensions.get("window").width;
+  const screenWidth = Dimensions.get("window").width; // Ancho de pantalla actual
   const positionAnim = useRef(new Animated.Value(screenWidth / 2)).current;
 
-  // Actualiza animación si cambia el tamaño de la pantalla
+  // 🔄 Se actualiza la posición de la animación si cambia el tamaño de pantalla
   useEffect(() => {
     const updateLayout = ({ window }) => {
       positionAnim.setValue(isLogin ? window.width / 2 : 0);
@@ -22,7 +22,7 @@ export default function AuthScreen() {
     return () => sub?.remove();
   }, [isLogin]);
 
-  // Cambia entre login y registro con animación
+  // 🔁 Alterna entre login y registro con animación
   const toggleForm = () => {
     Animated.timing(positionAnim, {
       toValue: isLogin ? 0 : screenWidth / 2,
@@ -31,13 +31,12 @@ export default function AuthScreen() {
     }).start(() => setIsLogin(!isLogin));
   };
 
-  // Maneja el login
+  // 🚪 Iniciar sesión
   const handleLogin = async ({ email, password }) => {
     try {
       await login(email, password);
       Alert.alert("Éxito", "Sesión iniciada correctamente");
 
-      // Redirige al HomeScreen
       navigation.reset({
         index: 0,
         routes: [{ name: 'Home' }],
@@ -48,7 +47,7 @@ export default function AuthScreen() {
     }
   };
 
-  // Maneja el registro
+  // 📝 Registrarse
   const handleRegister = async ({ email, password, nombre, apellidos }) => {
     if (!termsAccepted) {
       Alert.alert("Error", "Debes aceptar los términos y condiciones.");
@@ -58,16 +57,18 @@ export default function AuthScreen() {
     try {
       await register({ email, password, nombre, apellidos });
       Alert.alert("Éxito", "Registro exitoso. Inicia sesión ahora.");
-      toggleForm(); // volver a login
+      toggleForm();
     } catch (error) {
       Alert.alert("Error", error.message);
     }
   };
 
+  const isMobile = screenWidth < 600; // 📱 Detecta si es una pantalla móvil
+
   return (
     <View style={{ flex: 1, flexDirection: screenWidth > 600 ? 'row' : 'column' }}>
       {screenWidth > 600 ? (
-        // 💻 Escritorio: diseño dividido con animación
+        // 💻 Escritorio con fondo dividido y animación
         <>
           <View style={styles.leftBackground} />
           <View style={styles.rightBackground} />
@@ -92,8 +93,8 @@ export default function AuthScreen() {
           </Animated.View>
         </>
       ) : (
-        // 📱 Móvil: vista centrada sin animación
-        <View style={styles.mobileContainer}>
+        // 📱 Móvil: cambia fondo según login/registro
+        <View style={isLogin ? styles.mobileLogin : styles.mobileRegister}>
           <AuthForm
             isLogin={isLogin}
             onToggle={toggleForm}
