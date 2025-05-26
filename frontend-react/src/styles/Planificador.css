@@ -1,0 +1,33 @@
+/* Estilos de la página del planificador semanal */
+
+.planificador-page {
+  max-width: 600px;
+  margin: 2em auto;
+  text-align: center;
+}
+
+.planificador-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2em;
+  margin-top: 2em;
+}
+
+.planificador-dia {
+  background: var(--color-bg-alt);
+  border-radius: 8px;
+  padding: 1em;
+  box-shadow: 0 2px 8px rgba(3, 22, 52, 0.06);
+  border: 1px solid var(--color-primary);
+}
+
+.planificador-slot {
+  margin-top: 0.8em;
+  background: var(--color-white);
+  border-radius: 6px;
+  padding: 0.5em;
+  color: var(--color-secondary);
+  border: 1px dashed var(--color-primary);
+  cursor: pointer;
+  font-size: 0.95em;
+}

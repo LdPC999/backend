@@ -1,0 +1,132 @@
+/* Estilos modernos para la página de inicio adaptados de la plantilla */
+
+.home-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Header */
+.home-header {
+  background: var(--color-secondary);
+  color: #fff;
+  padding: 1em 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow);
+}
+
+.home-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Sección Hero */
+.home-hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: center;
+  gap: 2em;
+  padding: 4em 2em;
+}
+
+.home-hero-content {
+  max-width: 500px;
+}
+
+.home-hero-content h2 {
+  font-size: 1.2rem;
+  color: var(--color-primary);
+  margin-bottom: 0.5em;
+}
+
+.home-hero-content h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1em;
+}
+
+.home-hero-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2em;
+}
+
+.home-buttons {
+  display: flex;
+  gap: 1em;
+}
+
+/* Imagen de fondo (Hero) */
+.home-hero-image {
+  width: 100%;
+  height: 300px;
+  background-image: url("https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  animation: fadeIn 2s ease;
+}
+
+/* Animación simple */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Botones consistentes */
+.btn {
+  display: inline-block;
+  padding: 0.75em 1.5em;
+  font-weight: 600;
+  font-size: 1em;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+
+.btn-primary:hover {
+  background: var(--color-secondary);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: var(--color-white);
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.btn-secondary:hover {
+  background: var(--color-bg-alt);
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,25 @@
+/* Estilos de la página de recetas */
+
+.recetas-page {
+  max-width: 1100px;
+  /* Fondo global ya definido en index.css */
+}
+
+.recetas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2em;
+  margin-top: 2em;
+}
+
+.receta-card {
+  text-align: center;
+  padding: 1em;
+}
+
+.receta-img {
+  width: 100%;
+  border-radius: 12px;
+  border: 2px solid var(--color-primary);
+  margin-bottom: 1em;
+}

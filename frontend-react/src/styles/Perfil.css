@@ -1,0 +1,29 @@
+/* Estilos de la página de perfil */
+
+.perfil-page {
+  max-width: 420px;
+  /* Fondo general ya definido en index.css */
+}
+
+.perfil-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5em;
+  justify-content: center;
+  margin-bottom: 1.5em;
+}
+
+.perfil-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary);
+  background: var(--color-bg-alt);
+}
+
+.perfil-actions {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+  margin-top: 1em;
+}

@@ -1,0 +1,14 @@
+:root {
+  --color-primary: #512DA8;
+  --color-secondary: #03A9F4;
+  --color-bg: #f9f9f9;
+  --color-bg-alt: #ffffff;
+  --color-text: #222;
+  --color-link: #512DA8;
+  --color-link-hover: #03A9F4;
+  --color-border: #e0e0e0;
+
+  --transition-fast: 0.2s ease;
+  --border-radius: 12px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
