@@ -1,10 +1,7 @@
-// components/Footer.jsx
+// src/components/Footer.jsx
 import React from "react";
-import "./Footer.css";
+import "../styles/Footer.css"; // Importa los estilos del footer
 
-/**
- * Footer fijo abajo, solo con info legal/copyright.
- */
 export default function Footer() {
   return (
     <footer className="footer-app">

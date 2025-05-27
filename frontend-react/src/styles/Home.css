@@ -10,16 +10,12 @@
 }
 
 
-
 /* Main ocupa todo el espacio entre header y footer */
 .home-slider-container {
-  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
-  min-height: 320px;
   padding: 0;
   margin: 0;
-  /* NO usar width: 100%;, mejor dejar que el hijo ".home-slider-main" lo gestione */
 }
 
 /* Footer siempre pegado abajo */
@@ -38,8 +34,8 @@
    Slider tipo Hero adaptado (ocupa todo el ancho)
 ------------------------------------------------ */
 .home-slider-main {
-  width: 100vw; /* OJO: ocupa todo el ancho de la ventana */
-  min-height: 400px;
+  width: 100vw;
+  min-height: 320px;  /* Baja el mínimo aún más */
   position: relative;
   left: 50%;
   right: 50%;
@@ -49,13 +45,13 @@
   background: var(--color-bg);
   display: flex;
   align-items: stretch;
-  /* Elimina height: 100vh para que el slider respete el footer */
 }
 
-/* Si usas border-box, esto asegura que no hay padding añadido */
-.home-slider-main,
-.home-slider-image {
-  box-sizing: border-box;
+.home-slider-image{
+  position: relative;
+  width: 100vw;
+  height: 100%;
+  min-height: 220px;
 }
 
 .home-slider-article {
@@ -127,13 +123,14 @@
 .home-description {
   width: 100%;
   max-width: 560px;
-  margin: 3em auto 0 auto;
-  padding: 2em 2em 1.5em 2em;
+  margin: 2rem auto 2rem auto;  /* Aumenta el margen superior */
+  padding: 2rem 2rem 1.5rem 2rem;
   border-radius: 18px;
   background: rgba(255,255,255,0.97);
   box-shadow: 0 2px 24px rgba(0,0,0,0.09);
   text-align: center;
   font-size: 1.2rem;
+  position: relative;
 }
 
 .home-description h2 {
@@ -145,6 +142,44 @@
 .home-description p {
   color: var(--color-text, #222);
   font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+/* -----------------------------------------------
+   Tarjetas de descripción
+------------------------------------------------ */
+.home-description-cards {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 0 auto 3rem auto;
+  max-width: 1200px;
+  flex-wrap: wrap;
+}
+
+.home-description-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  padding: 2rem 1.5rem;
+  width: 320px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.home-description-card h3 {
+  color: var(--color-primary, #0099ee);
+  margin-bottom: 0.7em;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.home-description-card p {
+  color: var(--color-text, #222);
+  font-size: 1.05rem;
   line-height: 1.5;
 }
 

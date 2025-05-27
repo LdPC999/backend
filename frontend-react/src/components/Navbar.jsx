@@ -1,27 +1,28 @@
-// components/Navbar.jsx
+// src/components/Navbar.jsx
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import "./Navbar.css"; // Creamos el css adaptado a tus colores y marca
+import "../styles/Navbar.css"; // Importa los estilos de la navbar
 
 /**
- * Navbar principal fijo arriba, con enlaces y logo.
- * Los enlaces usan react-router-dom para navegación SPA.
+ * Navbar principal fijo arriba, con logo+nombre y menú.
  */
-export default function Navbar() {
+export default function Navbar({ onLogout }) {
   const location = useLocation();
 
-  // Puedes marcar activo el enlace según la ruta actual
+  // Marca como activo el enlace del menú correspondiente a la ruta actual
   const isActive = (path) => location.pathname === path;
 
   return (
     <nav className="navbar-app">
-      <ul>
-        {/* Logo (puedes poner un icono diferente si quieres) */}
-        <li>
-          <Link to="/home" className="logo" aria-label="Logo">
-            <i className="fa-solid fa-utensils"></i>
-          </Link>
-        </li>
+      {/* Bloque superior: Logo y nombre */}
+      <div className="navbar-brand">
+        <Link to="/home" className="navbar-logo" aria-label="Logo">
+          <i className="fa-solid fa-utensils"></i>
+        </Link>
+        <span className="navbar-title">NombreApp</span>
+      </div>
+      {/* Menú de navegación */}
+      <ul className="navbar-menu">
         <li>
           <Link to="/home" className={`link ${isActive("/home") ? "active" : ""}`}>Home</Link>
         </li>
@@ -34,6 +35,12 @@ export default function Navbar() {
         <li>
           <Link to="/perfil" className={`link ${isActive("/perfil") ? "active" : ""}`}>Perfil</Link>
         </li>
+        {/* Si necesitas un botón de logout, lo puedes añadir aquí */}
+        {/* <li>
+          <button className="link" id="logout" onClick={onLogout} style={{ background: "none", border: "none", cursor: "pointer" }}>
+            <i className="fa-solid fa-right-from-bracket"></i> Logout
+          </button>
+        </li> */}
       </ul>
     </nav>
   );

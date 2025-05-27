@@ -5,14 +5,14 @@ import gsap from "gsap";
 const slides = [
   {
     title: "Planifica tus",
-    main: "Recetas",
+    main: "Comidas y cenas",
     subtitle: "Organiza tu semana fácilmente",
     image:
       "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=2070&q=80",
   },
   {
-    title: "Descubre nuevos",
-    main: "Platos",
+    title: "Descubre nuevas",
+    main: "Recetas",
     subtitle: "Inspírate cada día",
     image:
       "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=2070&q=80",
@@ -24,17 +24,11 @@ const slides = [
     image:
       "https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?auto=format&fit=crop&w=2070&q=80",
   },
-  {
-    title: "Comparte tus",
-    main: "Favoritos",
-    subtitle: "Con familia y amigos",
-    image:
-      "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=2070&q=80",
-  },
+  
   {
     title: "Personaliza tu",
     main: "Menú",
-    subtitle: "A tu gusto y necesidades",
+    subtitle: "Teniendo en cuenta alérgenos",
     image:
       "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=2070&q=80",
   },

@@ -1,50 +1,80 @@
-/* components/Navbar.css */
-/* Navbar fijo arriba y responsivo */
+/* src/styles/Navbar.css */
+
+/* Contenedor general de la navbar */
 .navbar-app {
   width: 100vw;
   background: var(--color-secondary, #03A9F4);
-  padding: 0.4em 0;
+  padding: 0;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
   box-shadow: 0 2px 14px rgba(0,0,0,0.08);
-}
-.navbar-app ul {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  list-style: none;
-  justify-content: flex-start;
-  margin-left: 1.2em;
 }
-.logo {
-  text-decoration: none;
+
+/* Bloque de logo y nombre, centrados */
+.navbar-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.6em;
+  margin-bottom: 1em;
+}
+
+/* Logo de la app */
+.navbar-logo {
   color: #fff;
-  font-size: 2.1rem;
-  margin-right: 1.5em;
-  padding: 0.1rem 0.2rem;
+  font-size: 2.6rem;
+  margin-bottom: 0.12em;
+  text-decoration: none;
   transition: 0.25s;
 }
-.logo:hover {
+.navbar-logo:hover {
   opacity: 0.7;
 }
+
+/* Nombre de la app */
+.navbar-title {
+  color: #fff;
+  font-size: 1.42rem;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-align: center;
+  margin-bottom: 0.1em;
+}
+
+/* Menú de navegación centrado */
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  list-style: none;
+  margin-bottom: 0.7em;
+}
+
+/* Estilos de los enlaces del menú */
 .link {
   text-decoration: none;
   color: #fff;
-  font-size: 1.08rem;
+  font-size: 1.18rem;
   font-weight: 600;
   letter-spacing: 1px;
-  padding: 0.3em 0.7em;
+  padding: 0.3em 0.95em;
   border-radius: 6px;
   position: relative;
   transition: background 0.25s, color 0.18s;
 }
+
+/* Línea inferior animada al hacer hover o estar activo */
 .link::before {
   content: "";
   position: absolute;
   width: 100%;
-  height: 2px;
+  height: 2.5px;
   left: 0;
   bottom: 0;
   background: var(--color-primary, #512DA8);
@@ -56,17 +86,32 @@
 .link.active::before {
   transform: scaleX(1);
 }
+
+/* Enlace activo (página actual) */
 .link.active {
-  background: rgba(81,45,168,0.12); /* Violeta translúcido */
+  background: rgba(81,45,168,0.12);
   color: var(--color-primary, #512DA8);
 }
-@media (max-width: 720px) {
-  .navbar-app ul {
-    gap: 0.6rem;
-    margin-left: 0.2em;
+
+/* Ajuste de altura para el navbar */
+@media (min-width: 0px) {
+  .navbar-app {
+    min-height: 115px; /* puedes ajustar según prefieras */
   }
-  .link, .logo {
+}
+
+@media (max-width: 720px) {
+  .navbar-title {
+    font-size: 1.08rem;
+  }
+  .navbar-logo {
+    font-size: 1.5rem;
+  }
+  .navbar-menu {
+    gap: 1rem;
+  }
+  .link {
     font-size: 1rem;
-    padding: 0.2em 0.3em;
+    padding: 0.25em 0.7em;
   }
 }
