@@ -1,10 +1,10 @@
 // src/components/Navbar.jsx
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import "../styles/Navbar.css"; // Importa los estilos de la navbar
+import "../styles/Navbar.css";
 
 /**
- * Navbar principal fijo arriba, con logo+nombre y menú.
+ * Navbar principal fijo arriba, con logo+nombre, menú y botón de logout.
  */
 export default function Navbar({ onLogout }) {
   const location = useLocation();
@@ -19,29 +19,41 @@ export default function Navbar({ onLogout }) {
         <Link to="/home" className="navbar-logo" aria-label="Logo">
           <i className="fa-solid fa-utensils"></i>
         </Link>
-        <span className="navbar-title">NombreApp</span>
+        <span className="navbar-title">Recipe Planner</span>
       </div>
-      {/* Menú de navegación */}
-      <ul className="navbar-menu">
-        <li>
-          <Link to="/home" className={`link ${isActive("/home") ? "active" : ""}`}>Home</Link>
-        </li>
-        <li>
-          <Link to="/planificador" className={`link ${isActive("/planificador") ? "active" : ""}`}>Planificador</Link>
-        </li>
-        <li>
-          <Link to="/recetas" className={`link ${isActive("/recetas") ? "active" : ""}`}>Recetas</Link>
-        </li>
-        <li>
-          <Link to="/perfil" className={`link ${isActive("/perfil") ? "active" : ""}`}>Perfil</Link>
-        </li>
-        {/* Si necesitas un botón de logout, lo puedes añadir aquí */}
-        {/* <li>
-          <button className="link" id="logout" onClick={onLogout} style={{ background: "none", border: "none", cursor: "pointer" }}>
-            <i className="fa-solid fa-right-from-bracket"></i> Logout
-          </button>
-        </li> */}
-      </ul>
+
+      {/* Contenedor flexible para menú y logout */}
+      <div className="navbar-content">
+        {/* Menú de navegación */}
+        <ul className="navbar-menu">
+          <li>
+            <Link to="/home" className={`link ${isActive("/home") ? "active" : ""}`}>
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/planificador" className={`link ${isActive("/planificador") ? "active" : ""}`}>
+              Planificador
+            </Link>
+          </li>
+          <li>
+            <Link to="/recetas" className={`link ${isActive("/recetas") ? "active" : ""}`}>
+              Recetas
+            </Link>
+          </li>
+          <li>
+            <Link to="/perfil" className={`link ${isActive("/perfil") ? "active" : ""}`}>
+              Perfil
+            </Link>
+          </li>
+        </ul>
+
+        {/* Botón de logout */}
+        <button className="logout-btn" onClick={onLogout}>
+          <i className="fa-solid fa-right-from-bracket logout-icon"></i>
+          <span>Cerrar Sesión</span>
+        </button>
+      </div>
     </nav>
   );
 }

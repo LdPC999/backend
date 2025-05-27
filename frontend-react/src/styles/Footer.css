@@ -1,11 +1,14 @@
-/* src/styles/Footer.css */
 .footer-app {
-  width: 100%;
-  background: var(--color-bg-alt, #f9f9f9);
-  color: var(--color-primary, #512DA8);
+  width: 100vw;
+  background: var(--color-bg-alt);
+  color: var(--color-primary);
   text-align: center;
   font-size: 1.08rem;
   padding: 1em 0 1em 0;
   border-top: 1px solid #e0e0e0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 998;
   box-shadow: 0 -2px 12px rgba(0,0,0,0.03);
 }

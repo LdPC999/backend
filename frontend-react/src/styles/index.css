@@ -2,14 +2,18 @@
 
 /* Paleta de colores y variables globales */
 :root {
-  --color-primary: #512DA8;
-  --color-secondary: #03A9F4;
-  --color-bg: #f9f9f9;
-  --color-bg-alt: #fff;
-  --color-text: #222;
-  --color-link: #512DA8;
-  --color-link-hover: #03A9F4;
-  --color-border: #e0e0e0;
+  --color-primary: #CDB380;
+  --color-secondary: #033649;
+  --color-bg: #E8DDCB;
+  --color-bg-alt: #033649;
+  --color-text: #036564;
+  --color-link: #036564;
+  --color-link-hover: #E8DDCB;
+  --color-border: #036564;
+  --header-height-desktop: 115px;
+  --header-height-mobile: 85px;
+  --footer-height-desktop: 60px;
+  --footer-height-mobile: 80px;
 }
 
 /* Modo oscuro */
@@ -29,9 +33,12 @@ body.dark {
 }
 
 body {
-  font-family: 'Montserrat', Arial, sans-serif;
+  font-family: 'Montserrat';
   background: var(--color-bg);
   color: var(--color-text);
+  min-height: 100vh;
+  padding-top: var(--header-height-desktop);
+  padding-bottom: var(--footer-height-desktop);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -93,6 +100,15 @@ body {
 }
 
 #root {
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Añadir media queries */
+@media (max-width: 768px) {
+  body {
+    padding-top: var(--header-height-mobile);
+    padding-bottom: var(--footer-height-mobile);
+  }
 }
