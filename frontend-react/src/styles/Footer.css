@@ -1,6 +1,6 @@
 /* src/styles/Footer.css */
 .footer-app {
-  width: 100vw;
+  width: 100%;
   background: var(--color-bg-alt, #f9f9f9);
   color: var(--color-primary, #512DA8);
   text-align: center;

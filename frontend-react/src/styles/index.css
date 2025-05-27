@@ -83,3 +83,16 @@ a:hover {
   transform: translateY(-2px);
 }
 
+html {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-y: auto !important;
+}
+
+#root {
+  height: 100vh;
+  overflow: hidden;
+}
