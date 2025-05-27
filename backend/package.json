@@ -7,8 +7,6 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "npm run build && npm run start:dev",
-    "build": "nest build && if not exist dist\\firebase mkdir dist\\firebase && copy src\\firebase\\firebase-config.json dist\\firebase\\",
-    "postbuild": "mkdir dist\\firebase 2>nul & copy src\\firebase\\firebase-config.json dist\\firebase\\firebase-config.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

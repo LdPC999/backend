@@ -1,122 +1,17 @@
-/* Estilos generales del layout (estructura principal) */
-
-.app-layout {
+.layout-app {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--color-bg); /* Fondo general */
-}
-
-/* Header principal */
-.app-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 60px;
-  padding: 0 1em;
-  background: var(--color-secondary);
-  color: #fff;
-  box-shadow: var(--shadow);
-}
-
-.header-left, .header-right {
-  display: flex;
-  align-items: center;
-}
-
-.header-center {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 1.3em;
-  text-align: center;
-}
-
-.header-right button {
-  background: var(--color-white);
-  color: var(--color-primary);
-  border: none;
-  border-radius: 8px;
-  padding: 0.4em 1em;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.2s;
-}
-
-.header-right button:hover {
-  background: var(--color-bg-alt);
-}
-
-/* Contenido principal */
-.app-main {
-  flex: 1;
-  padding: 1em 0.5em 70px 0.5em; /* Deja espacio para el footer fijo */
-  background: transparent;
-}
-
-/* Footer fijo */
-.app-footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
   width: 100vw;
-  height: 56px;
-  background: var(--color-white);
-  border-top: 1px solid var(--color-border);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 100;
-}
-
-/* Menú lateral desplegable */
-.side-menu {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 200;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.side-menu-content {
-  background: var(--color-bg);
-  width: 240px;
-  height: 100%;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-  padding: 1em;
-}
-
-/* Sidebar adicional (si se usa) */
-.sidebar {
-  background: var(--color-bg-alt);
-  color: var(--color-text);
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
-  width: 240px;
-  max-width: 80vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 200;
-  padding: 2em 1em 1em 1em;
   display: flex;
   flex-direction: column;
-  gap: 1.2em;
-  transition: transform 0.3s;
+  background: var(--color-bg, #f9f9f9);
 }
-
-.sidebar a {
-  color: var(--color-link);
-  font-weight: 500;
-  font-size: 1.1em;
-  padding: 0.5em 0;
-  border-radius: 6px;
-  transition: background 0.2s, color 0.2s;
-}
-
-.sidebar a:hover {
-  background: var(--color-primary);
-  color: #fff;
+.main-content {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  /* Deja espacio para navbar y footer fijos */
+  padding-top: 60px;   /* Ajusta según la altura de tu navbar */
+  padding-bottom: 66px; /* Ajusta según la altura del footer */
+  width: 100%;
 }

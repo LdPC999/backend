@@ -1,0 +1,72 @@
+/* components/Navbar.css */
+/* Navbar fijo arriba y responsivo */
+.navbar-app {
+  width: 100vw;
+  background: var(--color-secondary, #03A9F4);
+  padding: 0.4em 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+}
+.navbar-app ul {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  list-style: none;
+  justify-content: flex-start;
+  margin-left: 1.2em;
+}
+.logo {
+  text-decoration: none;
+  color: #fff;
+  font-size: 2.1rem;
+  margin-right: 1.5em;
+  padding: 0.1rem 0.2rem;
+  transition: 0.25s;
+}
+.logo:hover {
+  opacity: 0.7;
+}
+.link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 0.3em 0.7em;
+  border-radius: 6px;
+  position: relative;
+  transition: background 0.25s, color 0.18s;
+}
+.link::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background: var(--color-primary, #512DA8);
+  border-radius: 6px;
+  transform: scaleX(0);
+  transition: transform 0.3s;
+}
+.link:hover::before,
+.link.active::before {
+  transform: scaleX(1);
+}
+.link.active {
+  background: rgba(81,45,168,0.12); /* Violeta translúcido */
+  color: var(--color-primary, #512DA8);
+}
+@media (max-width: 720px) {
+  .navbar-app ul {
+    gap: 0.6rem;
+    margin-left: 0.2em;
+  }
+  .link, .logo {
+    font-size: 1rem;
+    padding: 0.2em 0.3em;
+  }
+}
