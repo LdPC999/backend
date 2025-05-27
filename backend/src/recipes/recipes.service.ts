@@ -109,6 +109,7 @@ export class RecipesService {
     tipo?: string,
     sinTipo?: string,
     sinAlergeno?: string,
+    almuerzoCena?: string,
   ): Promise<Recipe[]> {
     const query = this.recipeRepository
       .createQueryBuilder('recipe')
@@ -172,6 +173,11 @@ export class RecipesService {
         '(ingredient.alergeno IS NULL OR LOWER(ingredient.alergeno) != :sinAlergeno)',
         { sinAlergeno: sinAlergeno.toLowerCase() },
       );
+    }
+
+    // Filtrar por almuerzo o cena
+    if (almuerzoCena) {
+      query.andWhere('recipe.almuerzoCena = :almuerzoCena', { almuerzoCena });
     }
 
     return query.getMany();

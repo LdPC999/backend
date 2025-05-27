@@ -38,7 +38,7 @@ html, body, #root {
   right: 0;
   width: 50%;
   height: 100%;
-  background: var(--color-primary); /* Antes: #673AB7 */
+  background: var(--color-bg); /* Antes: #673AB7 */
 }
 
 /* === CAJA DESLIZANTE === */
@@ -74,27 +74,27 @@ html, body, #root {
 }
 
 .left {
-  background: #2C3034;
-  color: #e3e3e3;
+  background: #23272f;
+  color: #CDB380;
   left: 0;
 }
 .left label {
-  color: #e3e3e3;
+  color: #CDB380;
 }
 .left input {
   border-bottom: 1px solid #e3e3e3;
-  color: #e3e3e3;
+  color: #CDB380;
 }
 .left input:focus, .left input:active {
-  border-color: var(--color-secondary);
-  color: var(--color-secondary);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 .left input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px #2C3034 inset;
-  -webkit-text-fill-color: #e3e3e3;
+  -webkit-text-fill-color: #CDB380;
 }
 .left a {
-  color: var(--color-secondary);
+  color: var(--color-primary);
 }
 
 .right {
@@ -215,10 +215,10 @@ button {
   transition: all 0.25s;
 }
 button.signup {
-  background: var(--color-secondary);
+  background: var(--color-primary);
 }
 button.login {
-  background: var(--color-primary);
+  background: var(--color-secondary);
 }
 button.off {
   background: none;
@@ -236,10 +236,10 @@ button:hover {
   box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1);
 }
 button:hover.signup {
-  background: #0288D1; /* Un tono más oscuro del secundario */
+  background: #036564; /* Un tono más oscuro del secundario */
 }
 button:hover.login {
-  background: #512DA8; /* Un tono más oscuro del primario */
+  background: #036564; /* Un tono más oscuro del primario */
 }
 
 /* === RESPONSIVE === */

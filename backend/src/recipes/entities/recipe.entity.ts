@@ -24,6 +24,9 @@ export class Recipe {
   @Column({ default: '' })
   imagen!: string;
 
+  @Column({ nullable: true})
+  almuerzoCena!: string;
+
   @ManyToMany(() => Ingredient, { eager: true })
   @JoinTable()
   ingredientes!: Ingredient[];

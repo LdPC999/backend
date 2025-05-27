@@ -1,4 +1,4 @@
-import { IsString, IsOptional } from 'class-validator';
+import { IsString, IsOptional, IsArray, ArrayNotEmpty, ArrayUnique } from 'class-validator';
 
 export class CreateIngredientDto {
   @IsString()
@@ -8,6 +8,7 @@ export class CreateIngredientDto {
   tipo!: string;
 
   @IsOptional()
-  @IsString()
-  alergeno?: string;
+  @IsArray()
+  @IsString({ each: true })
+  alergeno?: string[];
 }

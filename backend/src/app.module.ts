@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { AlergenosController } from './alergenos/alergenos.controller';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { AuthModule } from './auth/auth.module';
   ],
   controllers:[
     AppController,
+    AlergenosController,
   ],
   providers: [
     AppService,

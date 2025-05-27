@@ -30,6 +30,7 @@ export class RecipesController {
     @Query('tipo') tipo?: string,
     @Query('sinTipo') sinTipo?: string,
     @Query('sinAlergeno') sinAlergeno?: string,
+    @Query('almuerzoCena') almuerzoCena?: string,
   ) {
     return this.recipesService.findAllWithFilters(
       ingredienteNombre,
@@ -38,6 +39,7 @@ export class RecipesController {
       tipo,
       sinTipo,
       sinAlergeno,
+      almuerzoCena,
     );
   }
 

@@ -1,33 +1,124 @@
-/* Estilos de la página del planificador semanal */
+/* src/styles/Planificador.css */
 
-.planificador-page {
-  max-width: 600px;
-  margin: 2em auto;
+/* Contenedor principal */
+.planificador-container {
+  max-width: 500px;
+  margin: 3rem auto 2rem auto;
+  padding: 2.2rem 2.5rem 2.5rem 2.5rem;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(44, 56, 82, 0.10);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.planificador-container h2 {
   text-align: center;
+  color: var(--color-secondary, #033649);
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
 }
 
-.planificador-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.2em;
-  margin-top: 2em;
+/* Formulario */
+.planificador-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.1rem;
 }
 
-.planificador-dia {
-  background: var(--color-bg-alt);
-  border-radius: 8px;
-  padding: 1em;
-  box-shadow: 0 2px 8px rgba(3, 22, 52, 0.06);
-  border: 1px solid var(--color-primary);
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
 }
 
-.planificador-slot {
-  margin-top: 0.8em;
-  background: var(--color-white);
-  border-radius: 6px;
-  padding: 0.5em;
-  color: var(--color-secondary);
-  border: 1px dashed var(--color-primary);
+.tipo-comida-select {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
+}
+
+.tipo-comida-select label {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  gap: 0.5rem;
   cursor: pointer;
-  font-size: 0.95em;
+  color: var(--color-secondary, #033649);
+}
+
+.alergenos-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem 1.5rem;
+  margin-top: 0.6rem;
+}
+
+.alergeno-checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  gap: 0.4rem;
+  color: #247aff;
+  cursor: pointer;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  accent-color: var(--color-secondary, #033649);
+  width: 18px;
+  height: 18px;
+}
+
+/* Botón de generar */
+.btn.btn-primary {
+  background: var(--color-secondary, #033649);
+  color: #fff;
+  border: none;
+  padding: 0.85rem 1.8rem;
+  border-radius: 6px;
+  font-size: 1.11rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 2px 6px rgba(44, 56, 82, 0.08);
+  margin-top: 0.8rem;
+}
+
+.btn.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn.btn-primary:hover:not(:disabled) {
+  background: #247aff;
+  color: #fff;
+}
+
+.form-error {
+  font-size: 1.02rem;
+  padding: 0.7em 0.3em;
+  border-radius: 4px;
+  background: #ffe7e7;
+  color: #b10000;
+  text-align: center;
+  margin-top: 1em;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .planificador-container {
+    padding: 1.1rem 0.7rem 1.3rem 0.7rem;
+    max-width: 98vw;
+  }
+  .planificador-form {
+    gap: 1.2rem;
+  }
+  .tipo-comida-select {
+    gap: 1rem;
+  }
+  .alergenos-list {
+    gap: 0.7rem 1.1rem;
+  }
 }

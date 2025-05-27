@@ -1,23 +1,26 @@
 /* src/styles/Navbar.css */
 
-/* Contenedor general de la navbar */
+/* Contenedor general del navbar */
 .navbar-app {
   width: 100%;
   background: var(--color-secondary);
-  padding: 0;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  height: 80px;
   box-shadow: 0 2px 14px rgba(0,0,0,0.08);
 }
 
-/* Logo y título */
+/* Bloque izquierdo: logo y título */
 .navbar-brand {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 0.5rem 0;
+  gap: 0.9rem;
 }
 
 .navbar-logo {
@@ -25,6 +28,8 @@
   font-size: 2.2rem;
   text-decoration: none;
   transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
 }
 
 .navbar-logo:hover {
@@ -35,19 +40,16 @@
   color: #fff;
   font-size: 1.4rem;
   font-weight: bold;
-  margin-top: 0.2rem;
+  letter-spacing: 1px;
 }
 
-/* Contenedor de menú y logout */
-.navbar-content {
+/* Bloque central: menú */
+.navbar-menu-wrapper {
+  flex: 1;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 2rem;
-  background: rgba(255, 255, 255, 0.05);
+  justify-content: center;
 }
 
-/* Menú de navegación */
 .navbar-menu {
   display: flex;
   gap: 2rem;
@@ -56,84 +58,99 @@
   padding: 0;
 }
 
-/* Enlaces del menú */
 .link {
   color: #fff;
   text-decoration: none;
   font-size: 1.1rem;
   font-weight: 500;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.1rem;
   border-radius: 4px;
-  transition: all 0.2s;
+  transition: background 0.18s, color 0.18s;
+  display: block;
 }
 
-.link:hover, 
-.link.active {
-  background: rgba(255, 255, 255, 0.1);
+.link:hover, .link.active {
+  background: rgba(255,255,255,0.13);
+  color: #fff;
 }
 
-/* Botón de logout */
+/* Bloque derecho: logout */
+.navbar-logout {
+  display: flex;
+  align-items: center;
+  margin-left: 2.2rem;
+}
+
 .logout-btn {
   background: transparent;
   border: 2px solid #fff;
   color: #fff;
-  padding: 0.5rem 1.2rem;
+  padding: 0.48rem 1.18rem;
   border-radius: 4px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   font-size: 1rem;
   font-weight: 500;
-  transition: all 0.2s;
+  transition: background 0.18s, border-color 0.18s;
+  outline: none;
 }
 
 .logout-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255,255,255,0.13);
+  border-color: #f1f1f1;
 }
 
 .logout-icon {
-  font-size: 1.2rem;
+  font-size: 1.17rem;
+  display: flex;
+  align-items: center;
 }
 
-/* Media queries */
-@media (max-width: 768px) {
-  .navbar-brand {
-    padding: 0.3rem 0;
+/* Ajuste vertical perfecto del botón */
+.logout-btn span {
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive para móvil/tablet */
+@media (max-width: 900px) {
+  .navbar-app {
+    padding: 0 1rem;
+    height: 66px;
   }
 
   .navbar-logo {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
-
   .navbar-title {
-    font-size: 1.1rem;
+    font-size: 1.08rem;
   }
-
-  .navbar-content {
-    padding: 0.3rem 1rem;
-  }
-
   .navbar-menu {
-    gap: 0.8rem;
+    gap: 0.7rem;
   }
-
   .link {
-    font-size: 0.9rem;
-    padding: 0.3rem 0.6rem;
+    font-size: 0.93rem;
+    padding: 0.33rem 0.68rem;
   }
+  .navbar-logout {
+    margin-left: 1rem;
+  }
+  .logout-btn {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.94rem;
+  }
+}
 
-  /* Ocultar texto del botón logout en móvil */
-  .logout-btn span {
+@media (max-width: 600px) {
+  .navbar-title {
     display: none;
   }
-
-  .logout-btn {
-    padding: 0.3rem 0.6rem;
-    border-width: 1.5px;
+  .navbar-app {
+    height: 54px;
   }
-
-  .logout-icon {
-    margin: 0;
+  .logout-btn span {
+    display: none;
   }
 }

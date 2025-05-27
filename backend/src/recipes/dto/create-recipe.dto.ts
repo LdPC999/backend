@@ -14,6 +14,10 @@ export class CreateRecipeDto {
   @IsString()
   imagen?: string;
 
+  @IsOptional()
+  @IsString()
+  almuerzoCena!: string;
+
   @IsArray()
   @ArrayNotEmpty()
   @IsInt({ each: true }) // asegura que cada elemento del array sea un número entero

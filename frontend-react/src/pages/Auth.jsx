@@ -133,7 +133,7 @@ export default function Auth() {
             {/* Panel de registro */}
             <div className="left">
               <div className="content">
-                <h2>Registro</h2>
+                <h2 style={{ color: "#CDB380" }}>Registro</h2>
                 <form onSubmit={handleRegister}>
                   <div className="form-element form-stack">
                     <label>Nombre</label>
@@ -158,7 +158,7 @@ export default function Auth() {
                     <button
                       type="button"
                       className="signup off"
-                      onClick={goLeft}
+                      onClick={goLeft} style={{ color: "var(--color-primary)" }}
                     >
                       Login
                     </button>
@@ -189,7 +189,7 @@ export default function Auth() {
                     <button
                       type="button"
                       className="login off"
-                      onClick={goRight}
+                      onClick={goRight} style = {{ color: "var(--color-secondary)"}}
                     >
                       Registro
                     </button>

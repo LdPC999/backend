@@ -11,6 +11,6 @@ export class Ingredient {
   @Column()
   tipo!: string;
 
-  @Column({ nullable: true })
-  alergeno!: string;
+  @Column('text', { array: true, nullable: true })
+  alergeno!: string[];
 }
