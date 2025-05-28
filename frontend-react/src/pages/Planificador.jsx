@@ -4,17 +4,14 @@ import { useNavigate } from "react-router-dom";
 import "../styles/Planificador.css";
 
 export default function Planificador() {
-  // Estado para la lista de alérgenos
   const [alergenosDisponibles, setAlergenosDisponibles] = useState([]);
-  // Estado de alérgenos seleccionados por el usuario
   const [selectedAlergenos, setSelectedAlergenos] = useState([]);
-  // "ambos" (por defecto), "A" (almuerzo) o "C" (cena)
   const [tipoComida, setTipoComida] = useState("ambos");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Al cargar el componente, obtiene los alérgenos desde el backend
+  // Carga la lista de alérgenos (no protegida, puede ir sin token)
   useEffect(() => {
     fetch("http://localhost:3000/alergenos")
       .then((res) => res.json())
@@ -22,7 +19,7 @@ export default function Planificador() {
       .catch(() => setAlergenosDisponibles([]));
   }, []);
 
-  // Maneja el cambio de selección de alérgenos
+  // Maneja cambios en los checkboxes de alérgenos
   const handleAlergenoChange = (alergeno) => {
     setSelectedAlergenos((prev) =>
       prev.includes(alergeno)
@@ -31,7 +28,7 @@ export default function Planificador() {
     );
   };
 
-  // Cambia el tipo de comida (ambos, solo almuerzo, solo cena)
+  // Cambia el tipo de comida a planificar
   const handleTipoComidaChange = (e) => {
     setTipoComida(e.target.value);
   };
@@ -41,39 +38,52 @@ export default function Planificador() {
     setLoading(true);
     setError("");
     try {
-      // Prepara los parámetros de la query
       const alergenoQuery =
         selectedAlergenos.length > 0
           ? `sinAlergeno=${selectedAlergenos.join(",")}`
           : "";
 
-      // Pide recetas al backend según los filtros seleccionados
       let recetasComida = [];
       let recetasCena = [];
 
+      // Fetch para comidas (protegido, añade token en Authorization)
       if (tipoComida === "A" || tipoComida === "ambos") {
-        const res = await fetch(
-          `/recipes?almuerzoCena=A${alergenoQuery ? `&${alergenoQuery}` : ""}`
-        );
+        const urlComida = `http://localhost:3000/recipes?almuerzoCena=A${
+          alergenoQuery ? `&${alergenoQuery}` : ""
+        }`;
+        const res = await fetch(urlComida, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "application/json",
+          },
+        });
         recetasComida = await res.json();
       }
+
+      // Fetch para cenas (protegido, añade token en Authorization)
       if (tipoComida === "C" || tipoComida === "ambos") {
-        const res = await fetch(
-          `/recipes?almuerzoCena=C${alergenoQuery ? `&${alergenoQuery}` : ""}`
-        );
+        const urlCena = `http://localhost:3000/recipes?almuerzoCena=C${
+          alergenoQuery ? `&${alergenoQuery}` : ""
+        }`;
+        const res = await fetch(urlCena, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "application/json",
+          },
+        });
         recetasCena = await res.json();
       }
 
-      // Pasa los resultados a la pantalla de resultados usando el estado de React Router
-      navigate("/planificador-resultados", {
+      // Navega a la pantalla de resultados pasando los arrays y los filtros
+      navigate("/planificador/resultados", {
         state: {
           recetasComida,
           recetasCena,
           filtros: {
             alergenos: selectedAlergenos,
-            tipoComida
-          }
-        }
+            tipoComida,
+          },
+        },
       });
     } catch (err) {
       setError("No se han podido obtener las recetas. Inténtalo más tarde.");
@@ -128,7 +138,7 @@ export default function Planificador() {
           </div>
         </div>
 
-        {/* Filtro de alérgenos (checkbox múltiple) */}
+        {/* Filtro de alérgenos */}
         <div className="form-group">
           <label>Elige los alérgenos que quieres evitar:</label>
           <div className="alergenos-list">
@@ -151,18 +161,17 @@ export default function Planificador() {
 
         {/* Botón de generar */}
         <div className="form-group">
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={loading}
-          >
+          <button type="submit" className="btn btn-primary" disabled={loading}>
             {loading ? "Generando..." : "Generar semana"}
           </button>
         </div>
 
         {/* Muestra errores si los hay */}
         {error && (
-          <div className="form-error" style={{ color: "red", marginTop: "1em" }}>
+          <div
+            className="form-error"
+            style={{ color: "red", marginTop: "1em" }}
+          >
             {error}
           </div>
         )}
