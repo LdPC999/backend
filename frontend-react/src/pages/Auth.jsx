@@ -1,29 +1,24 @@
-// pages/Auth.jsx
+// src/pages/Auth.jsx
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Auth.css";
+import LogoAnimado from "../components/LogoAnimado"; // Importamos el logo
 
-// URL base del backend
 const API_URL = "http://192.168.1.134:3000/auth";
 
 export default function Auth() {
-  // Estado para saber si estamos en login o registro
   const [isLogin, setIsLogin] = useState(true);
-  // Estado para saber si es móvil
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  // Estado para mostrar mensajes de error o éxito
   const [message, setMessage] = useState("");
-  // Refs para animaciones en escritorio
   const slideBoxRef = useRef(null);
   const topLayerRef = useRef(null);
   const navigate = useNavigate();
 
-  // Actualiza el estado de móvil/escritorio al cambiar el tamaño de la ventana
+  // Controla si estamos en login o registro para pasar el estado al logo
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth <= 768;
       setIsMobile(mobile);
-      // Animación solo en escritorio
       if (slideBoxRef.current && topLayerRef.current) {
         if (mobile) {
           slideBoxRef.current.style.marginLeft = "0";
@@ -39,7 +34,7 @@ export default function Auth() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Animación para pasar a registro
+  // Funciones para animar el cambio de panel
   const goRight = () => {
     if (!isMobile && slideBoxRef.current && topLayerRef.current) {
       slideBoxRef.current.style.marginLeft = "0";
@@ -48,8 +43,6 @@ export default function Auth() {
     setIsLogin(false);
     setMessage("");
   };
-
-  // Animación para pasar a login
   const goLeft = () => {
     if (!isMobile && slideBoxRef.current && topLayerRef.current) {
       slideBoxRef.current.style.marginLeft = "50%";
@@ -59,14 +52,13 @@ export default function Auth() {
     setMessage("");
   };
 
-  // Función para hacer login
+  // Login y registro
   const handleLogin = async (e) => {
     e.preventDefault();
     setMessage("");
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-
     try {
       const res = await fetch(`${API_URL}/login`, {
         method: "POST",
@@ -75,10 +67,9 @@ export default function Auth() {
       });
       const data = await res.json();
       if (res.ok) {
-        // Guarda el token y redirige o actualiza el estado global
         localStorage.setItem("token", data.access_token);
         setMessage("Login correcto");
-        navigate("/home"); // Redirige a Home
+        navigate("/home");
       } else {
         setMessage(data.message || "Error en login");
       }
@@ -87,7 +78,6 @@ export default function Auth() {
     }
   };
 
-  // Función para hacer registro
   const handleRegister = async (e) => {
     e.preventDefault();
     setMessage("");
@@ -96,7 +86,6 @@ export default function Auth() {
     const apellidos = form.apellidos.value;
     const email = form.email.value;
     const password = form.password.value;
-
     try {
       const res = await fetch(`${API_URL}/register`, {
         method: "POST",
@@ -107,7 +96,7 @@ export default function Auth() {
       if (res.ok) {
         localStorage.setItem("token", data.access_token);
         setMessage("Registro correcto");
-        // Puedes redirigir o cambiar a login automáticamente
+        // navigate("/home");
       } else {
         setMessage(data.message || "Error en registro");
       }
@@ -118,19 +107,25 @@ export default function Auth() {
 
   return (
     <>
-      {/* Fondos y animación solo en escritorio */}
+      {/* Fondos y animación */}
       <div id="back">
-        {/* Si quieres el fondo animado, añade el canvas */}
         <canvas id="canvas" className="canvas-back"></canvas>
         <div className="backRight"></div>
         <div className="backLeft"></div>
       </div>
 
-      {/* Vista escritorio: animación entre login y registro */}
+      {/* Logo animado centrado en la mitad correspondiente */}
+      {!isMobile && (
+        <LogoAnimado
+          position={isLogin ? "left" : "right"}
+          mode={isLogin ? "login" : "registro"}
+        />
+      )}
+
+      {/* Paneles desktop */}
       {!isMobile && (
         <div id="slideBox" ref={slideBoxRef}>
           <div className="topLayer" ref={topLayerRef}>
-            {/* Panel de registro */}
             <div className="left">
               <div className="content">
                 <h2 style={{ color: "#CDB380" }}>Registro</h2>
@@ -158,18 +153,20 @@ export default function Auth() {
                     <button
                       type="button"
                       className="signup off"
-                      onClick={goLeft} style={{ color: "var(--color-primary)" }}
+                      onClick={goLeft}
+                      style={{ color: "var(--color-primary)" }}
                     >
                       Login
                     </button>
                   </div>
                   {message && !isLogin && (
-                    <div style={{ color: "red", marginTop: "1em" }}>{message}</div>
+                    <div style={{ color: "red", marginTop: "1em" }}>
+                      {message}
+                    </div>
                   )}
                 </form>
               </div>
             </div>
-            {/* Panel de login */}
             <div className="right">
               <div className="content">
                 <h2>Login</h2>
@@ -189,13 +186,16 @@ export default function Auth() {
                     <button
                       type="button"
                       className="login off"
-                      onClick={goRight} style = {{ color: "var(--color-secondary)"}}
+                      onClick={goRight}
+                      style={{ color: "var(--color-secondary)" }}
                     >
                       Registro
                     </button>
                   </div>
                   {message && isLogin && (
-                    <div style={{ color: "red", marginTop: "1em" }}>{message}</div>
+                    <div style={{ color: "red", marginTop: "1em" }}>
+                      {message}
+                    </div>
                   )}
                 </form>
               </div>
@@ -204,7 +204,7 @@ export default function Auth() {
         </div>
       )}
 
-      {/* Vista móvil: solo un formulario visible */}
+      {/* Móvil: solo un panel visible, sin logo */}
       {isMobile && (
         <div className="mobile-auth">
           <div className="content">

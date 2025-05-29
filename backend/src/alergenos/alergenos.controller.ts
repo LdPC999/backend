@@ -5,7 +5,6 @@ import { Controller, Get } from '@nestjs/common';
 export class AlergenosController {
   @Get()
   findAll() {
-    // Lista fija. Puedes moverla a un servicio si prefieres.
     return [
       'Frutos secos',
       'Apio',

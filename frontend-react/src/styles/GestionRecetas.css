@@ -28,44 +28,7 @@
   display: inline-block;
 }
 
-.ingredientes-checkboxes {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 14px 32px;
-  margin: 16px 0 24px 0;
-  padding: 16px 12px;
-  justify-items: start;
-  max-height: 420px;
-  overflow-y: auto;
-  background: #fafafa;
-  border-radius: 10px;
-  border: 1px solid #eee;
-}
 
-.ingredientes-checkboxes label {
-  display: flex;
-  align-items: center;
-  font-size: 1em;
-  gap: 0.4em;
-  white-space: nowrap;
-  min-width: 0;
-}
-
-.btn-admin {
-  background: var(--color-primary, #CDB380);
-  color: rgba(255, 255, 255, 0.651);
-  padding: 0.7em 1.5em;
-  border-radius: 8px;
-  border: none;
-  font-weight: bold;
-  font-size: 1.1em;
-  cursor: pointer;
-}
-.btn-admin:hover {
-  background: var(--color-secondary, #036564);
-  color: #fff;
-}
 .recetas-error { color: #c00; margin-top: 0.8em; }
 .recetas-ok { color: #3c6; margin-top: 0.8em; }
 

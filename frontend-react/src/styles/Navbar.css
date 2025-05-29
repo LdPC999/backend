@@ -23,21 +23,9 @@
   gap: 0.9rem;
 }
 
-.navbar-logo {
-  color: #fff;
-  font-size: 2.2rem;
-  text-decoration: none;
-  transition: opacity 0.2s;
-  display: flex;
-  align-items: center;
-}
-
-.navbar-logo:hover {
-  opacity: 0.8;
-}
 
 .navbar-title {
-  color: #fff;
+  color: #CDB380;
   font-size: 1.4rem;
   font-weight: bold;
   letter-spacing: 1px;
@@ -59,7 +47,7 @@
 }
 
 .link {
-  color: #fff;
+  color: #E8DDCB;
   text-decoration: none;
   font-size: 1.1rem;
   font-weight: 500;
@@ -71,7 +59,7 @@
 
 .link:hover, .link.active {
   background: rgba(255,255,255,0.13);
-  color: #fff;
+  color: #E8DDCB
 }
 
 /* Bloque derecho: logout */
@@ -83,14 +71,14 @@
 
 .logout-btn {
   background: transparent;
-  border: 2px solid #fff;
-  color: #fff;
-  padding: 0.48rem 1.18rem;
+  border: 2px solid #CDB380;
+  color: #CDB380;
+  padding: 0.58rem 1.4rem;
   border-radius: 4px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+
   font-size: 1rem;
   font-weight: 500;
   transition: background 0.18s, border-color 0.18s;
@@ -99,7 +87,7 @@
 
 .logout-btn:hover {
   background: rgba(255,255,255,0.13);
-  border-color: #f1f1f1;
+  border-color: #036564;
 }
 
 .logout-icon {
@@ -110,7 +98,6 @@
 
 /* Ajuste vertical perfecto del botón */
 .logout-btn span {
-  display: flex;
   align-items: center;
 }
 

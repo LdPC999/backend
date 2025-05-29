@@ -1,0 +1,64 @@
+.logo-animado {
+  position: absolute;
+  top: 40%;
+  width: 50vw;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  z-index: 20;
+  opacity: 1;
+  font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+  font-weight: 700;
+  line-height: 0.6;
+  transition: left 1s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 1s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.8s;
+  /* Tamaño grande y responsivo */
+  font-size: 70px;
+}
+.logo-animado span {
+  display: block;
+  font-size: inherit;
+}
+
+.logo-animado--left {
+  left: 0;
+  transform: translateX(0%);
+}
+.logo-animado--right {
+  left: 100%;
+  transform: translateX(-100%);
+}
+
+.logo-login {
+  color: #E8DDCB; /* Blanco sobre fondo azul */
+  text-shadow: 0 2px 8px #baedf7ad;
+  font-size: 1.1em;
+}
+.logo-login-sec {
+  color: #CDB380; /* Dorado/beige */
+  text-shadow: 0 2px 8px #e0d8c5a8;
+  font-size: 0.85em;
+}
+
+.logo-registro {
+  color: #033649; /* Dorado/beige sobre fondo oscuro */
+  text-shadow: 0 2px 8px #705b28a8;
+  font-size: 1.1em;
+}
+.logo-registro-sec {
+  color: #036564;   /* Blanco */
+  text-shadow: 0 2px 8px #705b28a8;
+  font-size: 0.85em;
+}
+
+@media (max-width: 900px) {
+  .logo-animado {
+    font-size: 45px;
+  }
+}
+@media (max-width: 768px) {
+  .logo-animado {
+    display: none;
+  }
+}

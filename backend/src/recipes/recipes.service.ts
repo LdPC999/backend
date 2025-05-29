@@ -67,10 +67,14 @@ export class RecipesService {
 
   // Actualización con validación de duplicado
   async update(id: number, updateRecipeDto: UpdateRecipeDto): Promise<Recipe> {
-    const receta = await this.recipeRepository.findOneBy({ id });
+    // 1. Buscar la receta CARGANDO RELACIONES
+    const receta = await this.recipeRepository.findOne({
+      where: { id },
+      relations: ['ingredientes'], // ¡Carga ingredientes!
+    });
     if (!receta) throw new NotFoundException('Receta no encontrada');
 
-    // Validar nombre duplicado si se modifica
+    // 2. Validar nombre duplicado si corresponde
     if (
       updateRecipeDto.nombre &&
       updateRecipeDto.nombre.toLowerCase().trim() !==
@@ -90,15 +94,28 @@ export class RecipesService {
       }
     }
 
-    // Si actualiza ingredientes
-    if (updateRecipeDto.ingredientes) {
-      const ingredientes = await this.ingredientRepository.findBy({
-        id: In(updateRecipeDto.ingredientes),
-      });
-      receta.ingredientes = ingredientes;
-    }
+    // 3. Actualizar campos simples (sin relaciones)
+    receta.nombre = updateRecipeDto.nombre ?? receta.nombre;
+    receta.dificultad = updateRecipeDto.dificultad ?? receta.dificultad;
+    receta.tiempoPreparacion =
+      updateRecipeDto.tiempoPreparacion ?? receta.tiempoPreparacion;
+    receta.imagen = updateRecipeDto.imagen ?? receta.imagen;
+    receta.almuerzoCena = updateRecipeDto.almuerzoCena ?? receta.almuerzoCena;
 
-    Object.assign(receta, updateRecipeDto);
+    // 4. Actualizar ingredientes (relación many-to-many)
+    if (updateRecipeDto.ingredientes) {
+      // Si la lista viene vacía, borra todos los ingredientes
+      if (updateRecipeDto.ingredientes.length === 0) {
+        receta.ingredientes = [];
+      } else {
+        // Busca los ingredientes por ID y asigna el array completo
+        const ingredientes = await this.ingredientRepository.findBy({
+          id: In(updateRecipeDto.ingredientes),
+        });
+        receta.ingredientes = ingredientes;
+      }
+    }
+    // 5. Guardar receta (esto actualiza también la tabla intermedia)
     return this.recipeRepository.save(receta);
   }
 

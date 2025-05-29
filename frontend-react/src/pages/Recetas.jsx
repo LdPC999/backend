@@ -2,25 +2,28 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserRole } from "../utils/auth";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"; // Importa los corazones
 import "../styles/Recetas.css";
 
 export default function Recetas() {
   const [recetas, setRecetas] = useState([]);
   const [recetaSeleccionada, setRecetaSeleccionada] = useState(null);
+  const [favoritos, setFavoritos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const userRole = getUserRole();
 
+  // Carga recetas
   useEffect(() => {
     async function fetchRecetas() {
       try {
         const res = await fetch("http://localhost:3000/recipes", {
           headers: {
-            "Authorization": "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer " + localStorage.getItem("token"),
             "Content-Type": "application/json",
-          }
+          },
         });
         if (!res.ok) throw new Error("No se han podido cargar las recetas");
         const data = await res.json();
@@ -34,25 +37,74 @@ export default function Recetas() {
     fetchRecetas();
   }, []);
 
+  // Carga favoritos del usuario
+  useEffect(() => {
+    async function fetchFavoritos() {
+      try {
+        const res = await fetch("http://localhost:3000/users/favoritos/me", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setFavoritos(data.map(r => r.id)); // Array de IDs de recetas favoritas
+        }
+      } catch {
+        setFavoritos([]);
+      }
+    }
+    fetchFavoritos();
+  }, []);
+
+  // Cambia receta seleccionada al elegir en el desplegable
   const handleChange = (e) => {
     const recetaId = Number(e.target.value);
-    const receta = recetas.find(r => r.id === recetaId);
+    const receta = recetas.find((r) => r.id === recetaId);
     setRecetaSeleccionada(receta || null);
   };
 
+  // Recoge alérgenos únicos de la receta seleccionada
   const getAlergenos = (receta) => {
     if (!receta || !receta.ingredientes) return [];
     const alergenosSet = new Set();
-    receta.ingredientes.forEach(ing => {
+    receta.ingredientes.forEach((ing) => {
       if (ing.alergeno) {
         if (Array.isArray(ing.alergeno)) {
-          ing.alergeno.forEach(al => alergenosSet.add(al.trim()));
+          ing.alergeno.forEach((al) => alergenosSet.add(al.trim()));
         } else {
-          ing.alergeno.split(",").forEach(al => alergenosSet.add(al.trim()));
+          ing.alergeno.split(",").forEach((al) => alergenosSet.add(al.trim()));
         }
       }
     });
     return Array.from(alergenosSet).filter(Boolean);
+  };
+
+  // Marcar/desmarcar favorito
+  const toggleFavorito = async (recetaId) => {
+    try {
+      if (favoritos.includes(recetaId)) {
+        // Quitar favorito
+        await fetch(`http://localhost:3000/users/favoritos/${recetaId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        setFavoritos(favoritos.filter(favId => favId !== recetaId));
+      } else {
+        // Añadir favorito
+        await fetch(`http://localhost:3000/users/favoritos/${recetaId}`, {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        setFavoritos([...favoritos, recetaId]);
+      }
+    } catch (err) {
+      // Puedes mostrar un error si quieres
+    }
   };
 
   return (
@@ -73,9 +125,7 @@ export default function Recetas() {
 
       {/* Desplegable de selección */}
       <div className="recetas-select-container">
-        <label htmlFor="select-receta">
-          Selecciona una receta:
-        </label>
+        <label htmlFor="select-receta">Selecciona una receta:</label>
         <select
           id="select-receta"
           onChange={handleChange}
@@ -85,11 +135,16 @@ export default function Recetas() {
           <option value="" disabled>
             -- Elige una receta --
           </option>
-          {recetas.map((r) => (
-            <option key={r.id} value={r.id}>
-              {r.nombre}
-            </option>
-          ))}
+          {recetas
+            .slice()
+            .sort((a, b) =>
+              a.nombre.trim().toLocaleLowerCase("es").localeCompare(b.nombre.trim().toLocaleLowerCase("es"), "es", { sensitivity: "base" })
+            )
+            .map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.nombre}
+              </option>
+            ))}
         </select>
       </div>
 
@@ -101,7 +156,10 @@ export default function Recetas() {
           {/* Imagen */}
           <div className="receta-imagen">
             {recetaSeleccionada.imagen ? (
-              <img src={recetaSeleccionada.imagen} alt={recetaSeleccionada.nombre} />
+              <img
+                src={recetaSeleccionada.imagen}
+                alt={recetaSeleccionada.nombre}
+              />
             ) : (
               <div className="receta-imagen-placeholder">
                 <span>Sin imagen</span>
@@ -110,7 +168,31 @@ export default function Recetas() {
           </div>
           {/* Info */}
           <div className="receta-info">
-            <h3>{recetaSeleccionada.nombre}</h3>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.85em" }}>
+              <h3 style={{ margin: 0 }}>{recetaSeleccionada.nombre}</h3>
+              {/* Icono de favorito solo si hay usuario logueado */}
+              {userRole && (
+                <button
+                  className="btn-favorito"
+                  aria-label={favoritos.includes(recetaSeleccionada.id) ? "Quitar de favoritos" : "Añadir a favoritos"}
+                  onClick={() => toggleFavorito(recetaSeleccionada.id)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center"
+                  }}
+                  tabIndex={0}
+                >
+                  {favoritos.includes(recetaSeleccionada.id)
+                    ? <AiFillHeart size={29} color="#d42332" />
+                    : <AiOutlineHeart size={29} color="#d42332" />
+                  }
+                </button>
+              )}
+            </div>
             <p>
               <strong>Tiempo de preparación:</strong>{" "}
               {recetaSeleccionada.tiempoPreparacion} minutos
@@ -123,7 +205,8 @@ export default function Recetas() {
           <div className="receta-ingredientes">
             <h4>Ingredientes:</h4>
             <ul>
-              {recetaSeleccionada.ingredientes && recetaSeleccionada.ingredientes.length > 0 ? (
+              {recetaSeleccionada.ingredientes &&
+              recetaSeleccionada.ingredientes.length > 0 ? (
                 recetaSeleccionada.ingredientes.map((ing) => (
                   <li key={ing.id || ing.nombre}>{ing.nombre}</li>
                 ))
@@ -151,7 +234,9 @@ export default function Recetas() {
             <div style={{ textAlign: "right", marginTop: "1em" }}>
               <button
                 className="btn btn-admin"
-                onClick={() => navigate(`/recetas/editar/${recetaSeleccionada.id}`)}
+                onClick={() =>
+                  navigate(`/recetas/editar/${recetaSeleccionada.id}`)
+                }
               >
                 Modificar receta
               </button>

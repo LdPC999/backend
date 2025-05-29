@@ -7,18 +7,22 @@
   background: transparent;
 }
 
+/* Conjunto del título y el desplegable */
 .recetas-select-container {
   margin-bottom: 2.5rem;
   width: 100%;
+
 }
 
+/* Desplegable de recetas */
 .recetas-select {
   width: 100%;
+  margin-top: 8px;
   padding: 0.8em;
-  border: 2px solid var(--color-secondary, #036564);
+  border: 1px solid var(--color-secondary, #036564);
   border-radius: 8px;
   font-size: 1.1em;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.712);
   cursor: pointer;
   transition: all 0.3s ease;
   color: var(--color-secondary, #036564);
@@ -26,7 +30,8 @@
 
 .recetas-select:hover {
   border-color: #025453;
-  background: white;
+  background: #036564;
+  color:#E8DDCB;
 }
 
 .recetas-select:focus {
@@ -53,14 +58,16 @@
   color: #080;
 }
 
+/* Caja con detalle de la receta */
 .receta-detalle {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.96);
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  padding: 2.5em 2em;
+  padding: 2.8em 2em;
   margin: 1.5rem 0;
-  transition: transform 0.3s ease;
+  font-size: 1.17em;  /* Tamaño general mayor */
 }
+
 
 .receta-detalle:hover {
   transform: translateY(-2px);
@@ -94,71 +101,181 @@
 
 .receta-info {
   text-align: left;
-  padding: 1.5rem;
+  padding: 1.5rem 0 1.3rem 0;
 }
+
 .receta-info h3 {
-  font-size: 1.8em;
-  margin-bottom: 1em;
+  font-size: 2em;
+  margin-bottom: 1.1em;
   color: var(--color-secondary, #036564);
 }
 
-.receta-ingredientes, .receta-alergenos {
+/* Nueva separación entre tiempo y dificultad */
+.receta-info p {
+  margin-bottom: 1.2em;
+  font-size: 1.13em;
+}
+
+.receta-ingredientes,
+.receta-alergenos {
   width: 100%;
   text-align: left;
+  margin-left: 0; /* Elimina sangría */
+  padding-left: 0; /* Elimina sangría */
+  font-size: 1.14em;
 }
+
 .receta-ingredientes h4, .receta-alergenos h4 {
-  margin-bottom: 0.4em;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
   color: var(--color-primary, #CDB380);
+  font-size: 1.08em;
 }
+
 .receta-ingredientes ul, .receta-alergenos ul {
   margin: 0 0 1em 1.2em;
   padding: 0;
   list-style-type: disc;
   color: #035;
+  font-size: 1.08em;
+}
+
+.tipo-select {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.7em;
+  border: 1.5px solid var(--color-secondary, #036564);
+  border-radius: 8px;
+  font-size: 1em;
+  background-color: rgba(255, 255, 255, 0.651);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  color: var(--color-secondary, #036564);
+  direction: ltr;
+  position: relative;
+}
+
+/* Añadir estas propiedades para forzar que el desplegable se abra hacia abajo */
+.select-wrapper {
+  position: relative;
+  min-height: 50px; /* Ajusta según necesites */
+  overflow: visible;
+}
+
+.tipo-select {
+  top: 0;
+  width: 100%;
+  
+}
+
+
+.tipo-select option {
+  top: 100%;
+  left: 0;
+}
+
+/* Opcional: añadir un atributo data para forzar el comportamiento */
+select.tipo-select[data-dropup="false"] {
+  transform: none !important;
+}
+
+.tipo-select:hover {
+  border-color: #025453;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.tipo-select:focus {
+  border-color: var(--color-secondary, #036564);
+  box-shadow: 0 0 0 2px rgba(3, 101, 100, 0.2);
+}
+
+.grupo-ingredientes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas de igual ancho */
+  gap: 15px; /* Espacio entre columnas */
+  margin-bottom: 1.5rem;
+}
+
+.grupo-ingredientes h4 {
+  grid-column: 1 / -1; /* El título ocupa ambas columnas */
+  color: var(--color-secondary, #036564);
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(3, 101, 100, 0.2);
+}
+
+.grupo-ingredientes label {
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  height: 32px; /* Altura fija para mejor alineación */
+}
+
+.grupo-ingredientes input[type="checkbox"] {
+  margin: 0 12px 0 0;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  position: relative;
+  top: 0; /* Elimina cualquier desplazamiento vertical */
+}
+
+.grupo-ingredientes label span {
+  display: inline-block;
+  line-height: 16px; /* Igual que la altura del checkbox */
+  vertical-align: middle;
 }
 
 .ingredientes-checkboxes {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
+  animation: fadeIn 0.3s ease-in;
   padding: 15px;
-  max-height: 305px;
-  overflow-y: scroll;
+  max-height: 400px;
+  overflow-y: auto;
   border-radius: 12px;
   background-color: rgba(255, 255, 255, 0.651);
-  margin-bottom: 1rem; 
-  margin-top: 1rem;
+  margin: 1rem 0;
 }
 
-.ingredientes-checkboxes label {
-  display: flex;
-  align-items: center;
-  gap: 1px;
-  padding: 5px;
-  cursor: pointer;
+.btn-favorito {
+  margin-left: 0.35em;
+  transition: transform 0.17s;
+  outline: none;
+  border: none;
+  background: none;
+  vertical-align: middle;
+}
+.btn-favorito:active {
+  transform: scale(0.89);
+}
+.btn-favorito svg {
+  transition: filter 0.15s;
+}
+.btn-favorito:hover svg {
+  filter: drop-shadow(0 0 3px #d4233277);
 }
 
-.ingredientes-checkboxes input[type="checkbox"] {
-  margin: 0;
-  cursor: progress;
-}
-
-.ingredientes-checkboxes label:hover {
-  background-color: #CDB380;
-  border-radius: 8px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Estilo para los botones */
-.receta-form button[type="submit"] {
-  margin-top: 2rem;
-  background-color: var(--color-secondary, #036564);
-  color: #E8DDCB;
+
+.receta-form button[type="submit"],
+.btn-admin, .btn-receta {
+  font-size: 1.05em !important; /* Botones igual de grandes */
   padding: 0.8em 1.5em;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1em;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  border-radius: 10px;
 }
 
 .receta-form button[type="submit"]:hover {
@@ -239,6 +356,17 @@
   margin: 1rem 0;
 }
 
+.btn-admin{
+  background-color: var(--color-secondary);
+  color: var(--color-bg);
+}
+
+.btn-admin:hover{
+  background-color:#025453;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(3, 101, 100, 0.2);
+}
+
 .btn-receta:hover {
   background-color: #025453;
   transform: translateY(-1px);
@@ -247,7 +375,7 @@
 
 /* Botón específico para nueva receta */
 .btn-nueva-receta {
-  background-color: var(--color-primary, #CDB380);
+  background-color: var(--color-secondary);
 }
 
 .btn-nueva-receta:hover {

@@ -8,6 +8,7 @@
 }
 
 /* === GENERAL === */
+
 html, body, #root {
   height: 100%;
   width: 100%;
@@ -137,7 +138,7 @@ html, body, #root {
   color: var(--color-secondary);
 }
 .right .content h2 {
-  color: var(--color-primary);
+  color: var(--color-secondary);
 }
 
 .form-element {
@@ -274,5 +275,9 @@ button:hover.login {
   .mobile-auth button {
     width: 100%;
     margin-bottom: 1em;
+  }
+
+  .app-title-auth{
+    display: none;
   }
 }
