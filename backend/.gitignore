@@ -1,4 +1,4 @@
-# compiled output
+# Compiled output
 /dist
 /node_modules
 /build
@@ -14,8 +14,9 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# OS
+# OS files
 .DS_Store
+Thumbs.db
 
 # Tests
 /coverage
@@ -57,14 +58,68 @@ pids
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-# Ingredients
+# Ingredient and recipe JSON files
 /ingredients.json
-
-# Recetas
 /recetas.json
 
-# Scripts
+# Scripts y archivos temporales del seed
 /src/seed
+/scripts
+/scripts/**
 
-# Firebase config
-**/firebase-config.json
+
+# Otros archivos de configuración y salida
+npm-debug.log
+yarn-debug.log
+pnpm-debug.log
+
+# VSCode workspace
+*.code-workspace
+
+# MacOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux system files
+*~
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# TypeORM migration and cache files
+/ormconfig.js
+/ormconfig.json
+/ormconfig.yml
+/ormconfig.env
+/typeorm-*.log
+
+# Jest coverage
+/coverage
+/jest-coverage/
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# NPM cache
+.npm
+.npmrc
+
+# Parcel cache
+.cache/
+
+# Webpack cache
+/.cache
+
+# Optional: exclude backup/old config files
+*.bak
+*.old
+*.orig

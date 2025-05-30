@@ -1,14 +1,30 @@
+// users.service.ts
+
+// Importamos decoradores y utilidades de NestJS y TypeORM.
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+// Importamos entidades y DTOs necesarios.
 import { User } from './entities/users.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
 import { Recipe } from '../recipes/entities/recipe.entity';
 
+/**
+ * Servicio de usuarios.
+ * 
+ * Contiene la lógica de negocio para la gestión de usuarios:
+ * CRUD, autenticación, favoritos y gestión de roles.
+ */
 @Injectable()
 export class UsersService {
+  /**
+   * Inyección de los repositorios de usuario y receta.
+   * 
+   * @param userRepository Repositorio de usuarios.
+   * @param recipeRepository Repositorio de recetas.
+   */
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
@@ -16,33 +32,56 @@ export class UsersService {
     private readonly recipeRepository: Repository<Recipe>,
   ) {}
 
-  // 📋 Obtener todos los usuarios
+  /**
+   * Obtiene todos los usuarios de la base de datos.
+   * 
+   * @returns Promesa con un array de usuarios.
+   */
   findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  // 🔍 Buscar un usuario por su ID
+  /**
+   * Busca un usuario por su ID.
+   * 
+   * @param id Identificador del usuario.
+   * @returns Promesa con el usuario encontrado o null.
+   */
   findOne(id: number): Promise<User | null> {
     return this.userRepository.findOneBy({ id });
   }
 
-  // ➕ Crear un nuevo usuario manualmente (por ejemplo desde un seed)
+  /**
+   * Crea un nuevo usuario de forma manual (por ejemplo, desde un script de seed).
+   * 
+   * @param dto Datos para crear el usuario.
+   * @returns Promesa con el usuario creado.
+   */
   async create(dto: CreateUserDto): Promise<User> {
     const newUser = this.userRepository.create(dto);
     return this.userRepository.save(newUser);
   }
 
-  // ✏️ Actualizar los datos de un usuario existente
+  /**
+   * Actualiza los datos de un usuario existente.
+   * 
+   * Si se actualiza la contraseña, la cifra antes de guardarla.
+   * 
+   * @param id ID del usuario a actualizar.
+   * @param dto Datos de actualización.
+   * @returns Promesa con el usuario actualizado.
+   * @throws Error si el usuario no existe.
+   */
   async update(id: number, dto: UpdateUserDto): Promise<User> {
     const user = await this.userRepository.findOneBy({ id });
     if (!user) throw new Error('Usuario no encontrado');
 
-    // Si viene password, hashearla antes de guardar
+    // Si hay una nueva contraseña, cifrarla antes de guardar.
     if (dto.password) {
       user.password = await bcrypt.hash(dto.password, 10);
     }
 
-    // Actualizar el resto de campos (excepto password)
+    // Actualizar campos básicos si se envían.
     if (dto.nombre !== undefined) user.nombre = dto.nombre;
     if (dto.apellidos !== undefined) user.apellidos = dto.apellidos;
     if (dto.alergenos !== undefined) user.alergenos = dto.alergenos;
@@ -50,12 +89,23 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  // ❌ Eliminar un usuario por su ID
+  /**
+   * Elimina un usuario por su ID.
+   * 
+   * @param id Identificador del usuario a eliminar.
+   * @returns Promesa que resuelve a void.
+   */
   async remove(id: number): Promise<void> {
     await this.userRepository.delete(id);
   }
 
-  // 📝 Registrar un nuevo usuario desde el formulario
+  /**
+   * Registra un nuevo usuario desde el formulario, asegurando que no exista duplicidad por email.
+   * 
+   * @param dto Datos de registro.
+   * @returns Promesa con el usuario registrado.
+   * @throws Error si ya existe el usuario.
+   */
   async register(dto: CreateUserDto): Promise<User> {
     const existing = await this.userRepository.findOneBy({ email: dto.email });
     if (existing) throw new Error('El usuario ya existe');
@@ -68,12 +118,23 @@ export class UsersService {
     return this.userRepository.save(newUser);
   }
 
-  // 🔎 Buscar usuario por su correo electrónico
+  /**
+   * Busca un usuario por su correo electrónico.
+   * 
+   * @param email Email del usuario.
+   * @returns Promesa con el usuario encontrado o null.
+   */
   async findByEmail(email: string): Promise<User | null> {
     return this.userRepository.findOne({ where: { email } });
   }
 
-  // 🔐 Iniciar sesión con email y contraseña
+  /**
+   * Realiza el login con email y contraseña.
+   * 
+   * @param credentials Objeto con email y contraseña.
+   * @returns Objeto con mensaje y datos básicos del usuario.
+   * @throws Error si el usuario no existe o la contraseña es incorrecta.
+   */
   async loginWithCredentials(credentials: { email: string; password: string }) {
     const { email, password } = credentials;
     const user = await this.userRepository.findOneBy({ email });
@@ -83,7 +144,7 @@ export class UsersService {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) throw new Error('Contraseña incorrecta');
 
-    // Se retorna solo la información básica del usuario
+    // Devuelve solo información básica del usuario
     return {
       message: 'Login exitoso',
       user: {
@@ -96,14 +157,28 @@ export class UsersService {
     };
   }
 
+  /**
+   * Asigna el rol 'admin' a un usuario por email.
+   * 
+   * @param email Email del usuario.
+   * @returns Promesa con el usuario actualizado.
+   * @throws NotFoundException si no se encuentra el usuario.
+   */
   async giveAdminRole(email: string): Promise<User> {
-    // Busca el usuario por email
     const user = await this.userRepository.findOneBy({ email });
     if (!user) throw new NotFoundException('Usuario no encontrado');
-    // Cambia el rol
-    user.role = 'admin'; // O como definas el campo en tu base de datos
+    user.role = 'admin';
     return this.userRepository.save(user);
   }
+
+  /**
+   * Añade una receta a la lista de favoritos del usuario.
+   * 
+   * @param userId ID del usuario.
+   * @param recipeId ID de la receta.
+   * @returns Promesa con el usuario actualizado.
+   * @throws NotFoundException si el usuario o receta no existen.
+   */
   async addFavorito(userId: number, recipeId: number): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id: userId },
@@ -116,7 +191,14 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  // Quitar receta de favoritos
+  /**
+   * Elimina una receta de la lista de favoritos del usuario.
+   * 
+   * @param userId ID del usuario.
+   * @param recipeId ID de la receta.
+   * @returns Promesa con el usuario actualizado.
+   * @throws NotFoundException si el usuario no existe.
+   */
   async removeFavorito(userId: number, recipeId: number): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id: userId },
@@ -127,7 +209,13 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  // Obtener favoritos de un usuario
+  /**
+   * Obtiene la lista de recetas favoritas de un usuario.
+   * 
+   * @param userId ID del usuario.
+   * @returns Promesa con un array de recetas favoritas.
+   * @throws NotFoundException si el usuario no existe.
+   */
   async getFavoritos(userId: number): Promise<Recipe[]> {
     const user = await this.userRepository.findOne({
       where: { id: userId },

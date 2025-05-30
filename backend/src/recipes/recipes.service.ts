@@ -1,17 +1,34 @@
+// recipes.service.ts
+
+// Importamos decoradores y excepciones de NestJS para el servicio.
 import {
   Injectable,
   NotFoundException,
   ConflictException,
 } from '@nestjs/common';
+// Importamos utilidades para inyectar repositorios y construir queries.
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
+// Importamos las entidades y DTOs necesarios.
 import { Recipe } from './entities/recipe.entity';
 import { Ingredient } from '../ingredients/entities/ingredient.entity';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 
+/**
+ * Servicio de recetas.
+ * 
+ * Contiene toda la lógica de negocio relacionada con la gestión de recetas,
+ * incluyendo creación, consulta, actualización, eliminación y filtrado avanzado.
+ */
 @Injectable()
 export class RecipesService {
+  /**
+   * Inyección de los repositorios de receta e ingrediente.
+   * 
+   * @param recipeRepository Repositorio de recetas.
+   * @param ingredientRepository Repositorio de ingredientes.
+   */
   constructor(
     @InjectRepository(Recipe)
     private readonly recipeRepository: Repository<Recipe>,
@@ -20,10 +37,18 @@ export class RecipesService {
     private readonly ingredientRepository: Repository<Ingredient>,
   ) {}
 
-  // Crear receta con validación de duplicado
+  /**
+   * Crea una nueva receta tras validar que no exista otra con el mismo nombre (ignorando mayúsculas/minúsculas).
+   * Asocia los ingredientes usando sus IDs.
+   * 
+   * @param createRecipeDto Datos para crear la receta.
+   * @returns Promesa con la receta creada.
+   * @throws ConflictException si el nombre ya existe.
+   */
   async create(createRecipeDto: CreateRecipeDto): Promise<Recipe> {
     const nombre = createRecipeDto.nombre.toLowerCase().trim();
 
+    // Validación de receta duplicada
     const existing = await this.recipeRepository
       .createQueryBuilder('recipe')
       .where('LOWER(recipe.nombre) = :nombre', { nombre })
@@ -35,10 +60,12 @@ export class RecipesService {
       );
     }
 
+    // Busca los ingredientes por sus IDs
     const ingredients = await this.ingredientRepository.findBy({
       id: In(createRecipeDto.ingredientes),
     });
 
+    // Crea y guarda la receta
     const recipe = this.recipeRepository.create({
       ...createRecipeDto,
       ingredientes: ingredients,
@@ -47,12 +74,21 @@ export class RecipesService {
     return this.recipeRepository.save(recipe);
   }
 
-  // Obtener todas las recetas con ingredientes
+  /**
+   * Obtiene todas las recetas, incluyendo sus ingredientes.
+   * 
+   * @returns Promesa con el array de recetas.
+   */
   findAll(): Promise<Recipe[]> {
     return this.recipeRepository.find({ relations: ['ingredientes'] });
   }
 
-  // Obtener una receta por ID
+  /**
+   * Busca una receta por su ID, incluyendo sus ingredientes.
+   * 
+   * @param id Identificador de la receta.
+   * @returns Promesa con la receta encontrada o null si no existe.
+   */
   findOne(id: number): Promise<Recipe | null> {
     return this.recipeRepository.findOne({
       where: { id },
@@ -60,17 +96,33 @@ export class RecipesService {
     });
   }
 
-  // Eliminar receta
+  /**
+   * Elimina una receta por su ID.
+   * 
+   * @param id Identificador de la receta a eliminar.
+   * @returns Promesa que resuelve a void.
+   */
   async remove(id: number): Promise<void> {
     await this.recipeRepository.delete(id);
   }
 
-  // Actualización con validación de duplicado
+  /**
+   * Actualiza una receta.
+   * 
+   * Permite actualizar campos simples y la relación con ingredientes,
+   * validando que no haya duplicidad de nombre.
+   * 
+   * @param id Identificador de la receta a actualizar.
+   * @param updateRecipeDto Datos de actualización.
+   * @returns Promesa con la receta actualizada.
+   * @throws NotFoundException si la receta no existe.
+   * @throws ConflictException si el nombre actualizado ya existe en otra receta.
+   */
   async update(id: number, updateRecipeDto: UpdateRecipeDto): Promise<Recipe> {
-    // 1. Buscar la receta CARGANDO RELACIONES
+    // 1. Buscar la receta incluyendo sus relaciones
     const receta = await this.recipeRepository.findOne({
       where: { id },
-      relations: ['ingredientes'], // ¡Carga ingredientes!
+      relations: ['ingredientes'],
     });
     if (!receta) throw new NotFoundException('Receta no encontrada');
 
@@ -94,7 +146,7 @@ export class RecipesService {
       }
     }
 
-    // 3. Actualizar campos simples (sin relaciones)
+    // 3. Actualizar campos simples (strings y números)
     receta.nombre = updateRecipeDto.nombre ?? receta.nombre;
     receta.dificultad = updateRecipeDto.dificultad ?? receta.dificultad;
     receta.tiempoPreparacion =
@@ -104,21 +156,34 @@ export class RecipesService {
 
     // 4. Actualizar ingredientes (relación many-to-many)
     if (updateRecipeDto.ingredientes) {
-      // Si la lista viene vacía, borra todos los ingredientes
+      // Si la lista viene vacía, elimina todos los ingredientes asociados
       if (updateRecipeDto.ingredientes.length === 0) {
         receta.ingredientes = [];
       } else {
-        // Busca los ingredientes por ID y asigna el array completo
+        // Busca los ingredientes por ID y actualiza el array
         const ingredientes = await this.ingredientRepository.findBy({
           id: In(updateRecipeDto.ingredientes),
         });
         receta.ingredientes = ingredientes;
       }
     }
-    // 5. Guardar receta (esto actualiza también la tabla intermedia)
+    // 5. Guarda la receta actualizada (incluye actualización de relaciones)
     return this.recipeRepository.save(receta);
   }
 
+  /**
+   * Devuelve recetas aplicando diferentes filtros avanzados según los parámetros recibidos.
+   * Permite filtrar por nombre o id de ingrediente, tipo, alérgeno, y otros criterios.
+   * 
+   * @param ingredienteNombre Nombre parcial del ingrediente que debe incluir la receta.
+   * @param ingredienteId ID de ingrediente que debe incluir la receta.
+   * @param sinIngrediente Nombre de ingrediente que NO debe estar presente.
+   * @param tipo Tipo de ingrediente requerido.
+   * @param sinTipo Tipo de ingrediente que NO debe estar presente.
+   * @param sinAlergeno Alérgeno que NO debe estar presente.
+   * @param almuerzoCena Valor de almuerzo/cena.
+   * @returns Promesa con el array de recetas que cumplen los filtros.
+   */
   async findAllWithFilters(
     ingredienteNombre?: string,
     ingredienteId?: number,
@@ -132,18 +197,19 @@ export class RecipesService {
       .createQueryBuilder('recipe')
       .leftJoinAndSelect('recipe.ingredientes', 'ingredient');
 
-    // Incluir recetas que contengan el ingrediente (por nombre o ID)
+    // Filtra recetas que contengan un ingrediente específico por ID
     if (ingredienteId) {
       query.andWhere('ingredient.id = :ingredienteId', { ingredienteId });
     }
 
+    // Filtra recetas que contengan ingredientes cuyo nombre incluya una cadena (insensible a mayúsculas/minúsculas)
     if (ingredienteNombre) {
       query.andWhere('LOWER(ingredient.nombre) LIKE :ingredienteNombre', {
         ingredienteNombre: `%${ingredienteNombre.toLowerCase()}%`,
       });
     }
 
-    // Excluir recetas que contengan un ingrediente concreto
+    // Excluye recetas que tengan un ingrediente concreto (por nombre)
     if (sinIngrediente) {
       query.andWhere(
         (qb) => {
@@ -160,14 +226,14 @@ export class RecipesService {
       );
     }
 
-    // Incluir recetas que tengan al menos un ingrediente de ese tipo
+    // Filtra recetas que tengan ingredientes de un tipo específico
     if (tipo) {
       query.andWhere('LOWER(ingredient.tipo) = :tipo', {
         tipo: tipo.toLowerCase(),
       });
     }
 
-    // Excluir recetas con ingredientes de cierto tipo
+    // Excluye recetas con ingredientes de cierto tipo
     if (sinTipo) {
       query.andWhere(
         (qb) => {
@@ -184,7 +250,7 @@ export class RecipesService {
       );
     }
 
-    // Excluir recetas con alérgenos
+    // Excluye recetas que tengan ingredientes con un alérgeno concreto
     if (sinAlergeno) {
       query.andWhere(
         '(ingredient.alergeno IS NULL OR LOWER(ingredient.alergeno) != :sinAlergeno)',
@@ -192,11 +258,12 @@ export class RecipesService {
       );
     }
 
-    // Filtrar por almuerzo o cena
+    // Filtra por valor de almuerzo o cena
     if (almuerzoCena) {
       query.andWhere('recipe.almuerzoCena = :almuerzoCena', { almuerzoCena });
     }
 
+    // Ejecuta la consulta y devuelve las recetas que cumplen los filtros
     return query.getMany();
   }
 }

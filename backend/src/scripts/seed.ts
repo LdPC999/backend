@@ -19,9 +19,9 @@ const AppDataSource = new DataSource({
 async function seed() {
   try {
     await AppDataSource.initialize();
-    console.log('✅ Conexión con PostgreSQL realizada correctamente.');
+    console.log('Conexión con PostgreSQL realizada correctamente.');
   } catch (err) {
-    console.error('❌ Error al conectar con la base de datos:', err);
+    console.error('Error al conectar con la base de datos:', err);
   } finally {
     await AppDataSource.destroy();
   }

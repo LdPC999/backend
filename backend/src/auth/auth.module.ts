@@ -1,3 +1,6 @@
+// auth.module.ts
+
+// Importamos los módulos, servicios y controladores necesarios de NestJS y la propia aplicación.
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
@@ -6,16 +9,26 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 
+/**
+ * Módulo de autenticación.
+ *
+ * Este módulo centraliza todos los componentes necesarios para gestionar la autenticación
+ * y autorización de usuarios en la aplicación, incluyendo el uso de JWT y Passport.
+ */
 @Module({
+  // imports: Otros módulos necesarios para que funcione el módulo de autenticación.
   imports: [
-    UsersModule,
-    PassportModule,
+    UsersModule,     // Módulo de usuarios, necesario para validar y registrar usuarios.
+    PassportModule,  // Módulo de Passport, facilita la integración de estrategias de autenticación.
     JwtModule.register({
-      secret: 'JWT_SECRET_KEY', 
-      signOptions: { expiresIn: '1h' },
+      // Configuración básica para la firma de tokens JWT.
+      secret: 'JWT_SECRET_KEY', // Clave secreta para firmar los JWT (en producción debe ir en variable de entorno).
+      signOptions: { expiresIn: '1h' }, // El token expira en 1 hora.
     }),
   ],
+  // providers: Servicios y estrategias que se inyectarán en el módulo.
   providers: [AuthService, JwtStrategy],
+  // controllers: Controladores asociados a este módulo.
   controllers: [AuthController],
 })
 export class AuthModule {}
