@@ -5,8 +5,7 @@ import "../styles/Recetas.css";
 
 /**
  * Formulario de gestión de recetas para admin (crear o editar).
- * Modo crear: ruta /recetas/crear
- * Modo editar: ruta /recetas/editar/:id
+ * Soporta subida de imagen a Cloudinary vía backend.
  */
 export default function GestionRecetas({ modo }) {
   const params = useParams();
@@ -14,7 +13,9 @@ export default function GestionRecetas({ modo }) {
   const [nombre, setNombre] = useState("");
   const [dificultad, setDificultad] = useState("fácil");
   const [tiempoPreparacion, setTiempoPreparacion] = useState(30);
-  const [imagen, setImagen] = useState("");
+  const [imagen, setImagen] = useState(""); // URL de la imagen
+  const [imagenFile, setImagenFile] = useState(null); // Archivo seleccionado
+  const [preview, setPreview] = useState(""); // Preview de la imagen
   const [ingredientes, setIngredientes] = useState([]);
   const [ingredientesDisponibles, setIngredientesDisponibles] = useState([]);
   const [error, setError] = useState("");
@@ -29,7 +30,7 @@ export default function GestionRecetas({ modo }) {
     }
   }, [navigate]);
 
-  // Carga los ingredientes disponibles desde el backend
+  // Carga ingredientes disponibles desde backend
   useEffect(() => {
     fetch("http://localhost:3000/ingredients", {
       headers: {
@@ -57,7 +58,7 @@ export default function GestionRecetas({ modo }) {
           setDificultad(data.dificultad || "fácil");
           setTiempoPreparacion(data.tiempoPreparacion || 30);
           setImagen(data.imagen || "");
-          // Guarda solo los IDs de los ingredientes seleccionados
+          setPreview(data.imagen || "");
           setIngredientes(data.ingredientes?.map((i) => i.id) || []);
         })
         .catch(() => {
@@ -74,9 +75,24 @@ export default function GestionRecetas({ modo }) {
     );
   };
 
-  // Maneja el cambio en el campo de la URL de la imagen
+  // Maneja el cambio en el campo de la URL de la imagen (opcional)
   const handleImagenChange = (e) => {
     setImagen(e.target.value);
+    setPreview(e.target.value); // Preview instantánea si es una URL
+    setImagenFile(null);        // Si escribe URL, resetea el archivo
+  };
+
+  // Maneja la selección de un archivo de imagen
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setImagenFile(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setPreview(reader.result);
+      reader.readAsDataURL(file);
+    } else {
+      setPreview(imagen || "");
+    }
   };
 
   // Envía el formulario: POST para crear, PATCH para editar
@@ -84,6 +100,28 @@ export default function GestionRecetas({ modo }) {
     e.preventDefault();
     setError("");
     setOk(false);
+
+    let imageUrl = imagen; // Por defecto, la URL pegada o la de la receta editada
+
+    // Si se ha seleccionado un archivo, primero súbelo a Cloudinary
+    if (imagenFile) {
+      const formData = new FormData();
+      formData.append("file", imagenFile);
+      try {
+        const resImg = await fetch("http://localhost:3000/upload/receta", {
+          method: "POST",
+          body: formData,
+        });
+        const dataImg = await resImg.json();
+        if (!resImg.ok) throw new Error("Error al subir la imagen");
+        imageUrl = dataImg.url; // URL de Cloudinary
+      } catch (err) {
+        setError("Error al subir la imagen: " + err.message);
+        return;
+      }
+    }
+
+    // Ahora guarda la receta normalmente, usando imageUrl
     try {
       const url =
         modo === "editar"
@@ -100,7 +138,7 @@ export default function GestionRecetas({ modo }) {
           nombre,
           dificultad,
           tiempoPreparacion: Number(tiempoPreparacion),
-          imagen,
+          imagen: imageUrl,
           ingredientes,
         }),
       });
@@ -117,7 +155,6 @@ export default function GestionRecetas({ modo }) {
 
   /**
    * Agrupa los ingredientes disponibles por tipo.
-   * Devuelve un objeto cuyas claves son los tipos y el valor es un array de ingredientes de ese tipo.
    */
   const ingredientesPorTipo = useMemo(() => {
     const grupos = {};
@@ -132,7 +169,6 @@ export default function GestionRecetas({ modo }) {
 
   /**
    * Crea un array de los tipos de ingredientes ordenados alfabéticamente.
-   * Esto se usa para mostrar el desplegable de tipos en orden.
    */
   const tiposOrdenados = useMemo(
     () =>
@@ -180,10 +216,28 @@ export default function GestionRecetas({ modo }) {
         </div>
         {/* Campo imagen */}
         <div>
-          <label>URL de imagen (opcional):</label>
-          <input value={imagen} onChange={handleImagenChange} />
+          <label>Imagen de la receta:</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+          {/* Opción: pegar URL manualmente */}
+          <input
+            type="text"
+            placeholder="O pega la URL de una imagen (opcional)"
+            value={imagen}
+            onChange={handleImagenChange}
+            style={{ marginTop: "0.5em" }}
+          />
+          {/* Mostrar la preview si hay */}
+          {preview && (
+            <div className="imagen-preview" style={{ marginTop: "0.8em" }}>
+              <img src={preview} alt="Preview" style={{ maxWidth: 200, borderRadius: 8 }} />
+            </div>
+          )}
         </div>
-        {/* Desplegable de tipos de ingredientes, ordenado alfabéticamente */}
+        {/* Desplegable de tipos de ingredientes */}
         <div style={{ width: "100%" }}>
           <label>Selecciona tipo de ingrediente:</label>
           <div className="select-wrapper">
@@ -194,7 +248,6 @@ export default function GestionRecetas({ modo }) {
               data-dropup="false"
             >
               <option value="">Selecciona un tipo</option>
-              {/* Tipos ordenados alfabéticamente */}
               {tiposOrdenados.map((tipo) => (
                 <option key={tipo} value={tipo}>
                   {tipo}
@@ -202,13 +255,13 @@ export default function GestionRecetas({ modo }) {
               ))}
             </select>
           </div>
-          {/* Checkboxes de ingredientes, ordenados alfabéticamente */}
+          {/* Checkboxes de ingredientes */}
           {tipoSeleccionado && tipoSeleccionado !== "" && (
             <div className="ingredientes-checkboxes">
               <div className="grupo-ingredientes">
                 <h4>{tipoSeleccionado}</h4>
                 {ingredientesPorTipo[tipoSeleccionado]
-                  ?.slice() // Crea una copia para no mutar el original
+                  ?.slice()
                   .sort((a, b) =>
                     a.nombre.localeCompare(b.nombre, "es", {
                       sensitivity: "base",

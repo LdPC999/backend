@@ -75,12 +75,12 @@
 
 .receta-imagen {
   width: 100%;
-  max-width: 300px;
-  height: 200px;
-  border-radius: 12px;
+  max-width: 400px;
+  height: 350px;
+  border-radius: 18px;
   overflow: hidden;
   margin: 0 auto 1.5em auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 .receta-imagen img {
   width: 100%;

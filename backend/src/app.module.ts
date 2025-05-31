@@ -16,6 +16,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 // Importamos el controlador de alérgenos.
 import { AlergenosController } from './alergenos/alergenos.controller';
+// Importamos el controlador de imágenes
+import { UploadController } from './upload/upload.controller';
 
 /**
  * Módulo raíz de la aplicación.
@@ -50,6 +52,7 @@ import { AlergenosController } from './alergenos/alergenos.controller';
   controllers: [
     AppController,
     AlergenosController,
+    UploadController,
   ],
   // Proveedores (servicios) principales.
   providers: [
