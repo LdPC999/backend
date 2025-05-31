@@ -17,7 +17,7 @@ import { UpdateRecipeDto } from './dto/update-recipe.dto';
 
 /**
  * Servicio de recetas.
- * 
+ *
  * Contiene toda la lógica de negocio relacionada con la gestión de recetas,
  * incluyendo creación, consulta, actualización, eliminación y filtrado avanzado.
  */
@@ -25,7 +25,7 @@ import { UpdateRecipeDto } from './dto/update-recipe.dto';
 export class RecipesService {
   /**
    * Inyección de los repositorios de receta e ingrediente.
-   * 
+   *
    * @param recipeRepository Repositorio de recetas.
    * @param ingredientRepository Repositorio de ingredientes.
    */
@@ -40,7 +40,7 @@ export class RecipesService {
   /**
    * Crea una nueva receta tras validar que no exista otra con el mismo nombre (ignorando mayúsculas/minúsculas).
    * Asocia los ingredientes usando sus IDs.
-   * 
+   *
    * @param createRecipeDto Datos para crear la receta.
    * @returns Promesa con la receta creada.
    * @throws ConflictException si el nombre ya existe.
@@ -76,7 +76,7 @@ export class RecipesService {
 
   /**
    * Obtiene todas las recetas, incluyendo sus ingredientes.
-   * 
+   *
    * @returns Promesa con el array de recetas.
    */
   findAll(): Promise<Recipe[]> {
@@ -85,7 +85,7 @@ export class RecipesService {
 
   /**
    * Busca una receta por su ID, incluyendo sus ingredientes.
-   * 
+   *
    * @param id Identificador de la receta.
    * @returns Promesa con la receta encontrada o null si no existe.
    */
@@ -98,7 +98,7 @@ export class RecipesService {
 
   /**
    * Elimina una receta por su ID.
-   * 
+   *
    * @param id Identificador de la receta a eliminar.
    * @returns Promesa que resuelve a void.
    */
@@ -108,10 +108,10 @@ export class RecipesService {
 
   /**
    * Actualiza una receta.
-   * 
+   *
    * Permite actualizar campos simples y la relación con ingredientes,
    * validando que no haya duplicidad de nombre.
-   * 
+   *
    * @param id Identificador de la receta a actualizar.
    * @param updateRecipeDto Datos de actualización.
    * @returns Promesa con la receta actualizada.
@@ -174,7 +174,7 @@ export class RecipesService {
   /**
    * Devuelve recetas aplicando diferentes filtros avanzados según los parámetros recibidos.
    * Permite filtrar por nombre o id de ingrediente, tipo, alérgeno, y otros criterios.
-   * 
+   *
    * @param ingredienteNombre Nombre parcial del ingrediente que debe incluir la receta.
    * @param ingredienteId ID de ingrediente que debe incluir la receta.
    * @param sinIngrediente Nombre de ingrediente que NO debe estar presente.
@@ -190,7 +190,7 @@ export class RecipesService {
     sinIngrediente?: string,
     tipo?: string,
     sinTipo?: string,
-    sinAlergeno?: string,
+    sinAlergeno?: string[],
     almuerzoCena?: string,
   ): Promise<Recipe[]> {
     const query = this.recipeRepository
@@ -251,10 +251,27 @@ export class RecipesService {
     }
 
     // Excluye recetas que tengan ingredientes con un alérgeno concreto
-    if (sinAlergeno) {
+    if (sinAlergeno && Array.isArray(sinAlergeno) && sinAlergeno.length > 0) {
+      // Normaliza todos a minúsculas
+      const alergenos = sinAlergeno.map((a) => a.toLowerCase());
+
       query.andWhere(
-        '(ingredient.alergeno IS NULL OR LOWER(ingredient.alergeno) != :sinAlergeno)',
-        { sinAlergeno: sinAlergeno.toLowerCase() },
+        (qb) => {
+          const subQuery = qb
+            .subQuery()
+            .select('ri.recipeId')
+            .from('recipe_ingredientes_ingredients', 'ri')
+            .innerJoin('ingredients', 'i', 'ri."ingredientsId" = i.id')
+            .where(
+              `EXISTS (
+                SELECT 1 FROM unnest(i.alergeno) AS alg
+                WHERE LOWER(alg) = ANY(:sinAlergenos)
+              )`,
+            )
+            .getQuery();
+          return `recipe.id NOT IN ${subQuery}`;
+        },
+        { sinAlergenos: alergenos },
       );
     }
 

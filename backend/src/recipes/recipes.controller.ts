@@ -20,7 +20,7 @@ import { UpdateRecipeDto } from './dto/update-recipe.dto';
 
 /**
  * Controlador de recetas.
- * 
+ *
  * Expone rutas RESTful para gestionar recetas en la aplicación.
  * Permite crear, consultar, actualizar y eliminar recetas,
  * así como aplicar filtros avanzados al listar recetas.
@@ -29,17 +29,17 @@ import { UpdateRecipeDto } from './dto/update-recipe.dto';
 export class RecipesController {
   /**
    * Inyecta el servicio de recetas.
-   * 
+   *
    * @param recipesService Servicio que contiene la lógica de negocio de recetas.
    */
   constructor(private readonly recipesService: RecipesService) {}
 
   /**
    * Crea una nueva receta.
-   * 
+   *
    * Ruta: POST /recipes
    * Recibe los datos validados a través del DTO de creación.
-   * 
+   *
    * @param createRecipeDto Datos para crear la receta.
    * @returns Promesa con la receta creada.
    */
@@ -50,10 +50,10 @@ export class RecipesController {
 
   /**
    * Obtiene la lista de recetas, con posibilidad de aplicar filtros por query params.
-   * 
+   *
    * Ruta: GET /recipes
    * Se pueden aplicar filtros por nombre de ingrediente, id de ingrediente, tipo, alérgeno, etc.
-   * 
+   *
    * @param ingredienteNombre Nombre de ingrediente (filtro).
    * @param ingredienteId ID de ingrediente (filtro).
    * @param sinIngrediente Ingrediente que NO debe contener la receta.
@@ -70,25 +70,32 @@ export class RecipesController {
     @Query('sinIngrediente') sinIngrediente?: string,
     @Query('tipo') tipo?: string,
     @Query('sinTipo') sinTipo?: string,
-    @Query('sinAlergeno') sinAlergeno?: string,
+    @Query('sinAlergeno') sinAlergeno?: string | string[],
     @Query('almuerzoCena') almuerzoCena?: string,
   ) {
+    // Normalizamos sinAlergeno para que sea siempre un array, aunque solo venga un parámetro
+    const alergenos = Array.isArray(sinAlergeno)
+      ? sinAlergeno
+      : sinAlergeno
+        ? [sinAlergeno]
+        : [];
+
     return this.recipesService.findAllWithFilters(
       ingredienteNombre,
       ingredienteId,
       sinIngrediente,
       tipo,
       sinTipo,
-      sinAlergeno,
+      alergenos,
       almuerzoCena,
     );
   }
 
   /**
    * Obtiene una receta específica por su id.
-   * 
+   *
    * Ruta: GET /recipes/:id
-   * 
+   *
    * @param id Identificador numérico de la receta.
    * @returns Promesa con la receta encontrada o null si no existe.
    */
@@ -99,10 +106,10 @@ export class RecipesController {
 
   /**
    * Actualiza parcialmente una receta existente.
-   * 
+   *
    * Ruta: PATCH /recipes/:id
    * Recibe los datos validados a través del DTO de actualización.
-   * 
+   *
    * @param id Identificador numérico de la receta.
    * @param updateRecipeDto Datos a actualizar (parciales).
    * @returns Promesa con la receta actualizada.
@@ -117,9 +124,9 @@ export class RecipesController {
 
   /**
    * Elimina una receta por su id.
-   * 
+   *
    * Ruta: DELETE /recipes/:id
-   * 
+   *
    * @param id Identificador numérico de la receta.
    * @returns Promesa que resuelve a void.
    */

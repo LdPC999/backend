@@ -9,7 +9,7 @@ import { AppModule } from './app.module';
 
 /**
  * Función principal de arranque de la aplicación.
- * 
+ *
  * Crea la instancia de la app NestJS, habilita CORS para permitir peticiones desde el frontend,
  * y levanta el servidor en el puerto y dirección especificados.
  */
@@ -19,10 +19,7 @@ async function bootstrap() {
 
   // Configura CORS para permitir solicitudes del frontend en local o en red local.
   app.enableCors({
-    origin: [
-      'http://localhost:5173',      // Frontend local (Vite, por ejemplo)
-      'http://192.168.1.134:5173', // Frontend en otra máquina de la red local
-    ],
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true, // Permite envío de cookies/autenticación entre frontend y backend

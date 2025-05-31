@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/Auth.css";
 import LogoAnimado from "../components/LogoAnimado"; // Importamos el logo
 
-const API_URL = "http://192.168.1.134:3000/auth";
+const API_URL = "http://localhost:3000/auth";
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
