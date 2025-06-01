@@ -1,10 +1,10 @@
 .planificador-resultados {
-  max-width: 750px;
+  max-width: 1100px;
   margin: 3rem auto 2.5rem auto;
   background: #fff;
   border-radius: 20px;
-  box-shadow: 0 4px 24px rgba(44, 56, 82, 0.10);
-  padding: 2.5rem 2.3rem 2.3rem 2.3rem;
+  box-shadow: 0 4px 24px rgba(44, 56, 82, 0.1);
+  padding: 3.5rem 3.3rem 3.3rem 3.3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,8 +21,8 @@
 .planificador-semana {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2.2rem 2.7rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem 3rem;
   margin-bottom: 2.5rem;
 }
 
@@ -30,13 +30,14 @@
   background: #f6f9fb;
   border-radius: 13px;
   box-shadow: 0 2px 8px rgba(44, 56, 82, 0.07);
-  padding: 1.6rem 1.2rem 1.2rem 1.2rem;
-  min-width: 230px;
-  min-height: 160px;
+  padding: 2.2rem 1.6rem 1.3rem 1.6rem;
+  min-width: 280px;
+  min-height: 210px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 1.15rem;
+  font-size: 1.19em;
 }
 
 .planificador-dia h3 {
@@ -49,18 +50,19 @@
 .tarjeta-receta {
   background: #eaf2ff;
   border-radius: 8px;
-  padding: 0.5rem 1rem;
+  padding: 0.7rem 1.3rem;
   margin-bottom: 0.3rem;
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
+  font-size: 1.18em;
 }
 
 .tarjeta-receta.comida {
   border-left: 5px solid #0099ee;
 }
 .tarjeta-receta.cena {
-  border-left: 5px solid #CDB380;
+  border-left: 5px solid #cdb380;
 }
 
 .tarjeta-receta strong {
@@ -92,6 +94,102 @@
   background: #247aff;
 }
 
+/* Popup modal para receta */
+.modal-fondo {
+  position: fixed;
+  z-index: 90;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(34, 46, 71, 0.28);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  animation: fadeIn 0.25s;
+  padding: 200px 0;
+}
+
+.modal-contenido {
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  max-width: 950px;
+  width: 96vw;
+  overflow-y: auto;
+  position: relative;
+  animation: scaleIn 0.25s;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.modal-contenido .receta-detalle {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 6px 32px rgba(44,56,82,0.15);
+  padding: 2em 2.2em 2em 2.2em;
+  width: 100%;
+  max-width: 900px;     
+  min-width: 320px;
+  margin: 0 auto;
+}
+
+.receta-detalle .receta-imagen {
+  width: 100%;
+  max-width: 420px;
+  height: 340px;
+  border-radius: 18px;
+  overflow: hidden;
+  margin: 0 auto 2em auto;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.receta-detalle .receta-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* TITULAR DE LA RECETA */
+.receta-detalle .receta-info h3 {
+  font-size: 2.4em;
+  font-weight: 700;
+  margin-bottom: 0.6em;
+  color: var(--color-secondary, #033649);
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Botón cerrar */
+.modal-cerrar {
+  position: absolute;
+  right: 1.3em;
+  top: 1.1em;
+  background: none;
+  border: none;
+  font-size: 2.2em;
+  color: #024;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.15s;
+}
+.modal-cerrar:hover { color: #d42332; }
+
+
 /* Responsive */
 @media (max-width: 800px) {
   .planificador-semana {
@@ -106,5 +204,11 @@
     width: 98vw;
     max-width: 430px;
     align-items: flex-start;
+  }
+
+  .modal-contenido, .modal-contenido .receta-detalle {
+    max-width: 97vw;
+    min-width: 0;
+    padding: 1em;
   }
 }
