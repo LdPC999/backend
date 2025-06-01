@@ -26,19 +26,21 @@ export class AlergenosController {
   findAll() {
     // Array con los nombres de los alérgenos más comunes
     return [
-      'Frutos secos',
+      'Cacahuetes',
       'Apio',
       'Pescado',
       'Moluscos', 
       'Lácteos',
-      'Carne roja',
       'Sulfitos', 
       'Gluten',
-      'Marisco',
+      'Crustáceos',
       'Huevo',
       'Mostaza',
       'Soja', 
-      'Sésamo'
+      'Sésamo',
+      'Frutos de cáscara',
+      'Altramuces',
+
     ];
   }
 }
