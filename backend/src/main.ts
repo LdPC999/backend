@@ -19,7 +19,17 @@ async function bootstrap() {
 
   // Configura CORS para permitir solicitudes del frontend en local o en red local.
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      // Permite siempre si coincide quitando barra final
+      const expected = (
+        process.env.FRONTEND_URL || 'http://localhost:5173'
+      ).replace(/\/$/, '');
+      if (!origin || origin.replace(/\/$/, '') === expected) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true, // Permite envío de cookies/autenticación entre frontend y backend
