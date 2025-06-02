@@ -21,10 +21,16 @@ async function bootstrap() {
   app.enableCors({
     origin: (origin, callback) => {
       // Permite siempre si coincide quitando barra final
-      const expected = (
-        process.env.FRONTEND_URL || 'http://localhost:5173'
-      ).replace(/\/$/, '');
-      if (!origin || origin.replace(/\/$/, '') === expected) {
+      const allowedOrigins = [
+        process.env.FRONTEND_URL, // Dominio Vercel en producción
+        'http://localhost:5173', // Localhost
+        'http://192.168.1.143:5173', // Tu IP local
+      ]
+        .filter(Boolean) // Filtra posibles undefined
+        .map((url) => url?.replace(/\/$/, '')); // Quita barra final
+
+      // Permite si no hay origen (como curl o Postman), o si el origen está permitido
+      if (!origin || allowedOrigins.includes(origin.replace(/\/$/, ''))) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));

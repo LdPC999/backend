@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Auth.css";
 import LogoAnimado from "../components/LogoAnimado"; // Importamos el logo
-
+import AuthForm from "../components/AuthForm";
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export default function Auth() {
@@ -60,7 +60,7 @@ export default function Auth() {
     const email = form.email.value;
     const password = form.password.value;
     try {
-      const res = await fetch(`${API_URL}/auth/login`, {
+      const res = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -87,7 +87,7 @@ export default function Auth() {
     const email = form.email.value;
     const password = form.password.value;
     try {
-      const res = await fetch(`${API_URL}/auth/register`, {
+      const res = await fetch(`${API_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nombre, apellidos, email, password }),
@@ -145,6 +145,20 @@ export default function Auth() {
                   <div className="form-element form-stack">
                     <label>Contraseña</label>
                     <input type="password" name="password" required />
+                  </div>
+                  <div className="form-element form-stack">
+                    <div className="toggle-switch">
+                      <input
+                        type="checkbox"
+                        name="terms"
+                        id="terms-desktop"
+                        required
+                      />
+                      <span className="slider"></span>
+                      <label className="toggle-label" htmlFor="terms-desktop">
+                        Acepto los términos y condiciones
+                      </label>
+                    </div>
                   </div>
                   <div className="form-element form-submit">
                     <button className="signup" type="submit">
@@ -230,6 +244,22 @@ export default function Auth() {
                 <label>Contraseña</label>
                 <input type="password" name="password" required />
               </div>
+              {!isLogin && (
+                <div className="form-element form-stack">
+                  <div className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      name="terms"
+                      id="terms-mobile"
+                      required
+                    />
+                    <span className="slider"></span>
+                    <label className="toggle-label" htmlFor="terms-mobile">
+                      Acepto los términos y condiciones
+                    </label>
+                  </div>
+                </div>
+              )}
               <div className="form-element form-submit">
                 <button className={isLogin ? "login" : "signup"} type="submit">
                   {isLogin ? "Log In" : "Registro"}

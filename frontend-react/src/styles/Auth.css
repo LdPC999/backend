@@ -163,43 +163,66 @@ input {
 }
 
 /* === CHECKBOX === */
-.checkbox {
-  background-color: #e3e3e3;
-  border: 1px solid #e3e3e3;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0 -15px 10px -12px rgba(0, 0, 0, 0.05);
-  padding: 12px;
-  border-radius: 4px;
-  display: inline-block;
-  position: relative;
-}
-
-.checkbox:focus, .checkbox:checked:focus,
-.checkbox:active, .checkbox:checked:active {
-  border-color: var(--color-secondary);
-}
-
-.checkbox:checked {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0 -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
-}
-
-.checkbox:checked:after {
-  content: "✓";
-  color: var(--color-secondary);
-  font-size: 1.4em;
-  font-weight: 900;
-  position: absolute;
-  top: -4px;
-  left: 4px;
-}
-
-.form-checkbox {
+.checkbox-container {
   display: flex;
   align-items: center;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
 }
-.form-checkbox label {
-  margin: 0 6px 0;
-  font-size: 0.72em;
+
+.checkbox-container input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-secondary, #033649); /* Color personalizado */
+  margin-right: 7px;
+  cursor: pointer;
 }
+
+.checkbox-text {
+  font-size: 0.98em;
+  color: #333;
+}
+.left .checkbox-text { color: #CDB380; }
+.right .checkbox-text { color: #1a314d; }
+
+.checkbox-text .link {
+  color: #247aff;
+  text-decoration: underline;
+  cursor: pointer;
+  margin: 0 2px;
+}
+.left .checkbox-text .link { color: #CDB380; }
+.right .checkbox-text .link { color: #247aff; }
+
+/* Para que no pueda hacer tab (accesibilidad) */
+.checkbox-text .link:focus {
+  outline: none;
+}
+
+/* =========== LINK OLVIDÉ CONTRASEÑA =========== */
+.form-content a {
+  font-size: 0.98em;
+}
+
+.form-content a.link {
+  color: #247aff;
+  text-decoration: underline;
+}
+
+.form-content a.link:hover {
+  color: #033649;
+}
+
+.form-content .forgot-link {
+  display: block;
+  margin-top: 1em;
+  text-align: right;
+  color: #247aff;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.98em;
+}
+
 
 /* === BOTONES === */
 button {
@@ -243,6 +266,75 @@ button:hover.login {
   background: #036564; /* Un tono más oscuro del primario */
 }
 
+/* Estilos para el toggle switch */
+.toggle-switch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.toggle-label {
+  padding-left: 50px;
+  font-size: 1em;
+  color: inherit;
+  cursor: pointer;
+  user-select: none;
+  width: 100%;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+  pointer-events: none;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.toggle-switch input:checked + .slider {
+  background-color: var(--color-primary);
+}
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Añadimos esto para mejorar la interactividad */
+.toggle-switch label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+}
+
 /* === RESPONSIVE === */
 @media only screen and (max-width: 768px) {
   #back,
@@ -279,5 +371,8 @@ button:hover.login {
 
   .app-title-auth{
     display: none;
+  }
+  .checkbox-container {
+    font-size: 0.96em;
   }
 }
