@@ -60,7 +60,7 @@ export default function Auth() {
     const email = form.email.value;
     const password = form.password.value;
     try {
-      const res = await fetch(`${API_URL}/login`, {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -87,7 +87,7 @@ export default function Auth() {
     const email = form.email.value;
     const password = form.password.value;
     try {
-      const res = await fetch(`${API_URL}/register`, {
+      const res = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nombre, apellidos, email, password }),
