@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserRole } from "../utils/auth";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"; // Importa los corazones
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"; 
 import "../styles/Recetas.css";
 
 export default function Recetas() {
