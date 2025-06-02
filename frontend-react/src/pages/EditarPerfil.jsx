@@ -25,12 +25,13 @@ export default function EditarPerfil() {
   const [error, setError] = useState("");
   const [ok, setOk] = useState("");
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // Cargar usuario y alérgenos disponibles
   useEffect(() => {
     async function fetchPerfil() {
       try {
-        const res = await fetch("http://localhost:3000/users/me", {
+        const res = await fetch(`${API_URL}/users/me`, {
           headers: {
             Authorization: "Bearer " + getToken(),
             "Content-Type": "application/json",
@@ -49,7 +50,7 @@ export default function EditarPerfil() {
     }
     async function fetchAlergenos() {
       try {
-        const res = await fetch("http://localhost:3000/alergenos");
+        const res = await fetch(`${API_URL}/alergenos`);
         const data = await res.json();
         setAlergenosDisponibles(data);
       } catch {
@@ -81,7 +82,7 @@ export default function EditarPerfil() {
     try {
       const body = { nombre, apellidos, alergenos };
       if (password) body.password = password;
-      const res = await fetch(`http://localhost:3000/users/${usuario.id}`, {
+      const res = await fetch(`${API_URL}/users/${usuario.id}`, {
         method: "PATCH",
         headers: {
           Authorization: "Bearer " + getToken(),

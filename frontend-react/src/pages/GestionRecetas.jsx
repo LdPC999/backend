@@ -22,6 +22,7 @@ export default function GestionRecetas({ modo }) {
   const [ok, setOk] = useState(false);
   const [tipoSeleccionado, setTipoSeleccionado] = useState("");
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // Solo permite acceso si es admin
   useEffect(() => {
@@ -32,7 +33,7 @@ export default function GestionRecetas({ modo }) {
 
   // Carga ingredientes disponibles desde backend
   useEffect(() => {
-    fetch("http://localhost:3000/ingredients", {
+    fetch(`${API_URL}/ingredients`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
         "Content-Type": "application/json",
@@ -46,7 +47,7 @@ export default function GestionRecetas({ modo }) {
   // Si estamos en modo editar, carga la receta a editar
   useEffect(() => {
     if (modo === "editar" && editingId) {
-      fetch(`http://localhost:3000/recipes/${editingId}`, {
+      fetch(`${API_URL}/recipes/${editingId}`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
           "Content-Type": "application/json",
@@ -108,7 +109,7 @@ export default function GestionRecetas({ modo }) {
       const formData = new FormData();
       formData.append("file", imagenFile);
       try {
-        const resImg = await fetch("http://localhost:3000/upload/receta", {
+        const resImg = await fetch(`${API_URL}/upload/receta`, {
           method: "POST",
           body: formData,
         });
@@ -125,8 +126,8 @@ export default function GestionRecetas({ modo }) {
     try {
       const url =
         modo === "editar"
-          ? `http://localhost:3000/recipes/${editingId}`
-          : "http://localhost:3000/recipes";
+          ? `${API_URL}/recipes/${editingId}`
+          : `${API_URL}/recipes`;
       const method = modo === "editar" ? "PATCH" : "POST";
       const res = await fetch(url, {
         method,

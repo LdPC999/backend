@@ -17,12 +17,12 @@ export default function Perfil() {
   const [adminOk, setAdminOk] = useState("");
   const navigate = useNavigate();
   const rol = getUserRole();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // Al montar, pide los datos del usuario y favoritos
   useEffect(() => {
     async function fetchPerfil() {
       try {
-        const API_URL = import.meta.env.VITE_API_URL;
         const res = await fetch(`${API_URL}/users/me`, {
           headers: {
             Authorization: "Bearer " + getToken(),
@@ -116,12 +116,12 @@ export default function Perfil() {
               <strong>Email:</strong> {usuario.email || "-"}
             </div>
             <div>
-              <strong>Rol:</strong> {rol === "admin" ? "Administrador" : "Usuario"}
+              <strong>Rol:</strong>{" "}
+              {rol === "admin" ? "Administrador" : "Usuario"}
             </div>
             {usuario.alergenos && usuario.alergenos.length > 0 && (
               <div>
-                <strong>Alérgenos:</strong>{" "}
-                {usuario.alergenos.join(", ")}
+                <strong>Alérgenos:</strong> {usuario.alergenos.join(", ")}
               </div>
             )}
           </div>
@@ -166,20 +166,37 @@ export default function Perfil() {
           {/* FAVORITOS */}
           <div className="perfil-favoritos-bloque">
             <h3 className="perfil-favoritos-titulo">
-              <AiFillHeart color="#d42332" size={25} style={{verticalAlign:"-3px", marginRight:"8px"}} />
+              <AiFillHeart
+                color="#d42332"
+                size={25}
+                style={{ verticalAlign: "-3px", marginRight: "8px" }}
+              />
               Mis recetas favoritas
             </h3>
             {favLoading ? (
-              <div style={{ textAlign: "center", padding: "0.7em" }}>Cargando favoritos...</div>
+              <div style={{ textAlign: "center", padding: "0.7em" }}>
+                Cargando favoritos...
+              </div>
             ) : favoritos.length === 0 ? (
-              <div style={{ color: "#444", padding: "1em 0 1.2em 0", textAlign:"center", fontSize:"1.09em" }}>
+              <div
+                style={{
+                  color: "#444",
+                  padding: "1em 0 1.2em 0",
+                  textAlign: "center",
+                  fontSize: "1.09em",
+                }}
+              >
                 No tienes recetas favoritas marcadas aún.
               </div>
             ) : (
               <ul className="perfil-favoritos-lista">
-                {favoritos.map(receta => (
+                {favoritos.map((receta) => (
                   <li key={receta.id} className="perfil-favorito-item">
-                    <AiFillHeart color="#d42332" size={21} style={{marginRight:"6px"}} />
+                    <AiFillHeart
+                      color="#d42332"
+                      size={21}
+                      style={{ marginRight: "6px" }}
+                    />
                     <span>{receta.nombre}</span>
                   </li>
                 ))}
