@@ -26,7 +26,7 @@ async function bootstrap() {
   });
 
   // Inicia el servidor en el puerto 3000 y en todas las interfaces de red disponibles.
-  await app.listen(3000, '0.0.0.0');
+  await app.listen(process.env.PORT || 3000);
 }
 
 // Ejecuta la función de arranque.
