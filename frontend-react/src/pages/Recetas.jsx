@@ -14,12 +14,13 @@ export default function Recetas() {
   const navigate = useNavigate();
 
   const userRole = getUserRole();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // Carga recetas
   useEffect(() => {
     async function fetchRecetas() {
       try {
-        const res = await fetch("http://localhost:3000/recipes", {
+        const res = await fetch(`${API_URL}/recipes`, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
             "Content-Type": "application/json",
@@ -41,7 +42,7 @@ export default function Recetas() {
   useEffect(() => {
     async function fetchFavoritos() {
       try {
-        const res = await fetch("http://localhost:3000/users/favoritos/me", {
+        const res = await fetch(`${API_URL}/users/favoritos/me`, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
@@ -85,7 +86,7 @@ export default function Recetas() {
     try {
       if (favoritos.includes(recetaId)) {
         // Quitar favorito
-        await fetch(`http://localhost:3000/users/favoritos/${recetaId}`, {
+        await fetch(`${API_URL}/users/favoritos/${recetaId}`, {
           method: "DELETE",
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -94,7 +95,7 @@ export default function Recetas() {
         setFavoritos(favoritos.filter(favId => favId !== recetaId));
       } else {
         // Añadir favorito
-        await fetch(`http://localhost:3000/users/favoritos/${recetaId}`, {
+        await fetch(`${API_URL}/users/favoritos/${recetaId}`, {
           method: "POST",
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),

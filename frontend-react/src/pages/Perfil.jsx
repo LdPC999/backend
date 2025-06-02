@@ -22,7 +22,8 @@ export default function Perfil() {
   useEffect(() => {
     async function fetchPerfil() {
       try {
-        const res = await fetch("http://localhost:3000/users/me", {
+        const API_URL = import.meta.env.VITE_API_URL;
+        const res = await fetch(`${API_URL}/users/me`, {
           headers: {
             Authorization: "Bearer " + getToken(),
             "Content-Type": "application/json",
@@ -45,7 +46,8 @@ export default function Perfil() {
     async function fetchFavoritos() {
       setFavLoading(true);
       try {
-        const res = await fetch("http://localhost:3000/users/favoritos/me", {
+        const API_URL = import.meta.env.VITE_API_URL;
+        const res = await fetch(`${API_URL}/users/favoritos/me`, {
           headers: {
             Authorization: "Bearer " + getToken(),
             "Content-Type": "application/json",
@@ -74,7 +76,8 @@ export default function Perfil() {
     setAdminError("");
     setAdminOk("");
     try {
-      const res = await fetch("http://localhost:3000/users/admin", {
+      const API_URL = import.meta.env.VITE_API_URL;
+      const res = await fetch(`${API_URL}/users/admin`, {
         method: "PATCH",
         headers: {
           Authorization: "Bearer " + getToken(),

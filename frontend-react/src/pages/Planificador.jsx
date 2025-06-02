@@ -12,8 +12,9 @@ export default function Planificador() {
   const navigate = useNavigate();
 
   // Carga la lista de alérgenos (no protegida, puede ir sin token)
+  const API_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
-    fetch("http://localhost:3000/alergenos")
+    fetch(`${API_URL}/alergenos`)
       .then((res) => res.json())
       .then((data) => setAlergenosDisponibles(data))
       .catch(() => setAlergenosDisponibles([]));
@@ -48,7 +49,7 @@ export default function Planificador() {
 
       // Fetch para comidas (protegido, añade token en Authorization)
       if (tipoComida === "A" || tipoComida === "ambos") {
-        const urlComida = `http://localhost:3000/recipes?almuerzoCena=A${
+        const urlComida = `${API_URL}/recipes?almuerzoCena=A${
           alergenoQuery ? `&${alergenoQuery}` : ""
         }`;
         const res = await fetch(urlComida, {
@@ -62,7 +63,7 @@ export default function Planificador() {
 
       // Fetch para cenas (protegido, añade token en Authorization)
       if (tipoComida === "C" || tipoComida === "ambos") {
-        const urlCena = `http://localhost:3000/recipes?almuerzoCena=C${
+        const urlCena = `${API_URL}/recipes?almuerzoCena=C${
           alergenoQuery ? `&${alergenoQuery}` : ""
         }`;
         const res = await fetch(urlCena, {
