@@ -21,7 +21,7 @@ import { UploadController } from './upload/upload.controller';
 
 /**
  * Módulo raíz de la aplicación.
- * 
+ *
  * Aquí se centralizan y configuran todos los módulos, controladores y proveedores de la app.
  * Es el punto de entrada principal y el lugar donde se configura la base de datos, módulos, controladores, etc.
  */
@@ -33,13 +33,17 @@ import { UploadController } from './upload/upload.controller';
     // Configura y conecta la base de datos PostgreSQL usando variables de entorno o valores por defecto.
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST || 'localhost',
-      port: Number(process.env.DB_PORT) || 5432,
-      username: process.env.DB_USERNAME || 'postgres',
-      password: process.env.DB_PASSWORD || 'LDpc17578', 
-      database: process.env.DB_NAME || 'tfgdb',
+      ...(process.env.DATABASE_URL
+        ? { url: process.env.DATABASE_URL }
+        : {
+            host: process.env.DB_HOST || 'localhost',
+            port: Number(process.env.DB_PORT) || 5432,
+            username: process.env.DB_USERNAME || 'postgres',
+            password: process.env.DB_PASSWORD || 'LDpc17578',
+            database: process.env.DB_NAME || 'tfgdb',
+          }),
       autoLoadEntities: true, // Carga automática de entidades
-      synchronize: true,      
+      synchronize: true,
     }),
 
     // Importa los módulos de cada dominio de la app.
@@ -49,14 +53,8 @@ import { UploadController } from './upload/upload.controller';
     AuthModule,
   ],
   // Controladores principales del módulo raíz.
-  controllers: [
-    AppController,
-    AlergenosController,
-    UploadController,
-  ],
+  controllers: [AppController, AlergenosController, UploadController],
   // Proveedores (servicios) principales.
-  providers: [
-    AppService,
-  ],
+  providers: [AppService],
 })
 export class AppModule {}
