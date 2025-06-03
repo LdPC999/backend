@@ -151,7 +151,7 @@ export default function Perfil() {
 
           {/* Botón para editar perfil */}
           <div className="perfil-actions">
-            <button className="btn" onClick={handleEditarPerfil}>
+            <button className="btn btn-admin" onClick={handleEditarPerfil}>
               Editar perfil
             </button>
           </div>

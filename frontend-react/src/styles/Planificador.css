@@ -61,7 +61,7 @@
   align-items: center;
   font-size: 1rem;
   gap: 0.4rem;
-  color: #247aff;
+  color: var(--color-text);
   cursor: pointer;
 }
 
@@ -75,7 +75,7 @@ input[type="checkbox"], input[type="radio"] {
 /* ==== BOTÓN DE GENERAR ==== */
 .btn.btn-primary {
   background: var(--color-secondary, #033649);
-  color: #fff;
+  color: var(--color-primary);
   border: none;
   padding: 0.85rem 1.8rem;
   border-radius: 6px;
@@ -95,8 +95,8 @@ input[type="checkbox"], input[type="radio"] {
 
 /* Hover */
 .btn.btn-primary:hover:not(:disabled) {
-  background: #247aff; /* Azul más brillante */
-  color: #fff;
+  background: var(--color-text); /* Azul más brillante */
+  color: var(--color-primary);
 }
 
 /* ==== MENSAJE DE ERROR ==== */

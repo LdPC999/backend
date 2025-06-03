@@ -236,13 +236,12 @@ export default function EditarPerfil() {
 
         {/* Botones de acción */}
         <div className="perfil-actions perfil-actions-form">
-          <button className="btn btn-admin" type="submit">
+          <button className="btn-base btn-admin" type="submit">
             GUARDAR CAMBIOS
           </button>
           <button
-            className="btn"
+            className="btn-base btn-cancelar"
             type="button"
-            style={{ background: "#bbb", color: "#222" }}
             onClick={() => navigate("/perfil")}
           >
             CANCELAR

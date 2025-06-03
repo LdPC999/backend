@@ -54,7 +54,7 @@ export default function Home() {
           </div>
           <div className="home-description-card">
             <h3>Recetas Variadas</h3>
-            <p>Descubre nuevas recetas y mantén tu alimentación siempre interesante.</p>
+            <p>Descubre nuevas recetas y mantén una alimentación diversa.</p>
           </div>
           <div className="home-description-card">
             <h3>Comparte y Disfruta</h3>
