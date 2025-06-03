@@ -1,4 +1,4 @@
-# 📚 Trabajo de Fin de Grado (TFG): Sistema de Gestión de Recetas — Fullstack
+# 📚 Proyecto - RECIPE PLANNER
 
 ## 🗂️ Índice General
 
