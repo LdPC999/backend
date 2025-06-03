@@ -1,12 +1,11 @@
-/* -----------------------------------------------
-   Layout general: Flexbox para Home
------------------------------------------------- */
+/* ==== LAYOUT GENERAL ==== */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
+/* Página principal: estructura en columna */
 .home-page {
   width: 100%;
   min-height: 100%;
@@ -14,14 +13,14 @@ html, body {
   flex-direction: column;
 }
 
+/* Contenedor principal con scroll vertical y ocupa todo el espacio */
 #home-container {
   flex: 1;
   overflow-y: auto;
   width: 100%;
 }
 
-
-/* Main ocupa todo el espacio entre header y footer */
+/* ==== SLIDER PRINCIPAL ==== */
 .home-slider-container {
   display: flex;
   flex-direction: column;
@@ -29,14 +28,10 @@ html, body {
   margin: 0;
 }
 
-
-
-/* -----------------------------------------------
-   Slider tipo Hero adaptado (ocupa todo el ancho)
------------------------------------------------- */
+/* Hero slider: ancho completo y mínimo de altura */
 .home-slider-main {
   width: 100%;
-  min-height: 300px;  /* Baja el mínimo aún más */
+  min-height: 300px;
   position: relative;
   overflow: hidden;
   background: var(--color-bg);
@@ -44,6 +39,7 @@ html, body {
   align-items: stretch;
 }
 
+/* Imagen de fondo del slider */
 .home-slider-image {
   position: relative;
   width: 100%;
@@ -54,27 +50,28 @@ html, body {
   background-repeat: no-repeat;
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
   transition: clip-path 1s cubic-bezier(0.86, 0, 0.07, 1);
-  box-sizing: border-box;
   z-index: 1;
 }
 
+/* Contenedor de los textos del slider */
 .home-slider-article {
   width: 100%;
   position: absolute;
   z-index: 1;
 }
 
+/* Información sobre la imagen */
 .home-slider-info {
   position: absolute;
   top: 50%;
   left: 5%;
   transform: translateY(-50%);
-  z-index: 3; /* Debe estar encima del ::before */
+  z-index: 3;
   max-width: 90vw;
   padding: 1.5em 2em;
   border-radius: 16px;
-  background: none; /* Quita el fondo, el overlay va en la imagen */
-  box-shadow: none; /* Opcional: quita sombra si no quieres */
+  background: none;
+  box-shadow: none;
 }
 .home-slider-info h2 {
   font-size: clamp(1.2rem, 7vw, 2.2rem);
@@ -97,21 +94,23 @@ html, body {
   letter-spacing: 1px;
 }
 
+/* Overlay translúcido sobre la imagen */
 .home-slider-image::before {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   width: 100%; height: 100%;
-  background: rgba(255,255,255,0.34); /* Fondo blanco translúcido, cambia a negro si prefieres */
+  background: rgba(255,255,255,0.34);
   z-index: 2;
   pointer-events: none;
   border-radius: inherit;
 }
 
+/* ==== SECCIÓN DESCRIPCIÓN DE LA APP ==== */
 .home-description {
   width: 100%;
   max-width: 560px;
-  margin: 2rem auto 2rem auto;  /* Aumenta el margen superior */
+  margin: 2rem auto;
   padding: 2rem 2rem 1.5rem 2rem;
   border-radius: 18px;
   background: rgba(255,255,255,0.97);
@@ -120,7 +119,6 @@ html, body {
   font-size: 1.2rem;
   position: relative;
 }
-
 .home-description h2 {
   color: var(--color-secondary, #03A9F4);
   margin-bottom: 0.6em;
@@ -133,19 +131,16 @@ html, body {
   line-height: 1.5;
 }
 
-/* -----------------------------------------------
-   Tarjetas de descripción
------------------------------------------------- */
+/* ==== TARJETAS DE DESCRIPCIÓN ==== */
 .home-description-cards {
   display: flex;
   justify-content: center;
   gap: 2rem;
-  margin: 0 auto 5rem auto; /* Aumentar margen inferior */
+  margin: 0 auto 5rem auto;
   max-width: 1200px;
   flex-wrap: wrap;
   padding: 0 1rem;
 }
-
 .home-description-card {
   background: #fff;
   border-radius: 16px;
@@ -158,25 +153,19 @@ html, body {
   align-items: center;
   text-align: center;
 }
-
 .home-description-card h3 {
   color: var(--color-primary, #0099ee);
   margin-bottom: 0.7em;
   font-size: 1.3rem;
   font-weight: bold;
 }
-
 .home-description-card p {
   color: var(--color-text, #222);
   font-size: 1.05rem;
   line-height: 1.5;
 }
 
-
-
-/* -----------------------------------------------
-   Responsive
------------------------------------------------- */
+/* ==== RESPONSIVE ==== */
 @media screen and (max-width: 900px) {
   .home-menu-overlay {
     padding: 7em 2em 2em 2em;

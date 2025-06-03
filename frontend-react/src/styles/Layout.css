@@ -1,16 +1,18 @@
+/* ==== CONTENEDOR PRINCIPAL DE LA APP ==== */
 .layout-app {
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  flex-direction: column; /* Estructura en columna: header - contenido - footer */
+  min-height: 100vh; /* Altura mínima para ocupar toda la pantalla */
   width: 100%;
-  background: var(--color-bg);
+  background: var(--color-bg); /* Fondo general (variable CSS) */
 }
 
+/* ==== CONTENIDO PRINCIPAL ==== */
 .main-content {
-  flex: 1;
+  flex: 1; /* Ocupa todo el espacio disponible entre header y footer */
   width: 100%;
-  padding-top: 82px;
-  padding-bottom: 80px;
-  overflow-y: auto;
+  padding-top: 82px; /* Espacio para el header fijo (ajustar si es necesario) */
+  padding-bottom: 80px; /* Espacio para el footer fijo (ajustar si es necesario) */
+  overflow-y: auto; /* Permite hacer scroll si el contenido es largo */
   position: relative;
 }

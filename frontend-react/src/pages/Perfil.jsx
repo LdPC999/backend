@@ -1,25 +1,39 @@
-// src/pages/Perfil.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserRole, getToken } from "../utils/auth";
+import { getUserRole, getToken } from "../utils/auth"; // Utilidades para obtener el rol y el token del usuario
 import { AiFillHeart } from "react-icons/ai"; // Icono de corazón lleno
 import "../styles/Perfil.css";
 
+/**
+ * Página de perfil del usuario:
+ * - Muestra la información personal.
+ * - Permite editar perfil.
+ * - Muestra las recetas favoritas.
+ * - Si el usuario es admin, permite dar permisos de admin a otro usuario.
+ */
 export default function Perfil() {
+  // Datos del usuario
   const [usuario, setUsuario] = useState(null);
   const [favoritos, setFavoritos] = useState([]);
+
+  // Estados para el loading y mensajes
   const [loading, setLoading] = useState(true);
   const [favLoading, setFavLoading] = useState(true);
   const [error, setError] = useState("");
   const [ok, setOk] = useState("");
+
+  // Estados para el formulario de dar permisos de admin
   const [adminEmail, setAdminEmail] = useState("");
   const [adminError, setAdminError] = useState("");
   const [adminOk, setAdminOk] = useState("");
+
   const navigate = useNavigate();
   const rol = getUserRole();
   const API_URL = import.meta.env.VITE_API_URL;
 
-  // Al montar, pide los datos del usuario y favoritos
+  /**
+   * Al cargar la página, obtiene los datos del perfil del usuario.
+   */
   useEffect(() => {
     async function fetchPerfil() {
       try {
@@ -41,12 +55,13 @@ export default function Perfil() {
     fetchPerfil();
   }, []);
 
+  /**
+   * Obtiene la lista de recetas favoritas del usuario.
+   */
   useEffect(() => {
-    // Pide recetas favoritas
     async function fetchFavoritos() {
       setFavLoading(true);
       try {
-        const API_URL = import.meta.env.VITE_API_URL;
         const res = await fetch(`${API_URL}/users/favoritos/me`, {
           headers: {
             Authorization: "Bearer " + getToken(),
@@ -55,7 +70,7 @@ export default function Perfil() {
         });
         if (!res.ok) throw new Error("No se pudieron cargar los favoritos");
         const data = await res.json();
-        setFavoritos(data); // Array de recetas completas favoritas
+        setFavoritos(data);
         setFavLoading(false);
       } catch (err) {
         setFavoritos([]);
@@ -65,18 +80,22 @@ export default function Perfil() {
     fetchFavoritos();
   }, []);
 
-  // Navega a editar perfil
+  /**
+   * Redirige a la página de edición del perfil.
+   */
   const handleEditarPerfil = () => {
     navigate("/perfil/editar");
   };
 
-  // Formulario para dar permisos de admin (solo admins pueden verlo)
+  /**
+   * Envía el formulario para otorgar permisos de administrador a otro usuario.
+   * Solo visible si el usuario actual es admin.
+   */
   const handleDarAdmin = async (e) => {
     e.preventDefault();
     setAdminError("");
     setAdminOk("");
     try {
-      const API_URL = import.meta.env.VITE_API_URL;
       const res = await fetch(`${API_URL}/users/admin`, {
         method: "PATCH",
         headers: {
@@ -90,7 +109,7 @@ export default function Perfil() {
         throw new Error(data.message || "No se pudo actualizar el usuario");
       }
       setAdminOk(`Permisos de administrador otorgados a ${adminEmail}`);
-      setAdminEmail(""); // Limpiar campo
+      setAdminEmail("");
     } catch (err) {
       setAdminError(err.message || "Error inesperado");
     }
@@ -100,9 +119,13 @@ export default function Perfil() {
     <div className="perfil-page">
       <h2>Mi perfil</h2>
 
+      {/* Cargando datos del perfil */}
       {loading && <div className="perfil-loading">Cargando perfil...</div>}
+
+      {/* Mensaje de error */}
       {error && <div className="perfil-error">{error}</div>}
 
+      {/* Datos del perfil una vez cargados */}
       {usuario && (
         <div className="perfil-card">
           <div className="perfil-info">
@@ -125,12 +148,15 @@ export default function Perfil() {
               </div>
             )}
           </div>
+
+          {/* Botón para editar perfil */}
           <div className="perfil-actions">
             <button className="btn" onClick={handleEditarPerfil}>
               Editar perfil
             </button>
           </div>
-          {/* Si es admin, mostramos el formulario para dar permisos */}
+
+          {/* Formulario de permisos de admin (solo para admins) */}
           {rol === "admin" && (
             <div className="perfil-admin-box">
               <span>👑 Tienes permisos de administrador</span>
@@ -163,7 +189,7 @@ export default function Perfil() {
             </div>
           )}
 
-          {/* FAVORITOS */}
+          {/* Lista de favoritos */}
           <div className="perfil-favoritos-bloque">
             <h3 className="perfil-favoritos-titulo">
               <AiFillHeart

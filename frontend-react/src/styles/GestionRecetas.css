@@ -1,52 +1,59 @@
+/* Contenedor principal de la página de gestión de recetas */
 .recetas-page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  padding: 24px 0;
+  min-height: 100vh; /* Asegura que ocupa toda la altura de la pantalla */
+  padding: 24px 0; /* Espaciado superior e inferior */
 }
 
+/* Formulario de creación/edición de recetas */
 .receta-form {
-  max-width: 980px;
-  width: 100%;
-  margin: 0 auto 2em auto;
-  padding: 2.5em 2em 1em 2em;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 2px 18px rgba(0,0,0,0.11);
+  max-width: 980px; /* Ancho máximo */
+  width: 100%; /* Ocupa el ancho disponible */
+  margin: 0 auto 2em auto; /* Centrado horizontal y margen inferior */
+  padding: 2.5em 2em 1em 2em; /* Espaciado interno */
+  background: #fff; /* Fondo blanco */
+  border-radius: 18px; /* Bordes redondeados */
+  box-shadow: 0 2px 18px rgba(0,0,0,0.11); /* Sombra sutil */
   display: flex;
   flex-direction: column;
-  gap: 1.2em;
+  gap: 1.2em; /* Espacio vertical entre elementos */
 }
 
+/* Cada div hijo dentro del formulario ocupa todo el ancho */
 .receta-form > div {
   width: 100%;
 }
 
+/* Estilo para las etiquetas dentro del formulario */
 .receta-form > div > label {
   margin-bottom: 0.3em;
   display: inline-block;
 }
 
+/* Mensajes de error y confirmación */
+.recetas-error { color: #c00; margin-top: 0.8em; } /* Texto rojo */
+.recetas-ok { color: #3c6; margin-top: 0.8em; } /* Texto verde */
 
-.recetas-error { color: #c00; margin-top: 0.8em; }
-.recetas-ok { color: #3c6; margin-top: 0.8em; }
-
+/* ==== RESPONSIVE: para pantallas medianas (máx. 1200px) ==== */
 @media (max-width: 1200px) {
   .receta-form {
-    max-width: 98vw;
-    padding: 1.5em 0.5em 1em 0.5em;
+    max-width: 98vw; /* Ocupa casi toda la pantalla */
+    padding: 1.5em 0.5em 1em 0.5em; /* Reduce el espaciado */
   }
   .ingredientes-checkboxes {
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 8px 16px;
+    gap: 8px 16px; /* Ajusta el espacio entre ingredientes */
     padding: 4px;
   }
 }
+
+/* ==== RESPONSIVE: para pantallas pequeñas (máx. 700px) ==== */
 @media (max-width: 700px) {
   .ingredientes-checkboxes {
-    grid-template-columns: 1fr;
-    gap: 6px 0;
+    grid-template-columns: 1fr; /* Una columna en móvil */
+    gap: 6px 0; /* Espacio vertical reducido */
     padding: 4px;
   }
 }

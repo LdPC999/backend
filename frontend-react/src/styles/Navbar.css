@@ -1,37 +1,33 @@
-/* src/styles/Navbar.css */
-
-/* Contenedor general del navbar */
+/* ==== CONTENEDOR GENERAL DEL NAVBAR ==== */
 .navbar-app {
   width: 100%;
   background: var(--color-secondary);
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
+  top: 0; left: 0;
+  z-index: 1000; /* Prioridad alta */
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2.5rem;
-  height: 80px;
+  height: 80px; /* Altura general */
   box-shadow: 0 2px 14px rgba(0,0,0,0.08);
 }
 
-/* Bloque izquierdo: logo y título */
+/* ==== BLOQUE IZQUIERDO: LOGO Y TÍTULO ==== */
 .navbar-brand {
   display: flex;
   align-items: center;
   gap: 0.9rem;
 }
 
-
 .navbar-title {
-  color: #CDB380;
+  color: #CDB380; /* Color dorado */
   font-size: 1.4rem;
   font-weight: bold;
   letter-spacing: 1px;
 }
 
-/* Bloque central: menú */
+/* ==== BLOQUE CENTRAL: MENÚ DE NAVEGACIÓN ==== */
 .navbar-menu-wrapper {
   flex: 1;
   display: flex;
@@ -57,12 +53,13 @@
   display: block;
 }
 
+/* Hover y activo: cambia fondo y color */
 .link:hover, .link.active {
   background: rgba(255,255,255,0.13);
-  color: #E8DDCB
+  color: #E8DDCB;
 }
 
-/* Bloque derecho: logout */
+/* ==== BLOQUE DERECHO: BOTÓN DE LOGOUT ==== */
 .navbar-logout {
   display: flex;
   align-items: center;
@@ -78,7 +75,6 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-
   font-size: 1rem;
   font-weight: 500;
   transition: background 0.18s, border-color 0.18s;
@@ -87,7 +83,7 @@
 
 .logout-btn:hover {
   background: rgba(255,255,255,0.13);
-  border-color: #036564;
+  border-color: #036564; /* Cambia color del borde al hacer hover */
 }
 
 .logout-icon {
@@ -96,12 +92,11 @@
   align-items: center;
 }
 
-/* Ajuste vertical perfecto del botón */
 .logout-btn span {
   align-items: center;
 }
 
-/* Responsive para móvil/tablet */
+/* ==== RESPONSIVE: PANTALLAS PEQUEÑAS ==== */
 @media (max-width: 900px) {
   .navbar-app {
     padding: 0 1rem;
@@ -131,13 +126,7 @@
 }
 
 @media (max-width: 600px) {
-  .navbar-title {
-    display: none;
-  }
-  .navbar-app {
-    height: 54px;
-  }
-  .logout-btn span {
-    display: none;
-  }
+  .navbar-title { display: none; }
+  .navbar-app { height: 54px; }
+  .logout-btn span { display: none; } /* Oculta el texto y deja solo el icono */
 }

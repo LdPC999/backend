@@ -1,83 +1,90 @@
+/* ==== FUENTE PRINCIPAL ==== */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-/* Paleta de colores y variables globales */
+/* ==== VARIABLES GLOBALES ==== */
 :root {
-  --color-primary: #CDB380;
-  --color-secondary: #033649;
-  --color-bg: #E8DDCB;
-  --color-bg-alt: #033649;
-  --color-text: #036564;
-  --color-link: #036564;
-  --color-link-hover: #E8DDCB;
-  --color-border: #036564;
-  --header-height-desktop: 115px;
-  --header-height-mobile: 85px;
-  --footer-height-desktop: 60px;
-  --footer-height-mobile: 80px;
+  --color-primary: #CDB380; /* Dorado claro */
+  --color-secondary: #033649; /* Azul oscuro */
+  --color-bg: #E8DDCB; /* Fondo principal */
+  --color-bg-alt: #033649; /* Fondo alternativo */
+  --color-text: #036564; /* Texto principal */
+  --color-link: #036564; /* Color de enlace */
+  --color-link-hover: #E8DDCB; /* Hover de enlace */
+  --color-border: #036564; /* Bordes */
+  --header-height-desktop: 115px; /* Altura del header escritorio */
+  --header-height-mobile: 85px; /* Altura del header móvil */
+  --footer-height-desktop: 60px; /* Altura del footer escritorio */
+  --footer-height-mobile: 80px; /* Altura del footer móvil */
 }
 
-/* Modo oscuro */
+/* ==== MODO OSCURO ==== */
 body.dark {
   --color-bg: #18191a;
   --color-bg-alt: #23272f;
   --color-text: #f1f1f1;
-  --color-primary: #b39ddb;
+  --color-primary: #b39ddb; /* Lila claro */
   --color-link: #b39ddb;
 }
 
-/* Reset básico */
+/* ==== RESET BÁSICO ==== */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* ==== BODY: ESTILO GLOBAL ==== */
 body {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   background: var(--color-bg);
   color: var(--color-text);
   min-height: 100vh;
-  padding-top: var(--header-height-desktop);
-  padding-bottom: var(--footer-height-desktop);
+  padding-top: var(--header-height-desktop); /* Espacio para header fijo */
+  padding-bottom: var(--footer-height-desktop); /* Espacio para footer fijo */
+  overflow-y: auto !important; /* Asegura scroll vertical */
 }
 
+/* ==== TITULOS ==== */
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-secondary);
   font-weight: 700;
   margin-bottom: 0.5em;
 }
 
+/* ==== ENLACES ==== */
 a {
   color: var(--color-link);
   text-decoration: none;
   transition: color 0.2s;
 }
-
 a:hover {
   color: var(--color-link-hover);
 }
 
+/* ==== BOTONES GENERALES ==== */
 .btn {
   display: inline-block;
   padding: 0.75em 1.5em;
   font-weight: 600;
   font-size: 1em;
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius); /* Si la tienes en otro archivo */
   text-decoration: none;
   cursor: pointer;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
+/* Botón principal */
 .btn-primary {
   background: var(--color-primary);
   color: #fff;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow); /* Debe estar definido en otro archivo */
 }
 .btn-primary:hover {
   background: var(--color-secondary);
-  transform: translateY(-2px);
+  transform: translateY(-2px); /* Efecto de elevación */
 }
 
+/* Botón secundario */
 .btn-secondary {
   background: var(--color-white);
   color: var(--color-primary);
@@ -90,22 +97,18 @@ a:hover {
   transform: translateY(-2px);
 }
 
+/* ==== HTML y BODY: ESTRUCTURA GENERAL ==== */
 html {
   height: 100%;
   overflow-x: hidden;
 }
-
-body {
-  overflow-y: auto !important;
-}
-
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Añadir media queries */
+/* ==== RESPONSIVE ==== */
 @media (max-width: 768px) {
   body {
     padding-top: var(--header-height-mobile);

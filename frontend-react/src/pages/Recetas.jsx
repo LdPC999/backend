@@ -1,22 +1,32 @@
-// src/pages/Recetas.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserRole } from "../utils/auth";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"; 
+import { getUserRole } from "../utils/auth"; // Utilidad para obtener el rol del usuario
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"; // Iconos de favoritos
 import "../styles/Recetas.css";
 
+/**
+ * Página de listado de recetas.
+ * - Permite al usuario seleccionar una receta para ver detalles.
+ * - Usuarios pueden marcar o quitar favoritos.
+ * - Admins pueden crear y modificar recetas.
+ */
 export default function Recetas() {
+  // Estados para la lista de recetas y la receta seleccionada
   const [recetas, setRecetas] = useState([]);
   const [recetaSeleccionada, setRecetaSeleccionada] = useState(null);
+
+  // Estados para favoritos y mensajes
   const [favoritos, setFavoritos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
-  const userRole = getUserRole();
+  const navigate = useNavigate();
+  const userRole = getUserRole(); // Rol del usuario logueado
   const API_URL = import.meta.env.VITE_API_URL;
 
-  // Carga recetas
+  /**
+   * Al montar, carga la lista de recetas.
+   */
   useEffect(() => {
     async function fetchRecetas() {
       try {
@@ -38,7 +48,9 @@ export default function Recetas() {
     fetchRecetas();
   }, []);
 
-  // Carga favoritos del usuario
+  /**
+   * Al montar, carga los favoritos del usuario.
+   */
   useEffect(() => {
     async function fetchFavoritos() {
       try {
@@ -49,7 +61,7 @@ export default function Recetas() {
         });
         if (res.ok) {
           const data = await res.json();
-          setFavoritos(data.map(r => r.id)); // Array de IDs de recetas favoritas
+          setFavoritos(data.map(r => r.id)); // Solo IDs de recetas favoritas
         }
       } catch {
         setFavoritos([]);
@@ -58,14 +70,18 @@ export default function Recetas() {
     fetchFavoritos();
   }, []);
 
-  // Cambia receta seleccionada al elegir en el desplegable
+  /**
+   * Cambia la receta seleccionada cuando el usuario la elige en el desplegable.
+   */
   const handleChange = (e) => {
     const recetaId = Number(e.target.value);
     const receta = recetas.find((r) => r.id === recetaId);
     setRecetaSeleccionada(receta || null);
   };
 
-  // Recoge alérgenos únicos de la receta seleccionada
+  /**
+   * Obtiene los alérgenos únicos de los ingredientes de la receta.
+   */
   const getAlergenos = (receta) => {
     if (!receta || !receta.ingredientes) return [];
     const alergenosSet = new Set();
@@ -81,11 +97,13 @@ export default function Recetas() {
     return Array.from(alergenosSet).filter(Boolean);
   };
 
-  // Marcar/desmarcar favorito
+  /**
+   * Marca o desmarca una receta como favorita.
+   */
   const toggleFavorito = async (recetaId) => {
     try {
       if (favoritos.includes(recetaId)) {
-        // Quitar favorito
+        // Quitar de favoritos
         await fetch(`${API_URL}/users/favoritos/${recetaId}`, {
           method: "DELETE",
           headers: {
@@ -94,7 +112,7 @@ export default function Recetas() {
         });
         setFavoritos(favoritos.filter(favId => favId !== recetaId));
       } else {
-        // Añadir favorito
+        // Añadir a favoritos
         await fetch(`${API_URL}/users/favoritos/${recetaId}`, {
           method: "POST",
           headers: {
@@ -103,8 +121,8 @@ export default function Recetas() {
         });
         setFavoritos([...favoritos, recetaId]);
       }
-    } catch (err) {
-      // Puedes mostrar un error si quieres
+    } catch {
+      // Podrías mostrar un error si lo deseas
     }
   };
 
@@ -112,7 +130,7 @@ export default function Recetas() {
     <div className="recetas-page">
       <h2>Recetario</h2>
 
-      {/* Botón solo visible si es admin */}
+      {/* Botón para crear nueva receta (solo para admin) */}
       {userRole === "admin" && (
         <div style={{ textAlign: "right", marginBottom: "1em" }}>
           <button
@@ -124,7 +142,7 @@ export default function Recetas() {
         </div>
       )}
 
-      {/* Desplegable de selección */}
+      {/* Selector de receta */}
       <div className="recetas-select-container">
         <label htmlFor="select-receta">Selecciona una receta:</label>
         <select
@@ -149,29 +167,29 @@ export default function Recetas() {
         </select>
       </div>
 
+      {/* Estado de carga o error */}
       {loading && <div className="recetas-loading">Cargando recetas...</div>}
       {error && <div className="recetas-error">{error}</div>}
 
+      {/* Detalle de la receta seleccionada */}
       {recetaSeleccionada && (
         <div className="receta-detalle">
           {/* Imagen */}
           <div className="receta-imagen">
             {recetaSeleccionada.imagen ? (
-              <img
-                src={recetaSeleccionada.imagen}
-                alt={recetaSeleccionada.nombre}
-              />
+              <img src={recetaSeleccionada.imagen} alt={recetaSeleccionada.nombre} />
             ) : (
               <div className="receta-imagen-placeholder">
                 <span>Sin imagen</span>
               </div>
             )}
           </div>
-          {/* Info */}
+
+          {/* Información principal */}
           <div className="receta-info">
             <div style={{ display: "flex", alignItems: "center", gap: "0.85em" }}>
               <h3 style={{ margin: 0 }}>{recetaSeleccionada.nombre}</h3>
-              {/* Icono de favorito solo si hay usuario logueado */}
+              {/* Icono de favorito si el usuario está logueado */}
               {userRole && (
                 <button
                   className="btn-favorito"
@@ -189,25 +207,19 @@ export default function Recetas() {
                 >
                   {favoritos.includes(recetaSeleccionada.id)
                     ? <AiFillHeart size={29} color="#d42332" />
-                    : <AiOutlineHeart size={29} color="#d42332" />
-                  }
+                    : <AiOutlineHeart size={29} color="#d42332" />}
                 </button>
               )}
             </div>
-            <p>
-              <strong>Tiempo de preparación:</strong>{" "}
-              {recetaSeleccionada.tiempoPreparacion} minutos
-            </p>
-            <p>
-              <strong>Dificultad:</strong> {recetaSeleccionada.dificultad}
-            </p>
+            <p><strong>Tiempo de preparación:</strong> {recetaSeleccionada.tiempoPreparacion} minutos</p>
+            <p><strong>Dificultad:</strong> {recetaSeleccionada.dificultad}</p>
           </div>
+
           {/* Ingredientes */}
           <div className="receta-ingredientes">
             <h4>Ingredientes:</h4>
             <ul>
-              {recetaSeleccionada.ingredientes &&
-              recetaSeleccionada.ingredientes.length > 0 ? (
+              {recetaSeleccionada.ingredientes?.length > 0 ? (
                 recetaSeleccionada.ingredientes.map((ing) => (
                   <li key={ing.id || ing.nombre}>{ing.nombre}</li>
                 ))
@@ -216,6 +228,7 @@ export default function Recetas() {
               )}
             </ul>
           </div>
+
           {/* Alérgenos */}
           <div className="receta-alergenos">
             <h4>Alérgenos:</h4>
@@ -230,14 +243,12 @@ export default function Recetas() {
             </ul>
           </div>
 
-          {/* Botón de modificar solo para admin */}
+          {/* Botón para modificar la receta (solo para admin) */}
           {userRole === "admin" && (
             <div style={{ textAlign: "right", marginTop: "1em" }}>
               <button
                 className="btn btn-admin"
-                onClick={() =>
-                  navigate(`/recetas/editar/${recetaSeleccionada.id}`)
-                }
+                onClick={() => navigate(`/recetas/editar/${recetaSeleccionada.id}`)}
               >
                 Modificar receta
               </button>

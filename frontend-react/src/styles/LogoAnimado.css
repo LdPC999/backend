@@ -1,64 +1,83 @@
+/* ==== LOGO ANIMADO ==== */
 .logo-animado {
   position: absolute;
-  top: 40%;
-  width: 50vw;
-  text-align: center;
-  pointer-events: none;
-  user-select: none;
-  z-index: 20;
-  opacity: 1;
-  font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+  top: 40%; /* Centrado verticalmente en la mitad superior */
+  width: 50vw; /* Ocupa la mitad de la pantalla */
+  text-align: center; /* Centra el texto */
+  pointer-events: none; /* No interactúa con el ratón */
+  user-select: none; /* No se puede seleccionar el texto */
+  z-index: 20; /* Prioridad alta */
+  opacity: 1; /* Inicialmente visible */
+  font-family: 'Montserrat', 'Poppins', Arial, sans-serif; /* Fuentes */
   font-weight: 700;
-  line-height: 0.6;
-  transition: left 1s cubic-bezier(0.4, 0, 0.2, 1), 
+  line-height: 0.6; /* Línea compacta */
+  
+  /* Animación de desplazamiento y opacidad */
+  transition: left 1s cubic-bezier(0.4, 0, 0.2, 1),
               transform 1s cubic-bezier(0.4, 0, 0.2, 1),
               opacity 0.8s;
-  /* Tamaño grande y responsivo */
+
+  /* Tamaño de fuente grande y responsivo */
   font-size: 70px;
 }
+
+/* Cada línea del logo ocupa un bloque */
 .logo-animado span {
   display: block;
   font-size: inherit;
 }
 
+/* Posición a la izquierda */
 .logo-animado--left {
   left: 0;
   transform: translateX(0%);
 }
+
+/* Posición a la derecha y desplaza a la izquierda para que quede visible */
 .logo-animado--right {
   left: 100%;
   transform: translateX(-100%);
 }
 
+/* ==== ESTILOS ESPECÍFICOS SEGÚN CONTEXTO ==== */
+
+/* Estilo principal del logo en login */
 .logo-login {
-  color: #E8DDCB; /* Blanco sobre fondo azul */
-  text-shadow: 0 2px 8px #baedf7ad;
+  color: #E8DDCB; /* Blanco/beige */
+  text-shadow: 0 2px 8px #baedf7ad; /* Sombra azul translúcida */
   font-size: 1.1em;
 }
+
+/* Estilo secundario del logo en login */
 .logo-login-sec {
   color: #CDB380; /* Dorado/beige */
-  text-shadow: 0 2px 8px #e0d8c5a8;
+  text-shadow: 0 2px 8px #e0d8c5a8; /* Sombra beige */
   font-size: 0.85em;
 }
 
+/* Estilo principal del logo en registro */
 .logo-registro {
-  color: #033649; /* Dorado/beige sobre fondo oscuro */
-  text-shadow: 0 2px 8px #705b28a8;
+  color: #033649; /* Azul oscuro */
+  text-shadow: 0 2px 8px #705b28a8; /* Sombra dorada translúcida */
   font-size: 1.1em;
 }
+
+/* Estilo secundario del logo en registro */
 .logo-registro-sec {
-  color: #036564;   /* Blanco */
-  text-shadow: 0 2px 8px #705b28a8;
+  color: #036564; /* Verde */
+  text-shadow: 0 2px 8px #705b28a8; /* Sombra dorada translúcida */
   font-size: 0.85em;
 }
 
+/* ==== RESPONSIVE ==== */
 @media (max-width: 900px) {
   .logo-animado {
-    font-size: 45px;
+    font-size: 45px; /* Reduce tamaño en pantallas medianas */
   }
 }
+
 @media (max-width: 768px) {
   .logo-animado {
-    display: none;
+    display: none; /* Oculta el logo animado en pantallas pequeñas */
   }
 }

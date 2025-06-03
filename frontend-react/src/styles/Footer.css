@@ -1,14 +1,18 @@
+/* Estilos principales del footer */
 .footer-app {
-  width: 100vw;
-  background: var(--color-bg-alt);
-  color: var(--color-primary);
-  text-align: center;
-  font-size: 1.08rem;
-  padding: 1em 0 1em 0;
-  border-top: 1px solid #e0e0e0;
-  position: fixed;
+  width: 100vw; /* Ocupa todo el ancho de la ventana */
+  background: var(--color-bg-alt); /* Color de fondo del footer (variable CSS) */
+  color: var(--color-primary); /* Color del texto (variable CSS) */
+  text-align: center; /* Centra el texto horizontalmente */
+  font-size: 1.08rem; /* Tamaño del texto */
+  padding: 1em 0; /* Espaciado vertical superior e inferior */
+  border-top: 1px solid #e0e0e0; /* Línea superior para separar el footer */
+  
+  position: fixed; /* El footer siempre visible al fondo */
   bottom: 0;
   left: 0;
-  z-index: 998;
-  box-shadow: 0 -2px 12px rgba(0,0,0,0.03);
+  z-index: 998; /* Prioridad para que quede encima de otros elementos */
+  
+  /* Sombra suave superior para dar profundidad */
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.03);
 }

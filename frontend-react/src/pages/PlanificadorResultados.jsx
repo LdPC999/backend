@@ -1,6 +1,3 @@
-// PlanificadorResultados.jsx
-// src/pages/PlanificadorResultados.jsx
-
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/PlanificadorResultados.css";
@@ -17,8 +14,8 @@ const DIAS = [
 ];
 
 /**
- * Utilidad para seleccionar 'n' elementos aleatorios de un array sin repetir.
- * Si hay menos de 'n', repite elementos.
+ * Selecciona 'n' elementos aleatorios de un array sin repetir.
+ * Si el array tiene menos de 'n' elementos, se repiten.
  */
 function seleccionarAleatoriosSinRepetir(array, n) {
   if (!Array.isArray(array) || array.length === 0) return [];
@@ -32,7 +29,6 @@ function seleccionarAleatoriosSinRepetir(array, n) {
     }
     return seleccionados;
   } else {
-    // Si hay menos de n, se repiten aleatoriamente
     const seleccionados = [];
     let fuente = [...array];
     while (seleccionados.length < n) {
@@ -46,13 +42,12 @@ function seleccionarAleatoriosSinRepetir(array, n) {
 }
 
 /**
- * Componente Modal para mostrar el detalle de una receta.
- * Recibe la receta y la función para cerrar el modal por props.
+ * Modal para mostrar el detalle de una receta seleccionada.
  */
 function RecetaModal({ receta, onClose }) {
   if (!receta) return null;
 
-  // Utilidad para recoger alérgenos únicos de todos los ingredientes de la receta
+  // Obtiene alérgenos únicos de todos los ingredientes de la receta
   const getAlergenos = (receta) => {
     if (!receta || !receta.ingredientes) return [];
     const alergenosSet = new Set();
@@ -69,15 +64,10 @@ function RecetaModal({ receta, onClose }) {
   };
 
   return (
-    // Fondo oscuro del modal. Si pulsas fuera del contenido, se cierra.
     <div className="modal-fondo" onClick={onClose}>
-      {/* Contenido del modal. Al hacer click aquí NO se cierra */}
       <div className="modal-contenido" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-cerrar" onClick={onClose}>
-          ✕
-        </button>
+        <button className="modal-cerrar" onClick={onClose}>✕</button>
         <div className="receta-detalle">
-          {/* Imagen de la receta */}
           <div className="receta-imagen">
             {receta.imagen ? (
               <img src={receta.imagen} alt={receta.nombre} />
@@ -87,21 +77,15 @@ function RecetaModal({ receta, onClose }) {
               </div>
             )}
           </div>
-          {/* Información principal */}
           <div className="receta-info">
-            <h3 style={{ margin: 0 }}>{receta.nombre}</h3>
-            <p>
-              <strong>Tiempo de preparación:</strong> {receta.tiempoPreparacion} minutos
-            </p>
-            <p>
-              <strong>Dificultad:</strong> {receta.dificultad}
-            </p>
+            <h3>{receta.nombre}</h3>
+            <p><strong>Tiempo de preparación:</strong> {receta.tiempoPreparacion} minutos</p>
+            <p><strong>Dificultad:</strong> {receta.dificultad}</p>
           </div>
-          {/* Ingredientes de la receta */}
           <div className="receta-ingredientes">
             <h4>Ingredientes:</h4>
             <ul>
-              {receta.ingredientes && receta.ingredientes.length > 0 ? (
+              {receta.ingredientes?.length > 0 ? (
                 receta.ingredientes.map((ing) => (
                   <li key={ing.id || ing.nombre}>{ing.nombre}</li>
                 ))
@@ -110,7 +94,6 @@ function RecetaModal({ receta, onClose }) {
               )}
             </ul>
           </div>
-          {/* Alérgenos presentes en la receta */}
           <div className="receta-alergenos">
             <h4>Alérgenos:</h4>
             <ul>
@@ -130,22 +113,21 @@ function RecetaModal({ receta, onClose }) {
 }
 
 /**
- * Componente principal que muestra el resultado del menú semanal generado.
- * Permite hacer click en una receta para ver el detalle en un modal.
+ * Componente principal que muestra el menú semanal generado.
  */
 export default function PlanificadorResultados() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Estado para almacenar el menú semanal generado SOLO al montar el componente
+  // Estado para el menú semanal generado
   const [semanaComidas, setSemanaComidas] = useState([]);
   const [semanaCenas, setSemanaCenas] = useState([]);
 
-  // Estados para el popup/modal de detalle de receta
+  // Estados para el modal
   const [modalAbierto, setModalAbierto] = useState(false);
   const [recetaModal, setRecetaModal] = useState(null);
 
-  // Si no hay información previa, mostramos mensaje y botón para volver
+  // Si no hay datos, muestra mensaje y botón para volver
   if (!location.state) {
     return (
       <div>
@@ -155,17 +137,17 @@ export default function PlanificadorResultados() {
     );
   }
 
-  // Desestructuramos la información recibida desde la pantalla anterior
+  // Desestructura los datos recibidos de la navegación
   const { recetasComida = [], recetasCena = [], filtros = {} } = location.state;
 
-  // Generamos el menú semanal SOLO al montar el componente
+  // Genera el menú semanal solo al cargar el componente
   useEffect(() => {
     setSemanaComidas(seleccionarAleatoriosSinRepetir(recetasComida, 7));
     setSemanaCenas(seleccionarAleatoriosSinRepetir(recetasCena, 7));
     // eslint-disable-next-line
   }, []);
 
-  // Si no hay recetas con los filtros seleccionados, mostramos aviso
+  // Si no hay recetas según los filtros, muestra mensaje
   if (
     (filtros.tipoComida === "A" && recetasComida.length === 0) ||
     (filtros.tipoComida === "C" && recetasCena.length === 0) ||
@@ -176,23 +158,18 @@ export default function PlanificadorResultados() {
     return (
       <div className="planificador-resultados">
         <h2>No se han encontrado recetas con los filtros elegidos.</h2>
-        <button
-          onClick={() => navigate("/planificador")}
-          className="btn btn-primary"
-        >
+        <button onClick={() => navigate("/planificador")} className="btn btn-primary">
           Volver
         </button>
       </div>
     );
   }
 
-  // Función para mostrar el modal con la receta seleccionada
+  // Funciones para abrir y cerrar el modal
   const handleOpenModal = (receta) => {
     setRecetaModal(receta);
     setModalAbierto(true);
   };
-
-  // Función para cerrar el modal
   const handleCloseModal = () => {
     setModalAbierto(false);
     setRecetaModal(null);
@@ -202,20 +179,15 @@ export default function PlanificadorResultados() {
     <div className="planificador-resultados">
       <h2>Menú semanal generado</h2>
       <div className="planificador-semana">
-        {/* Mostramos el menú de lunes a domingo */}
         {DIAS.map((dia, idx) => (
           <div key={dia} className="planificador-dia">
             <h3>{dia}</h3>
-            {/* Si hay comida, la mostramos */}
             {(filtros.tipoComida === "A" || filtros.tipoComida === "ambos") && (
               <div className="tarjeta-receta comida">
                 <strong>Comida:</strong>
-                {/* Al pulsar en el nombre de la receta se abre el modal */}
                 <span
                   className="receta-link"
-                  onClick={() =>
-                    semanaComidas[idx] && handleOpenModal(semanaComidas[idx])
-                  }
+                  onClick={() => semanaComidas[idx] && handleOpenModal(semanaComidas[idx])}
                   style={{
                     cursor: semanaComidas[idx] ? "pointer" : "default",
                     textDecoration: "underline",
@@ -225,15 +197,12 @@ export default function PlanificadorResultados() {
                 </span>
               </div>
             )}
-            {/* Si hay cena, la mostramos */}
             {(filtros.tipoComida === "C" || filtros.tipoComida === "ambos") && (
               <div className="tarjeta-receta cena">
                 <strong>Cena:</strong>
                 <span
                   className="receta-link"
-                  onClick={() =>
-                    semanaCenas[idx] && handleOpenModal(semanaCenas[idx])
-                  }
+                  onClick={() => semanaCenas[idx] && handleOpenModal(semanaCenas[idx])}
                   style={{
                     cursor: semanaCenas[idx] ? "pointer" : "default",
                     textDecoration: "underline",
@@ -246,14 +215,11 @@ export default function PlanificadorResultados() {
           </div>
         ))}
       </div>
-      {/* Botón para volver a generar el menú */}
-      <button
-        onClick={() => navigate("/planificador")}
-        className="btn btn-primary"
-      >
+      <button onClick={() => navigate("/planificador")} className="btn btn-primary">
         Volver a generar
       </button>
-      {/* Mostramos el modal SOLO si hay una receta seleccionada */}
+
+      {/* Modal de detalle de la receta */}
       {modalAbierto && recetaModal && (
         <RecetaModal receta={recetaModal} onClose={handleCloseModal} />
       )}

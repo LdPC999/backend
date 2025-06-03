@@ -1,69 +1,60 @@
-@charset "UTF-8";
-
-/* === RESET === */
+/* ==== RESET GENERAL ==== */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* === GENERAL === */
-
+/* ==== ESTRUCTURA GENERAL ==== */
 html, body, #root {
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  overflow: hidden; /* Evitamos scroll innecesario */
 }
 
-/* === FONDOS === */
+/* ==== FONDOS DIVIDIDOS ==== */
 #back {
   width: 100%;
   height: 100%;
   position: absolute;
-  z-index: -999;
+  z-index: -999; /* Fondo detrás de todo */
 }
 
+/* Fondo izquierdo y derecho (pantallas grandes) */
 .backLeft, .backRight {
   position: absolute;
   width: 50%;
   height: 100%;
   top: 0;
 }
-
 .backLeft {
   left: 0;
-  background: var(--color-secondary); /* Antes: #03A9F4 */
+  background: var(--color-secondary);
 }
-
 .backRight {
   right: 0;
-  width: 50%;
-  height: 100%;
-  background: var(--color-bg); /* Antes: #673AB7 */
+  background: var(--color-bg);
 }
 
-/* === CAJA DESLIZANTE === */
+/* ==== CAJA DESLIZANTE (pantallas grandes) ==== */
 #slideBox {
   width: 50vw;
   height: 100vh;
-  max-height: 100vh;
-  margin-left: 50vw;
+  margin-left: 50vw; /* Inicialmente desplazado a la derecha */
   position: absolute;
-  top: 0;
-  left: 0;
   overflow: hidden;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 .topLayer {
-  width: 200%;
+  width: 200%; /* Para la animación de desplazamiento */
   height: 100%;
   position: relative;
   left: -100%;
-  transition: margin-left 1.0s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: margin-left 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* === PANELES === */
+/* ==== PANELES DESLIZANTES (pantallas grandes) ==== */
 .left, .right {
   width: 50%;
   height: 100%;
@@ -79,9 +70,7 @@ html, body, #root {
   color: #CDB380;
   left: 0;
 }
-.left label {
-  color: #CDB380;
-}
+.left label, .left .checkbox-text { color: #CDB380; }
 .left input {
   border-bottom: 1px solid #e3e3e3;
   color: #CDB380;
@@ -94,18 +83,13 @@ html, body, #root {
   -webkit-box-shadow: 0 0 0 30px #2C3034 inset;
   -webkit-text-fill-color: #CDB380;
 }
-.left a {
-  color: var(--color-primary);
-}
 
 .right {
   background: var(--color-bg);
   color: #212121;
   right: 0;
 }
-.right label {
-  color: #212121;
-}
+.right label, .right .checkbox-text { color: #212121; }
 .right input {
   border-bottom: 1px solid #212121;
   color: #212121;
@@ -118,12 +102,11 @@ html, body, #root {
   -webkit-text-fill-color: #212121;
 }
 
-/* === FORMULARIO === */
+/* ==== CONTENIDO DE FORMULARIOS ==== */
 .content {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100%;
   width: 80%;
   margin: 0 auto;
 }
@@ -133,19 +116,16 @@ html, body, #root {
   font-size: 2.6em;
   margin: 0.2em 0 0.1em;
 }
-
-.left .content h2 {
-  color: var(--color-secondary);
-}
-.right .content h2 {
+.left .content h2, .right .content h2 {
   color: var(--color-secondary);
 }
 
+/* ==== CAMPOS DE FORMULARIOS ==== */
 .form-element {
   margin: 1.6em 0;
 }
 .form-element.form-submit {
-  margin: 1.6em 0 0;
+  margin-top: 1.6em;
 }
 
 .form-stack {
@@ -162,29 +142,25 @@ input {
   margin-top: 0.1em;
 }
 
-/* === CHECKBOX === */
+/* ==== CHECKBOX (términos y condiciones) ==== */
 .checkbox-container {
   display: flex;
   align-items: center;
   margin-top: 0.5em;
   margin-bottom: 1em;
 }
-
 .checkbox-container input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: var(--color-secondary, #033649); /* Color personalizado */
+  accent-color: var(--color-secondary);
   margin-right: 7px;
   cursor: pointer;
 }
 
+/* Texto y enlaces del checkbox */
 .checkbox-text {
   font-size: 0.98em;
-  color: #333;
 }
-.left .checkbox-text { color: #CDB380; }
-.right .checkbox-text { color: #1a314d; }
-
 .checkbox-text .link {
   color: #247aff;
   text-decoration: underline;
@@ -193,154 +169,74 @@ input {
 }
 .left .checkbox-text .link { color: #CDB380; }
 .right .checkbox-text .link { color: #247aff; }
+.checkbox-text .link:focus { outline: none; }
 
-/* Para que no pueda hacer tab (accesibilidad) */
-.checkbox-text .link:focus {
-  outline: none;
-}
-
-/* =========== LINK OLVIDÉ CONTRASEÑA =========== */
-.form-content a {
-  font-size: 0.98em;
-}
-
-.form-content a.link {
-  color: #247aff;
-  text-decoration: underline;
-}
-
-.form-content a.link:hover {
-  color: #033649;
-}
-
-.form-content .forgot-link {
-  display: block;
-  margin-top: 1em;
-  text-align: right;
-  color: #247aff;
-  text-decoration: underline;
-  cursor: pointer;
-  font-size: 0.98em;
-}
-
-
-/* === BOTONES === */
+/* ==== BOTONES ==== */
 button {
   padding: 0.8em 1.2em;
-  margin: 0 10px 0 0;
   font-weight: 600;
   text-transform: uppercase;
   font-size: 1em;
   color: #fff;
-  border-radius: 3px;
-  border: 0;
-  outline: 0;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.25s;
 }
-button.signup {
-  background: var(--color-primary);
-}
-button.login {
-  background: var(--color-secondary);
-}
-button.off {
-  background: none;
-  box-shadow: none;
-  margin: 0;
-}
-button.off.signup {
-  color: var(--color-secondary);
-}
-button.off.login {
-  color: var(--color-primary);
+button.signup { background: var(--color-primary); }
+button.login { background: var(--color-secondary); }
+button.off { background: none; box-shadow: none; }
+button.off.signup { color: var(--color-secondary); border: none; padding: 1em 1.2em; }
+button.off.login { color: var(--color-primary); border: none; padding: 1em 1.2em; }
+
+button.off.login:hover { background: var(--color-primary);}
+
+button:hover { box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1); }
+button:hover.signup, button:hover.login {
+  background: #036564; /* Tono más oscuro */
 }
 
-button:hover {
-  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1);
-}
-button:hover.signup {
-  background: #036564; /* Un tono más oscuro del secundario */
-}
-button:hover.login {
-  background: #036564; /* Un tono más oscuro del primario */
-}
-
-/* Estilos para el toggle switch */
+/* ==== TOGGLE SWITCH (aceptar términos) ==== */
 .toggle-switch {
-  position: relative;
   display: flex;
   align-items: center;
+  position: relative;
   width: 100%;
-  margin-bottom: 15px;
   cursor: pointer;
 }
-
 .toggle-switch input {
   opacity: 0;
   width: 0;
   height: 0;
   position: absolute;
 }
-
-.toggle-label {
-  padding-left: 50px;
-  font-size: 1em;
-  color: inherit;
-  cursor: pointer;
-  user-select: none;
-  width: 100%;
-}
-
+.toggle-label { padding-left: 50px; width: 100%; cursor: pointer; }
 .slider {
   position: absolute;
-  cursor: pointer;
-  top: 50%;
-  transform: translateY(-50%);
   left: 0;
   width: 40px;
   height: 20px;
-  background-color: #ccc;
-  transition: .4s;
+  background: #ccc;
+  transition: 0.4s;
   border-radius: 34px;
   pointer-events: none;
 }
-
 .slider:before {
-  position: absolute;
   content: "";
-  height: 16px;
-  width: 16px;
+  position: absolute;
   left: 2px;
   bottom: 2px;
-  background-color: white;
-  transition: .4s;
+  width: 16px;
+  height: 16px;
+  background: white;
+  transition: 0.4s;
   border-radius: 50%;
 }
+.toggle-switch input:checked + .slider { background: var(--color-primary); }
+.toggle-switch input:checked + .slider:before { transform: translateX(20px); }
 
-.toggle-switch input:checked + .slider {
-  background-color: var(--color-primary);
-}
-
-.toggle-switch input:checked + .slider:before {
-  transform: translateX(20px);
-}
-
-/* Añadimos esto para mejorar la interactividad */
-.toggle-switch label {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  cursor: pointer;
-}
-
-/* === RESPONSIVE === */
+/* ==== RESPONSIVE (móvil) ==== */
 @media only screen and (max-width: 768px) {
-  #back,
-  #slideBox {
-    display: none !important;
-  }
+  #back, #slideBox { display: none !important; }
 
   .mobile-auth {
     display: flex !important;
@@ -355,24 +251,10 @@ button:hover.login {
     left: 0;
     z-index: 10;
   }
-  .mobile-auth .content {
-    width: 90vw;
-    margin: 0;
-    padding: 0;
-    background: transparent;
-  }
-  .mobile-auth h2 {
-    font-size: 2em;
-  }
-  .mobile-auth button {
-    width: 100%;
-    margin-bottom: 1em;
-  }
+  .mobile-auth .content { width: 90vw; background: transparent; }
+  .mobile-auth h2 { font-size: 2em; }
+  .mobile-auth button { width: 100%; margin-bottom: 1em; }
 
-  .app-title-auth{
-    display: none;
-  }
-  .checkbox-container {
-    font-size: 0.96em;
-  }
+  .app-title-auth { display: none; }
+  .checkbox-container { font-size: 0.96em; }
 }

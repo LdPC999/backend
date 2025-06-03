@@ -1,37 +1,50 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserRole } from "../utils/auth";
+import { getUserRole } from "../utils/auth"; // Utilidad para obtener el rol del usuario
 import "../styles/Recetas.css";
 
 /**
- * Formulario de gestión de recetas para admin (crear o editar).
- * Soporta subida de imagen a Cloudinary vía backend.
+ * Componente para crear o editar recetas (solo accesible para admin).
+ * - Permite subir imágenes (archivo o URL).
+ * - Permite seleccionar ingredientes agrupados por tipo.
+ * - Modo "editar" o "crear" se gestiona con el prop `modo`.
  */
 export default function GestionRecetas({ modo }) {
+  // Obtiene el parámetro "id" de la URL (si se está editando)
   const params = useParams();
   const editingId = params.id;
+
+  // Estados del formulario
   const [nombre, setNombre] = useState("");
   const [dificultad, setDificultad] = useState("fácil");
   const [tiempoPreparacion, setTiempoPreparacion] = useState(30);
-  const [imagen, setImagen] = useState(""); // URL de la imagen
-  const [imagenFile, setImagenFile] = useState(null); // Archivo seleccionado
+  const [imagen, setImagen] = useState(""); // URL de la imagen (si se pega manualmente)
+  const [imagenFile, setImagenFile] = useState(null); // Archivo de imagen (opcional)
   const [preview, setPreview] = useState(""); // Preview de la imagen
-  const [ingredientes, setIngredientes] = useState([]);
-  const [ingredientesDisponibles, setIngredientesDisponibles] = useState([]);
+  const [ingredientes, setIngredientes] = useState([]); // IDs de ingredientes seleccionados
+  const [ingredientesDisponibles, setIngredientesDisponibles] = useState([]); // Ingredientes disponibles desde el backend
+  const [tipoSeleccionado, setTipoSeleccionado] = useState(""); // Tipo de ingrediente seleccionado para ver los checkboxes
+
+  // Estados para mensajes de error y confirmación
   const [error, setError] = useState("");
   const [ok, setOk] = useState(false);
-  const [tipoSeleccionado, setTipoSeleccionado] = useState("");
+
   const navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL;
 
-  // Solo permite acceso si es admin
+  /**
+   * Efecto para restringir el acceso solo a administradores.
+   * Si no es admin, redirige a la lista de recetas.
+   */
   useEffect(() => {
     if (getUserRole() !== "admin") {
       navigate("/recetas");
     }
   }, [navigate]);
 
-  // Carga ingredientes disponibles desde backend
+  /**
+   * Efecto para cargar la lista de ingredientes disponibles.
+   */
   useEffect(() => {
     fetch(`${API_URL}/ingredients`, {
       headers: {
@@ -44,7 +57,9 @@ export default function GestionRecetas({ modo }) {
       .catch(() => setIngredientesDisponibles([]));
   }, []);
 
-  // Si estamos en modo editar, carga la receta a editar
+  /**
+   * Si estamos en modo "editar", carga la receta actual para rellenar el formulario.
+   */
   useEffect(() => {
     if (modo === "editar" && editingId) {
       fetch(`${API_URL}/recipes/${editingId}`, {
@@ -68,7 +83,9 @@ export default function GestionRecetas({ modo }) {
     }
   }, [modo, editingId]);
 
-  // Maneja la selección/deselección de ingredientes
+  /**
+   * Handler para los checkboxes de ingredientes.
+   */
   const handleIngredienteChange = (e) => {
     const id = Number(e.target.value);
     setIngredientes((prev) =>
@@ -76,14 +93,19 @@ export default function GestionRecetas({ modo }) {
     );
   };
 
-  // Maneja el cambio en el campo de la URL de la imagen (opcional)
+  /**
+   * Handler para el cambio manual del campo de URL de la imagen.
+   */
   const handleImagenChange = (e) => {
     setImagen(e.target.value);
-    setPreview(e.target.value); // Preview instantánea si es una URL
-    setImagenFile(null);        // Si escribe URL, resetea el archivo
+    setPreview(e.target.value);
+    setImagenFile(null); // Si se introduce URL, se deselecciona el archivo
   };
 
-  // Maneja la selección de un archivo de imagen
+  /**
+   * Handler para la selección de un archivo de imagen.
+   * Muestra una vista previa de la imagen seleccionada.
+   */
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setImagenFile(file);
@@ -96,15 +118,17 @@ export default function GestionRecetas({ modo }) {
     }
   };
 
-  // Envía el formulario: POST para crear, PATCH para editar
+  /**
+   * Envía el formulario: crea o edita la receta.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setOk(false);
 
-    let imageUrl = imagen; // Por defecto, la URL pegada o la de la receta editada
+    let imageUrl = imagen; // Valor por defecto: la URL que está en el input
 
-    // Si se ha seleccionado un archivo, primero súbelo a Cloudinary
+    // Si hay un archivo, primero lo sube a Cloudinary a través del backend
     if (imagenFile) {
       const formData = new FormData();
       formData.append("file", imagenFile);
@@ -115,14 +139,14 @@ export default function GestionRecetas({ modo }) {
         });
         const dataImg = await resImg.json();
         if (!resImg.ok) throw new Error("Error al subir la imagen");
-        imageUrl = dataImg.url; // URL de Cloudinary
+        imageUrl = dataImg.url;
       } catch (err) {
         setError("Error al subir la imagen: " + err.message);
         return;
       }
     }
 
-    // Ahora guarda la receta normalmente, usando imageUrl
+    // Guarda la receta (POST o PATCH)
     try {
       const url =
         modo === "editar"
@@ -155,7 +179,7 @@ export default function GestionRecetas({ modo }) {
   };
 
   /**
-   * Agrupa los ingredientes disponibles por tipo.
+   * Agrupa los ingredientes disponibles por su tipo.
    */
   const ingredientesPorTipo = useMemo(() => {
     const grupos = {};
@@ -169,7 +193,7 @@ export default function GestionRecetas({ modo }) {
   }, [ingredientesDisponibles]);
 
   /**
-   * Crea un array de los tipos de ingredientes ordenados alfabéticamente.
+   * Obtiene los tipos de ingredientes ordenados alfabéticamente.
    */
   const tiposOrdenados = useMemo(
     () =>
@@ -192,6 +216,7 @@ export default function GestionRecetas({ modo }) {
             required
           />
         </div>
+
         {/* Campo dificultad */}
         <div>
           <label>Dificultad:</label>
@@ -204,7 +229,8 @@ export default function GestionRecetas({ modo }) {
             <option value="difícil">Difícil</option>
           </select>
         </div>
-        {/* Campo tiempo de preparación */}
+
+        {/* Tiempo de preparación */}
         <div>
           <label>Tiempo de preparación (min):</label>
           <input
@@ -215,7 +241,8 @@ export default function GestionRecetas({ modo }) {
             required
           />
         </div>
-        {/* Campo imagen */}
+
+        {/* Imagen */}
         <div>
           <label>Imagen de la receta:</label>
           <input
@@ -223,7 +250,6 @@ export default function GestionRecetas({ modo }) {
             accept="image/*"
             onChange={handleFileChange}
           />
-          {/* Opción: pegar URL manualmente */}
           <input
             type="text"
             placeholder="O pega la URL de una imagen (opcional)"
@@ -231,14 +257,18 @@ export default function GestionRecetas({ modo }) {
             onChange={handleImagenChange}
             style={{ marginTop: "0.5em" }}
           />
-          {/* Mostrar la preview si hay */}
           {preview && (
             <div className="imagen-preview" style={{ marginTop: "0.8em" }}>
-              <img src={preview} alt="Preview" style={{ maxWidth: 200, borderRadius: 8 }} />
+              <img
+                src={preview}
+                alt="Preview"
+                style={{ maxWidth: 200, borderRadius: 8 }}
+              />
             </div>
           )}
         </div>
-        {/* Desplegable de tipos de ingredientes */}
+
+        {/* Ingredientes por tipo */}
         <div style={{ width: "100%" }}>
           <label>Selecciona tipo de ingrediente:</label>
           <div className="select-wrapper">
@@ -246,7 +276,6 @@ export default function GestionRecetas({ modo }) {
               value={tipoSeleccionado}
               onChange={(e) => setTipoSeleccionado(e.target.value)}
               className="tipo-select"
-              data-dropup="false"
             >
               <option value="">Selecciona un tipo</option>
               {tiposOrdenados.map((tipo) => (
@@ -256,8 +285,9 @@ export default function GestionRecetas({ modo }) {
               ))}
             </select>
           </div>
-          {/* Checkboxes de ingredientes */}
-          {tipoSeleccionado && tipoSeleccionado !== "" && (
+
+          {/* Lista de checkboxes para ingredientes */}
+          {tipoSeleccionado && (
             <div className="ingredientes-checkboxes">
               <div className="grupo-ingredientes">
                 <h4>{tipoSeleccionado}</h4>
@@ -283,11 +313,13 @@ export default function GestionRecetas({ modo }) {
             </div>
           )}
         </div>
-        {/* Botón de guardar */}
+
+        {/* Botón de submit */}
         <button type="submit" className="btn btn-admin">
           {modo === "editar" ? "Guardar cambios" : "Crear receta"}
         </button>
-        {/* Mensajes de error y confirmación */}
+
+        {/* Mensajes */}
         {error && <div className="recetas-error">{error}</div>}
         {ok && (
           <div className="recetas-ok">

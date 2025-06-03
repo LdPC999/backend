@@ -1,16 +1,21 @@
-// Home.jsx con react-scroll implementado
 import React, { useEffect } from "react";
-import HeroSlider from "../components/HeroSlider";
+import HeroSlider from "../components/HeroSlider"; // Slider principal de la página
 import "../styles/Home.css";
-import { Element, scroller } from "react-scroll";
+import { Element, scroller } from "react-scroll"; // Librería para scroll suave
 
 /**
- * Home: Página principal solo con slider y descripción.
- * El layout general (Navbar y Footer) lo pone Layout.jsx.
+ * Componente Home: página principal de la aplicación.
+ * - Muestra un slider principal y una descripción de la app.
+ * - Usa react-scroll para que comience siempre desde arriba al cargar.
+ * - El navbar y el footer están en Layout.jsx, no aquí.
  */
 export default function Home() {
   useEffect(() => {
-    // Asegura que la página comience desde arriba al cargar
+    /**
+     * Al montar el componente, hace scroll suave al inicio de la página.
+     * - Usamos el contenedor con id="home-container" para que funcione bien.
+     * - Duración de la animación: 100ms.
+     */
     scroller.scrollTo('home-top', {
       duration: 100,
       smooth: true,
@@ -20,12 +25,15 @@ export default function Home() {
 
   return (
     <div className="home-page" id="home-container">
+      {/* Elemento de referencia para el scroll suave */}
       <Element name="home-top"></Element>
-      {/* Slider ocupa el espacio disponible */}
+
+      {/* Slider principal que ocupa todo el espacio disponible */}
       <main className="home-slider-container">
         <HeroSlider />
       </main>
-      {/* Descripción */}
+
+      {/* Sección de descripción */}
       <Element name="description">
         <section className="home-description">
           <h2>¿Qué hace esta aplicación?</h2>
@@ -36,6 +44,8 @@ export default function Home() {
           </p>
         </section>
       </Element>
+
+      {/* Tarjetas descriptivas con los puntos clave */}
       <Element name="cards">
         <div className="home-description-cards">
           <div className="home-description-card">
