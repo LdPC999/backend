@@ -216,8 +216,8 @@ export class RecipesService {
           const subQuery = qb
             .subQuery()
             .select('ri.recipeId')
-            .from('recipe_ingredients_ingredient', 'ri')
-            .innerJoin('ingredients', 'i', 'ri.ingredientId = i.id')
+            .from('recipe_ingredientes_ingredients', 'ri')
+            .innerJoin('ingredients', 'i', 'ri."ingredientsId" = i.id')
             .where('LOWER(i.nombre) = :sinIngrediente')
             .getQuery();
           return `recipe.id NOT IN ${subQuery}`;
@@ -240,8 +240,8 @@ export class RecipesService {
           const subQuery = qb
             .subQuery()
             .select('ri.recipeId')
-            .from('recipe_ingredients_ingredient', 'ri')
-            .innerJoin('ingredients', 'i', 'ri.ingredientId = i.id')
+            .from('recipe_ingredientes_ingredients', 'ri')
+            .innerJoin('ingredients', 'i', 'ri."ingredientsId" = i.id')
             .where('LOWER(i.tipo) = :sinTipo')
             .getQuery();
           return `recipe.id NOT IN ${subQuery}`;
@@ -251,8 +251,7 @@ export class RecipesService {
     }
 
     // Excluye recetas que tengan ingredientes con un alérgeno concreto
-    if (sinAlergeno && Array.isArray(sinAlergeno) && sinAlergeno.length > 0) {
-      // Normaliza todos a minúsculas
+    if (sinAlergeno && sinAlergeno.length > 0) {
       const alergenos = sinAlergeno.map((a) => a.toLowerCase());
 
       query.andWhere(
@@ -263,12 +262,15 @@ export class RecipesService {
             .from('recipe_ingredientes_ingredients', 'ri')
             .innerJoin('ingredients', 'i', 'ri."ingredientsId" = i.id')
             .where(
-              `EXISTS (
-                SELECT 1 FROM unnest(i.alergeno) AS alg
-                WHERE LOWER(alg) = ANY(:sinAlergenos)
-              )`,
+              `
+          EXISTS (
+            SELECT 1 FROM unnest(i.alergeno) AS alg
+            WHERE LOWER(alg) = ANY(:sinAlergenos)
+          )
+        `,
             )
             .getQuery();
+
           return `recipe.id NOT IN ${subQuery}`;
         },
         { sinAlergenos: alergenos },
