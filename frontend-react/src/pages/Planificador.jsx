@@ -51,6 +51,18 @@ export default function Planificador() {
   };
 
   /**
+   * Construye el query string con los alérgenos como múltiples sinAlergeno=
+   * @param {string} tipo - 'A' o 'C' según si es comida o cena
+   * @returns {string} query string para URL
+   */
+  const construirQuery = (tipo) => {
+    const params = new URLSearchParams();
+    params.append("almuerzoCena", tipo);
+    selectedAlergenos.forEach((a) => params.append("sinAlergeno", a));
+    return params.toString();
+  };
+
+  /**
    * Genera el plan semanal al pulsar el botón.
    * - Hace peticiones GET a la API para obtener recetas filtradas.
    * - Pasa los resultados a la vista de resultados usando `navigate`.
@@ -60,20 +72,12 @@ export default function Planificador() {
     setError("");
 
     try {
-      // Construye el query string para los alérgenos seleccionados
-      const alergenoQuery =
-        selectedAlergenos.length > 0
-          ? `sinAlergeno=${selectedAlergenos.join(",")}`
-          : "";
-
       let recetasComida = [];
       let recetasCena = [];
 
       // Fetch para comidas (si corresponde)
       if (tipoComida === "A" || tipoComida === "ambos") {
-        const urlComida = `${API_URL}/recipes?almuerzoCena=A${
-          alergenoQuery ? `&${alergenoQuery}` : ""
-        }`;
+        const urlComida = `${API_URL}/recipes?${construirQuery("A")}`;
         const res = await fetch(urlComida, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -85,9 +89,7 @@ export default function Planificador() {
 
       // Fetch para cenas (si corresponde)
       if (tipoComida === "C" || tipoComida === "ambos") {
-        const urlCena = `${API_URL}/recipes?almuerzoCena=C${
-          alergenoQuery ? `&${alergenoQuery}` : ""
-        }`;
+        const urlCena = `${API_URL}/recipes?${construirQuery("C")}`;
         const res = await fetch(urlCena, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
