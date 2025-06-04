@@ -182,5 +182,8 @@
 
   .logout-icon {
     font-size: 1.1rem;
+    background:red;
+    color: #ffffff;
+    display: inline-block;
   }
 }
