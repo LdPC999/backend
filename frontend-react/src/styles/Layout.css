@@ -16,3 +16,11 @@
   overflow-y: auto; /* Permite hacer scroll si el contenido es largo */
   position: relative;
 }
+
+/* ==== RESPONSIVE PARA LAYOUT EN MÓVILES PEQUEÑOS ==== */
+@media (max-width: 480px) {
+  .main-content {
+    padding-top: 66px; /* Altura del navbar en móviles */
+    padding-bottom: 80px; /* Footer móvil */
+  }
+}

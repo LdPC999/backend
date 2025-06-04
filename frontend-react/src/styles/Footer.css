@@ -16,3 +16,13 @@
   /* Sombra suave superior para dar profundidad */
   box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.03);
 }
+
+/* ==== RESPONSIVE PARA FOOTER EN MÓVILES PEQUEÑOS ==== */
+@media (max-width: 480px) {
+  .footer-app {
+    font-size: 0.9rem;
+    padding: 0.8em 0.4em;
+    text-align: center;
+    line-height: 1.3;
+  }
+}

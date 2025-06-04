@@ -57,3 +57,60 @@
     padding: 4px;
   }
 }
+
+/* ==== RESPONSIVE ADICIONAL PARA MÓVILES PEQUEÑOS (480px o menos) ==== */
+@media (max-width: 480px) {
+  .recetas-page {
+    padding: 1rem 0.5rem;
+  }
+
+  .receta-form {
+    padding: 1.2em 0.8em;
+    gap: 1em;
+    border-radius: 14px;
+  }
+
+  .receta-form > div > label {
+    font-size: 1rem;
+    margin-bottom: 0.4em;
+  }
+
+  .receta-form input,
+  .receta-form select {
+    font-size: 1em;
+    padding: 0.6em;
+  }
+
+  .tipo-select {
+    font-size: 1em;
+    padding: 0.6em;
+  }
+
+  .ingredientes-checkboxes {
+    padding: 8px;
+  }
+
+  .grupo-ingredientes label {
+    font-size: 0.95em;
+    padding: 6px 4px;
+  }
+
+  .imagen-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .btn-admin {
+    width: 100%;
+    padding: 0.9em 1.2em;
+    font-size: 1em;
+    margin-top: 1em;
+  }
+
+  .recetas-error,
+  .recetas-ok {
+    font-size: 0.95em;
+    text-align: center;
+  }
+}

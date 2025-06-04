@@ -115,3 +115,25 @@ html {
     padding-bottom: var(--footer-height-mobile);
   }
 }
+
+@media (max-width: 768px) {
+  body {
+    padding-top: var(--header-height-mobile);
+    padding-bottom: var(--footer-height-mobile);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 0.96rem;
+  }
+
+  h1, h2, h3 {
+    font-size: 1.2rem;
+  }
+
+  .btn {
+    font-size: 1rem;
+    padding: 0.7em 1em;
+  }
+}

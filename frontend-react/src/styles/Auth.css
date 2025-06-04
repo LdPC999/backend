@@ -251,10 +251,77 @@ button:hover.signup, button:hover.login {
     left: 0;
     z-index: 10;
   }
+
+    .mobile-auth input {
+    width: 100%;
+    font-size: 1em;
+    padding: 10px;
+    margin-bottom: 0.8em;
+  }
+    .form-element {
+    width: 100%;
+  }
+
+  .toggle-switch {
+    flex-wrap: wrap;
+  }
   .mobile-auth .content { width: 90vw; background: transparent; }
   .mobile-auth h2 { font-size: 2em; }
   .mobile-auth button { width: 100%; margin-bottom: 1em; }
 
   .app-title-auth { display: none; }
   .checkbox-container { font-size: 0.96em; }
+}
+
+/* ==== RESPONSIVE ADICIONAL PARA MÓVILES PEQUEÑOS (480px o menos) ==== */
+@media only screen and (max-width: 480px) {
+  .mobile-auth .content {
+    width: 92vw;
+    padding: 1.2rem;
+  }
+
+  .mobile-auth h2 {
+    font-size: 1.6em;
+    margin-bottom: 1rem;
+  }
+
+  .mobile-auth input {
+    font-size: 1em;
+    padding: 10px;
+  }
+
+  .form-element {
+    margin: 1em 0;
+  }
+
+  .form-element.form-submit {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .form-element button {
+    font-size: 1em;
+    padding: 0.9rem 1.2rem;
+    width: 100%;
+  }
+
+  .checkbox-text {
+    font-size: 0.94em;
+    line-height: 1.4;
+  }
+
+  .toggle-switch {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .slider {
+    width: 38px;
+    height: 18px;
+  }
+
+  .slider:before {
+    width: 15px;
+    height: 15px;
+  }
 }

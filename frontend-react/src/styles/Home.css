@@ -190,3 +190,60 @@ html, body {
     grid-row: auto;
   }
 }
+
+/* ==== RESPONSIVE: móviles pequeños (máx. 480px) ==== */
+@media screen and (max-width: 480px) {
+  .home-slider-info {
+    padding: 1.2em 1em;
+    left: 4vw;
+    max-width: 92vw;
+  }
+
+  .home-slider-info h1 {
+    font-size: 1.9rem;
+  }
+
+  .home-slider-info h2 {
+    font-size: 1.2rem;
+  }
+
+  .home-slider-info h3 {
+    font-size: 1rem;
+    margin-top: 1.2em;
+  }
+
+  .home-description {
+    margin: 1.5rem auto;
+    padding: 1.3rem 1rem;
+    font-size: 1.05rem;
+  }
+
+  .home-description h2 {
+    font-size: 1.5rem;
+  }
+
+  .home-description p {
+    font-size: 1rem;
+  }
+
+  .home-description-cards {
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 0 0.5rem;
+  }
+
+  .home-description-card {
+    width: 94%;
+    min-height: auto;
+    padding: 1.4rem 1rem;
+    font-size: 1rem;
+  }
+
+  .home-description-card h3 {
+    font-size: 1.15rem;
+  }
+
+  .home-description-card p {
+    font-size: 0.98rem;
+  }
+}

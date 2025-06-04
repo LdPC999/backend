@@ -130,3 +130,33 @@
   .navbar-app { height: 54px; }
   .logout-btn span { display: none; } /* Oculta el texto y deja solo el icono */
 }
+
+/* ==== RESPONSIVE EXTRA PARA NAVBAR EN MÓVILES PEQUEÑOS ==== */
+@media (max-width: 480px) {
+  .navbar-app {
+    height: 50px;
+    padding: 0 0.7rem;
+  }
+
+  .navbar-logo i {
+    font-size: 1.2rem;
+  }
+
+  .navbar-menu {
+    gap: 0.4rem;
+  }
+
+  .link {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .logout-btn {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .logout-icon {
+    font-size: 1.1rem;
+  }
+}

@@ -261,3 +261,58 @@
 .btn-nueva-receta:hover {
   background: #b89f6d;
 }
+
+/* ==== RESPONSIVE PARA MÓVILES PEQUEÑOS (480px o menos) ==== */
+@media (max-width: 480px) {
+  .recetas-page {
+    padding: 1.2rem 0.6rem 2rem 0.6rem;
+  }
+
+  .recetas-select-container {
+    margin-bottom: 1.5rem;
+  }
+
+  .recetas-select {
+    font-size: 1rem;
+    padding: 0.7em;
+  }
+
+  .receta-detalle {
+    padding: 1.6em 1em;
+    font-size: 1.05em;
+  }
+
+  .receta-imagen {
+    height: auto;
+    max-height: 280px;
+    border-radius: 14px;
+  }
+
+  .receta-info h3 {
+    font-size: 1.5em;
+  }
+
+  .receta-info p {
+    font-size: 1em;
+  }
+
+  .receta-ingredientes h4,
+  .receta-alergenos h4 {
+    font-size: 1em;
+    margin: 0.7em 0 0.4em;
+  }
+
+  .receta-ingredientes ul,
+  .receta-alergenos ul {
+    font-size: 0.95em;
+    margin-left: 1em;
+  }
+
+  .btn-receta,
+  .btn-admin {
+    font-size: 1em !important;
+    width: 100%;
+    padding: 0.9em 1.2em;
+    margin-top: 1em;
+  }
+}

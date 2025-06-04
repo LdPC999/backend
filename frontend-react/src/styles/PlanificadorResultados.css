@@ -200,3 +200,56 @@
     padding: 1em;
   }
 }
+
+/* ==== RESPONSIVE ADICIONAL PARA MÓVILES (480px o menos) ==== */
+@media (max-width: 480px) {
+  .planificador-resultados {
+    padding: 1rem 0.5rem;
+  }
+
+  .planificador-dia {
+    padding: 1.2rem 1rem;
+    font-size: 1.05em;
+    gap: 0.8rem;
+  }
+
+  .planificador-dia h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tarjeta-receta {
+    font-size: 1em;
+    padding: 0.6rem 1rem;
+  }
+
+  .tarjeta-receta strong {
+    font-size: 0.98rem;
+  }
+
+  .tarjeta-receta span {
+    font-size: 1rem;
+  }
+
+  .btn.btn-primary {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .modal-cerrar {
+    font-size: 1.8em;
+    top: 0.8em;
+    right: 1em;
+  }
+
+  .receta-detalle .receta-info h3 {
+    font-size: 1.6em;
+  }
+
+  .receta-imagen {
+    height: auto;
+    max-height: 260px;
+  }
+}

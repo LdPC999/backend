@@ -300,3 +300,69 @@
     padding: 1.1em 0.6em 1em 0.6em;
   }
 }
+
+/* ==== RESPONSIVE ADICIONAL PARA MÓVILES (480px o menos) ==== */
+@media (max-width: 480px) {
+  .perfil-card {
+    width: 95vw;
+    padding: 1em;
+    border-radius: 14px;
+  }
+
+  .perfil-form-grid {
+    grid-template-columns: 1fr; /* De dos columnas a una */
+    gap: 0.8em;
+  }
+
+  .perfil-form-label {
+    text-align: left;
+    font-size: 1em;
+    margin-bottom: 0.4em;
+  }
+
+  .perfil-form-field {
+    font-size: 1em;
+    padding: 0.6em;
+    max-width: 100%;
+  }
+
+  .alergenos-checkbox-list {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .perfil-favoritos-lista {
+    grid-template-columns: 1fr;
+  }
+
+  .perfil-favorito-item {
+    font-size: 1em;
+    padding: 0.6em;
+  }
+
+  .perfil-actions-form {
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .btn-admin, .btn-cancelar {
+    width: 100%;
+    font-size: 1em;
+  }
+
+  .perfil-admin-box {
+    width: 95%;
+    padding: 1em;
+    font-size: 1em;
+  }
+
+  .perfil-admin-box input[type="email"] {
+    width: 100%;
+    font-size: 1em;
+  }
+
+  .perfil-admin-box button {
+    width: 100%;
+    font-size: 1em;
+  }
+}
