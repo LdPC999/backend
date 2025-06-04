@@ -183,9 +183,8 @@
   }
 
   .logout-icon {
-    font-size: 1.1rem;
-    background:red;
-    color: #ffffff;
+    font-size: 1.3rem;
+    color: var(--color-primary);
     display: inline-block;
   }
 }
