@@ -128,31 +128,29 @@
 }
 
 @media (max-width: 600px) {
-  .navbar-title {
-    display: none;
-  }
-  .navbar-app {
-    height: 54px;
-  }
+  .navbar-title { display: none; }
+  .navbar-app { height: 54px; }
 
-  /* Oculta el texto y estiliza solo el icono */
-  .logout-btn span {
-    display: none;
-  }
+  /* Oculta el texto */
+  .logout-btn span { display: none; }
 
+  /* Botón solo con icono */
   .logout-btn {
-    padding: 0.5rem;
+    padding: 0.6rem;
     border: none;
     background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .logout-icon {
-    font-size: 1.4rem;
-    color: #cdb380;
+    font-size: 1.5rem;
+    color: #ffffff; /* Asegura contraste */
   }
 
   .logout-btn:hover .logout-icon {
-    color: #ffffff;
+    color: var(--color-primary); /* dorado */
     transform: scale(1.1);
   }
 }
