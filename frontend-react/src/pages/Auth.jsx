@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Auth.css";
-import LogoAnimado from "../components/LogoAnimado"; 
+import LogoAnimado from "../components/LogoAnimado";
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 /**
@@ -21,6 +21,11 @@ export default function Auth() {
   const slideBoxRef = useRef(null);
   const topLayerRef = useRef(null);
   const navigate = useNavigate();
+  // Controlan si la contraseña debe mostrarse o no
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [showRegisterPassword, setShowRegisterPassword] = useState(false);
+  const [isRegisterPasswordFocused, setIsRegisterPasswordFocused] =
+    useState(false);
 
   /**
    * Efecto para controlar el modo móvil/escritorio y ajustar la animación.
@@ -176,7 +181,50 @@ export default function Auth() {
                   </div>
                   <div className="form-element form-stack">
                     <label>Contraseña</label>
-                    <input type="password" name="password" required />
+                    <div
+                      style={{
+                        position: "relative",
+                        borderBottom: `1px solid ${
+                          isRegisterPasswordFocused
+                            ? "var(--color-primary)"
+                            : "#e3e3e3"
+                        }`,
+                        display: "flex",
+                        alignItems: "center",
+                        marginTop: "0.5em",
+                      }}
+                    >
+                      <input
+                        type={showRegisterPassword ? "text" : "password"}
+                        name="password"
+                        required
+                        onFocus={() => setIsRegisterPasswordFocused(true)}
+                        onBlur={() => setIsRegisterPasswordFocused(false)}
+                        style={{
+                          flex: 1,
+                          border: "none",
+                          outline: "none",
+                          background: "transparent",
+                          padding: "8px 1px",
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onMouseDown={() => setShowRegisterPassword(true)}
+                        onMouseUp={() => setShowRegisterPassword(false)}
+                        onMouseLeave={() => setShowRegisterPassword(false)}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          fontSize: "1em",
+                          padding: "0 0.5em",
+                        }}
+                        aria-label="Mostrar contraseña"
+                      >
+                        👁️
+                      </button>
+                    </div>
                   </div>
                   <div className="form-element form-stack">
                     <div className="toggle-switch">
@@ -187,10 +235,7 @@ export default function Auth() {
                         required
                       />
                       <span className="slider"></span>
-                      <label
-                        className="toggle-label"
-                        htmlFor="terms-desktop"
-                      >
+                      <label className="toggle-label" htmlFor="terms-desktop">
                         Acepto los términos y condiciones
                       </label>
                     </div>
@@ -228,7 +273,44 @@ export default function Auth() {
                   </div>
                   <div className="form-element form-stack">
                     <label>Contraseña</label>
-                    <input type="password" name="password" required />
+                    <div
+                      style={{
+                        position: "relative",
+                        borderBottom: "1px solid currentColor",
+                        display: "flex",
+                        alignItems: "center",
+                        marginTop: "0.5em",
+                      }}
+                    >
+                      <input
+                        type={showLoginPassword ? "text" : "password"}
+                        name="password"
+                        required
+                        style={{
+                          flex: 1,
+                          border: "none",
+                          outline: "none",
+                          background: "transparent",
+                          padding: "8px 1px",
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onMouseDown={() => setShowLoginPassword(true)}
+                        onMouseUp={() => setShowLoginPassword(false)}
+                        onMouseLeave={() => setShowLoginPassword(false)}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          fontSize: "1em",
+                          padding: "0 0.5em",
+                        }}
+                        aria-label="Mostrar contraseña"
+                      >
+                        👁️
+                      </button>
+                    </div>
                   </div>
                   <div className="form-element form-submit">
                     <button className="login" type="submit">
@@ -293,20 +375,14 @@ export default function Auth() {
                       required
                     />
                     <span className="slider"></span>
-                    <label
-                      className="toggle-label"
-                      htmlFor="terms-mobile"
-                    >
+                    <label className="toggle-label" htmlFor="terms-mobile">
                       Acepto los términos y condiciones
                     </label>
                   </div>
                 </div>
               )}
               <div className="form-element form-submit">
-                <button
-                  className={isLogin ? "login" : "signup"}
-                  type="submit"
-                >
+                <button className={isLogin ? "login" : "signup"} type="submit">
                   {isLogin ? "Log In" : "Registro"}
                 </button>
                 <button
