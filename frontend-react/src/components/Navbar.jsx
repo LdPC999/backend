@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
+import { FiLogOut } from "react-icons/fi";
 
 /**
  * Componente Navbar: barra de navegación principal de la aplicación.
@@ -85,7 +86,7 @@ export default function Navbar() {
       {/* Bloque derecho: botón para cerrar sesión */}
       <div className="navbar-logout">
         <button className="logout-btn" onClick={handleLogout}>
-          <i className="fa-solid fa-right-from-bracket logout-icon"></i>
+          <FiLogOut className="logout-icon" title="Cerrar sesión" />
           <span>Cerrar sesión</span>
         </button>
       </div>

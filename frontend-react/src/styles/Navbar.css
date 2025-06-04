@@ -92,6 +92,7 @@
   font-size: 1.17rem;
   display: flex;
   align-items: center;
+  margin-right: 0.5rem;
 }
 
 .logout-btn span {
@@ -140,17 +141,18 @@
     border: none;
     background: transparent;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    border: none;
+    
   }
 
   .logout-icon {
     font-size: 1.5rem;
-    color: #ffffff; /* Asegura contraste */
+    color: #ffffff; 
+    
   }
 
   .logout-btn:hover .logout-icon {
-    color: var(--color-primary); /* dorado */
+    color: var(--color-primary); 
     transform: scale(1.1);
   }
 }
