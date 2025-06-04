@@ -3,14 +3,15 @@
   width: 100%;
   background: var(--color-secondary);
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   z-index: 1000; /* Prioridad alta */
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2.5rem;
   height: 80px; /* Altura general */
-  box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
 }
 
 /* ==== BLOQUE IZQUIERDO: LOGO Y TÍTULO ==== */
@@ -21,7 +22,7 @@
 }
 
 .navbar-title {
-  color: #CDB380; /* Color dorado */
+  color: #cdb380; /* Color dorado */
   font-size: 1.4rem;
   font-weight: bold;
   letter-spacing: 1px;
@@ -43,7 +44,7 @@
 }
 
 .link {
-  color: #E8DDCB;
+  color: #e8ddcb;
   text-decoration: none;
   font-size: 1.1rem;
   font-weight: 500;
@@ -54,9 +55,10 @@
 }
 
 /* Hover y activo: cambia fondo y color */
-.link:hover, .link.active {
-  background: rgba(255,255,255,0.13);
-  color: #E8DDCB;
+.link:hover,
+.link.active {
+  background: rgba(255, 255, 255, 0.13);
+  color: #e8ddcb;
 }
 
 /* ==== BLOQUE DERECHO: BOTÓN DE LOGOUT ==== */
@@ -68,8 +70,8 @@
 
 .logout-btn {
   background: transparent;
-  border: 2px solid #CDB380;
-  color: #CDB380;
+  border: 2px solid #cdb380;
+  color: #cdb380;
   padding: 0.58rem 1.4rem;
   border-radius: 4px;
   cursor: pointer;
@@ -82,7 +84,7 @@
 }
 
 .logout-btn:hover {
-  background: rgba(255,255,255,0.13);
+  background: rgba(255, 255, 255, 0.13);
   border-color: #036564; /* Cambia color del borde al hacer hover */
 }
 
@@ -126,9 +128,33 @@
 }
 
 @media (max-width: 600px) {
-  .navbar-title { display: none; }
-  .navbar-app { height: 54px; }
-  .logout-btn span { display: none; } /* Oculta el texto y deja solo el icono */
+  .navbar-title {
+    display: none;
+  }
+  .navbar-app {
+    height: 54px;
+  }
+
+  /* Oculta el texto y estiliza solo el icono */
+  .logout-btn span {
+    display: none;
+  }
+
+  .logout-btn {
+    padding: 0.5rem;
+    border: none;
+    background: transparent;
+  }
+
+  .logout-icon {
+    font-size: 1.4rem;
+    color: #cdb380;
+  }
+
+  .logout-btn:hover .logout-icon {
+    color: #ffffff;
+    transform: scale(1.1);
+  }
 }
 
 /* ==== RESPONSIVE EXTRA PARA NAVBAR EN MÓVILES PEQUEÑOS ==== */
