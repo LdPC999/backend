@@ -188,7 +188,6 @@
 }
 .btn-base {
   font-size: 1.07em;
-   /* igual que el botón guardar */
   border-radius: 10px;
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -208,15 +207,16 @@
 }
 
 .btn-cancelar {
-  background-color: #bbb;
-  color: #222;
-  width: 180px;
-  height: 50px;
-  margin-top: 16px;
+  font-size: 1.07em;
+  border-radius: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
+  background: var(--color-primary);
 }
 
 .btn-cancelar:hover {
-  background-color: var(--color-primary);;
+  background-color: red;
   transform: translateY(-1px);
 }
 

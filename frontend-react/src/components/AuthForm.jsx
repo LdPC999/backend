@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import "../styles/Auth.css"; // Importa los estilos específicos del formulario de autenticación
-
+import "../styles/Auth.css"; 
 /**
  * Componente AuthForm
  * 
