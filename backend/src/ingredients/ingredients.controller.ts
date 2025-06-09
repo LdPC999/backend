@@ -1,5 +1,3 @@
-// ingredients.controller.ts
-
 // Importamos decoradores de NestJS para crear controladores y manejar rutas y parámetros.
 import {
   Controller,
@@ -24,7 +22,7 @@ import { UpdateIngredientDto } from './dto/update-ingredient.dto';
  * Expone rutas RESTful para gestionar ingredientes en la aplicación.
  * Permite obtener, crear, actualizar y eliminar ingredientes a través de la API.
  */
-@Controller('ingredients') // Ruta base: /ingredients
+@Controller('ingredients') 
 export class IngredientsController {
   /**
    * Inyecta el servicio de ingredientes.

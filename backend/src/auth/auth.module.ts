@@ -1,6 +1,3 @@
-// auth.module.ts
-
-// Importamos los módulos, servicios y controladores necesarios de NestJS y la propia aplicación.
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
@@ -22,7 +19,7 @@ import { JwtStrategy } from './jwt.strategy';
     PassportModule,  // Módulo de Passport, facilita la integración de estrategias de autenticación.
     JwtModule.register({
       // Configuración básica para la firma de tokens JWT.
-      secret: 'JWT_SECRET_KEY', // Clave secreta para firmar los JWT (en producción debe ir en variable de entorno).
+      secret: 'JWT_SECRET_KEY', // Clave secreta para firmar los JWT (La declaramos como variable de entorno).
       signOptions: { expiresIn: '1h' }, // El token expira en 1 hora.
     }),
   ],

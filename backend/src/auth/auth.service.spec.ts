@@ -1,5 +1,3 @@
-// auth.service.spec.ts
-
 // Importamos utilidades de testeo de NestJS.
 // Test: Permite crear módulos de testing.
 // TestingModule: Representa un módulo de pruebas instanciado.

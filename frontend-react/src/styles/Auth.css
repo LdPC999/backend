@@ -142,34 +142,6 @@ input {
   margin-top: 0.1em;
 }
 
-/* ==== CHECKBOX (términos y condiciones) ==== */
-.checkbox-container {
-  display: flex;
-  align-items: center;
-  margin-top: 0.5em;
-  margin-bottom: 1em;
-}
-.checkbox-container input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--color-secondary);
-  margin-right: 7px;
-  cursor: pointer;
-}
-
-/* Texto y enlaces del checkbox */
-.checkbox-text {
-  font-size: 0.98em;
-}
-.checkbox-text .link {
-  color: #247aff;
-  text-decoration: underline;
-  cursor: pointer;
-  margin: 0 2px;
-}
-.left .checkbox-text .link { color: #CDB380; }
-.right .checkbox-text .link { color: #247aff; }
-.checkbox-text .link:focus { outline: none; }
 
 /* ==== BOTONES ==== */
 button {

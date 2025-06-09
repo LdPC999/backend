@@ -1,4 +1,4 @@
-# 📚 Trabajo de Fin de Grado (TFG): Backend — Sistema de Gestión de Recetas
+# 📚 Trabajo de Fin de Grado (TFG): Backend — RECIPE PLANNER
 
 ## 🗂️ Índice General
 
@@ -28,12 +28,7 @@
 
 8. **[Líneas de Investigación Futuras](#8-líneas-de-investigación-futuras)**
 
-9. **[Anexos](#9-anexos)**
-
-   - Ejemplos de uso de la API
-   - Esquemas de la base de datos y modelos
-
-10. **[Bibliografía](#10-bibliografía)**
+9. **[Bibliografía](#10-bibliografía)**
 
 ---
 
@@ -216,11 +211,8 @@ src/
  - Apartado de settings para adaptabilidad a modo claro/oscuro y multilenguaje.
  - Mejora del panel de administración -> Evolución a dashboard avanzado.
 
- ## 9.- Anexos
 
- Introducir capturas
-
- ## 10.- Bibliografía
+ ## 9.- Bibliografía
 
  - NestJS documentation
  - TypeORM documentation

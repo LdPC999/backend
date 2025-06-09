@@ -1,5 +1,3 @@
-// auth.controller.ts
-
 // Importamos los decoradores y excepciones necesarias desde NestJS.
 // Controller: Permite declarar la clase como un controlador de rutas.
 // Post: Define que un método responde a una petición HTTP POST.
@@ -15,7 +13,8 @@ import { AuthService } from './auth.service';
  * Este controlador gestiona las rutas relacionadas con la autenticación de usuarios,
  * como el inicio de sesión (login) y el registro (register).
  */
-@Controller('auth') // Ruta base: /auth
+
+@Controller('auth')
 export class AuthController {
   /**
    * Constructor de la clase.
@@ -44,7 +43,7 @@ export class AuthController {
       // Si la validación falla, devuelve una excepción 401 con un mensaje personalizado.
       throw new UnauthorizedException('Credenciales inválidas');
     }
-    // Si la validación es correcta, genera y retorna el token (y/o info adicional).
+    // Si la validación es correcta, genera y retorna el token.
     return this.authService.login(user);
   }
 
@@ -55,7 +54,7 @@ export class AuthController {
    * Llama al servicio de autenticación para crear el usuario y devolver los datos necesarios.
    * 
    * @param body Objeto con los datos del usuario a registrar (nombre, email, password, etc.).
-   * @returns Objeto con los datos del usuario registrado (puede incluir un token, id, etc.).
+   * @returns Objeto con los datos del usuario registrado.
    */
   @Post('register')
   async register(@Body() body: any) {

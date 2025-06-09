@@ -1,5 +1,3 @@
-// update-ingredient.dto.ts
-
 // Importamos PartialType desde @nestjs/mapped-types para reutilizar el DTO de creación.
 // PartialType transforma todos los campos en opcionales, ideal para actualizaciones parciales (PATCH).
 import { PartialType } from '@nestjs/mapped-types';

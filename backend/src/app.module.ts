@@ -1,8 +1,5 @@
-// app.module.ts
-
 // Importamos módulos y utilidades principales de NestJS.
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core'; // (No usado en este archivo, pero útil para guards globales)
 import { TypeOrmModule } from '@nestjs/typeorm';
 // Importamos los módulos funcionales de la aplicación.
 import { IngredientsModule } from './ingredients/ingredients.module';
@@ -30,17 +27,17 @@ import { UploadController } from './upload/upload.controller';
     // Carga las variables de entorno (.env) en toda la app.
     ConfigModule.forRoot({ isGlobal: true }),
 
-    // Configura y conecta la base de datos PostgreSQL usando variables de entorno o valores por defecto.
+    // Configura y conecta la base de datos PostgreSQL usando variables de entorno.
     TypeOrmModule.forRoot({
       type: 'postgres',
       ...(process.env.DATABASE_URL
         ? { url: process.env.DATABASE_URL }
         : {
-            host: process.env.DB_HOST || 'localhost',
-            port: Number(process.env.DB_PORT) || 5432,
-            username: process.env.DB_USERNAME || 'postgres',
-            password: process.env.DB_PASSWORD || 'LDpc17578',
-            database: process.env.DB_NAME || 'tfgdb',
+            host: process.env.DB_HOST || process.env.DB_HOST_LOCAL,
+            port: Number(process.env.DB_PORT) || Number(process.env.DB_PORT_LOCAL) ,
+            username: process.env.DB_USERNAME || process.env.DB_USER_LOCAL,
+            password: process.env.DB_PASSWORD || process.env.DB_PASS_LOCAL,
+            database: process.env.DB_NAME || process.env.DB_NAME_LOCAL,
           }),
       autoLoadEntities: true, // Carga automática de entidades
       synchronize: true,

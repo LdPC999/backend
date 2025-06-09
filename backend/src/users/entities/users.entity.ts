@@ -1,5 +1,3 @@
-// user.entity.ts
-
 // Importamos decoradores de TypeORM para definir la entidad y sus relaciones.
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
 // Importamos la entidad Recipe para establecer la relación de favoritos.

@@ -1,5 +1,3 @@
-// ingredient.entity.ts
-
 // Importamos los decoradores necesarios de TypeORM para definir una entidad.
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 

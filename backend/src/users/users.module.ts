@@ -1,5 +1,3 @@
-// users.module.ts
-
 // Importamos decoradores y módulos de NestJS y TypeORM.
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';

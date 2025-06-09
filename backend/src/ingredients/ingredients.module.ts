@@ -1,5 +1,3 @@
-// ingredients.module.ts
-
 // Importamos los decoradores y módulos necesarios.
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';

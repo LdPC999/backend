@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserRole, getToken } from "../utils/auth"; // Utilidades para obtener el rol y el token del usuario
-import { AiFillHeart } from "react-icons/ai"; // Icono de corazón lleno
+import { AiFillHeart } from "react-icons/ai"; // Icono de corazón para las recetas favoritas
 import "../styles/Perfil.css";
 
 /**

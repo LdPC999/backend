@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "../styles/Home.css"; // Importación de los estilos específicos del slider
+import "../styles/Home.css"; 
 import gsap from "gsap";     // Importación de GSAP, una librería para animaciones complejas
 
 /**

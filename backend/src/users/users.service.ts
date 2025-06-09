@@ -1,5 +1,3 @@
-// users.service.ts
-
 // Importamos decoradores y utilidades de NestJS y TypeORM.
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';

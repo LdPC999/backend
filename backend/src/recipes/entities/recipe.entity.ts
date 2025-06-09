@@ -1,5 +1,3 @@
-// recipe.entity.ts
-
 // Importamos los decoradores y utilidades de TypeORM para definir la entidad y sus relaciones.
 import {
   Entity,

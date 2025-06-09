@@ -1,5 +1,3 @@
-// update-user.dto.ts
-
 // Importamos PartialType para convertir los campos del DTO base en opcionales (útil para PATCH).
 import { PartialType } from '@nestjs/mapped-types';
 // Importamos el DTO base para reutilizar su estructura y validaciones.

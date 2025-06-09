@@ -1,5 +1,3 @@
-// recipes.controller.ts
-
 // Importamos decoradores y utilidades de NestJS para crear el controlador y manejar rutas y parámetros.
 import {
   Controller,

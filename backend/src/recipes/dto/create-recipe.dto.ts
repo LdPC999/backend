@@ -1,5 +1,3 @@
-// create-recipe.dto.ts
-
 // Importamos los decoradores de validación de class-validator.
 // Estos decoradores permiten validar automáticamente los datos recibidos en la petición.
 import { IsString, IsNumber, IsOptional, IsArray, ArrayNotEmpty, IsInt } from 'class-validator';
@@ -43,7 +41,6 @@ export class CreateRecipeDto {
   /**
    * Indica si la receta es para almuerzo o cena.
    * Opcional y debe ser una cadena de texto si se proporciona.
-   * Si se espera solo uno de los dos valores, se recomienda validar con un Enum en el futuro.
    */
   @IsOptional()
   @IsString()

@@ -1,5 +1,3 @@
-// auth.service.ts
-
 // Importamos decoradores y excepciones de NestJS.
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 // Importamos el servicio JWT para generar y firmar tokens.
@@ -44,25 +42,25 @@ export class AuthService {
 
     // Si no existe el usuario, devuelve null.
     if (!user) {
-      console.warn('❌ Usuario no encontrado:', email);
+      console.warn('Usuario no encontrado:', email);
       return null;
     }
 
-    // Imprime la contraseña recibida y el hash almacenado (para depuración).
-    console.log('🔐 Contraseña recibida:', pass);
-    console.log('🔐 Hash almacenado:', user.password);
+    // Imprime la contraseña recibida y el hash almacenado.
+    console.log('Contraseña recibida:', pass);
+    console.log('Hash almacenado:', user.password);
 
     // Compara la contraseña ingresada con el hash usando bcrypt.
     const passwordMatch = await bcrypt.compare(pass, user.password);
 
     // Si la contraseña no coincide, devuelve null.
     if (!passwordMatch) {
-      console.warn('❌ Contraseña incorrecta para:', email);
+      console.warn('Contraseña incorrecta para:', email);
       return null;
     }
 
     // Si la autenticación es exitosa, elimina la contraseña del objeto usuario antes de devolverlo.
-    console.log('✅ Login exitoso para:', email);
+    console.log('Login exitoso para:', email);
     const { password, ...result } = user;
     return result;
   }

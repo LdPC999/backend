@@ -1,5 +1,3 @@
-// create-ingredient.dto.ts
-
 // Importamos los decoradores de validación de la librería class-validator.
 // Estos decoradores nos permiten asegurar que los datos recibidos cumplen con el formato esperado.
 import { IsString, IsOptional, IsArray } from 'class-validator';

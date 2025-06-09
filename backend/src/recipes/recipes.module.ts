@@ -1,5 +1,3 @@
-// recipes.module.ts
-
 // Importamos los módulos y decoradores necesarios de NestJS y TypeORM.
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';

@@ -364,7 +364,7 @@ export default function Auth() {
                 <label>Contraseña</label>
                 <input type="password" name="password" required />
               </div>
-              {/* Checkbox solo en registro */}
+              {/* Toggle solo en registro */}
               {!isLogin && (
                 <div className="form-element form-stack">
                   <div className="toggle-switch">

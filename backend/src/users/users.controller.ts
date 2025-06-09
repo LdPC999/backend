@@ -1,5 +1,3 @@
-// users.controller.ts
-
 // Importamos los decoradores y utilidades de NestJS para crear el controlador y gestionar rutas, parámetros y autenticación.
 import {
   Controller,

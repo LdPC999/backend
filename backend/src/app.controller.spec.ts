@@ -1,5 +1,3 @@
-// app.controller.spec.ts
-
 // Importamos utilidades de testing de NestJS.
 import { Test, TestingModule } from '@nestjs/testing';
 // Importamos el controlador y el servicio principal de la app.

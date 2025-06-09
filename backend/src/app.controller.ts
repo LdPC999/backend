@@ -1,5 +1,3 @@
-// app.controller.ts
-
 // Importamos decoradores de NestJS para definir el controlador y los endpoints.
 import { Controller, Get } from '@nestjs/common';
 // Importamos el servicio principal de la aplicación.

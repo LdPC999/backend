@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/Footer.css"; // Importa los estilos específicos del footer
+import "../styles/Footer.css"; 
 
 /**
  * Componente Footer
@@ -7,8 +7,6 @@ import "../styles/Footer.css"; // Importa los estilos específicos del footer
  * Este componente muestra el pie de página común a toda la aplicación.
  * Incluye el año actual, el nombre de la app y los derechos reservados.
  * 
- * Se recomienda mantener el Footer siempre fuera de los componentes que cambian según la ruta,
- * para que siempre se visualice en la parte inferior de la interfaz.
  */
 export default function Footer() {
   return (

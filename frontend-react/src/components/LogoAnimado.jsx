@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/LogoAnimado.css"; // Importa los estilos específicos del logo animado
+import "../styles/LogoAnimado.css";
 
 /**
  * Componente LogoAnimado
@@ -15,7 +15,6 @@ import "../styles/LogoAnimado.css"; // Importa los estilos específicos del logo
  */
 export default function LogoAnimado({ position = "left", mode = "login" }) {
   // Calcula la clase CSS principal según la posición recibida por props.
-  // Ejemplo: 'logo-animado logo-animado--left'
   const mainClass = `logo-animado logo-animado--${position}`;
 
   // El logo se compone de dos líneas (Recipe / Planner) que alternan el color según el modo (login o registro).

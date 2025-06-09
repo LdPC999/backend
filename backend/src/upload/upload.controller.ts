@@ -1,4 +1,3 @@
-// src/upload/upload.controller.ts
 
 import { Controller, Post, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';

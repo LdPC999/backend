@@ -1,5 +1,3 @@
-// create-user.dto.ts
-
 /**
  * DTO para la creación de usuarios.
  * 

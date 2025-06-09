@@ -31,7 +31,7 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("token"); // Borra el token
     localStorage.removeItem("user"); // Borra los datos del usuario
-    // Aquí puedes añadir más claves a eliminar si las hay
+  
     navigate("/login"); // Redirige a la pantalla de login
   };
 

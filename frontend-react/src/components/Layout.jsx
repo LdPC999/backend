@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "./Navbar";       // Importa el componente de la barra de navegación superior
-import Footer from "./Footer";       // Importa el componente del pie de página
+import Navbar from "./Navbar"; 
+import Footer from "./Footer";       
 import { Outlet } from "react-router-dom"; // Importa Outlet para renderizar rutas anidadas
-import "../styles/Layout.css";      // Importa los estilos específicos para el layout
+import "../styles/Layout.css";      
 
 /**
  * Componente Layout

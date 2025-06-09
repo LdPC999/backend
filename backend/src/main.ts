@@ -1,5 +1,3 @@
-// main.ts
-
 // Importa el soporte para decoradores y metadatos, necesario para TypeORM y NestJS.
 import 'reflect-metadata';
 // Importa el factory de NestJS para crear la aplicación.
@@ -24,7 +22,7 @@ async function bootstrap() {
       const allowedOrigins = [
         process.env.FRONTEND_URL, // Dominio Vercel en producción
         'http://localhost:5173', // Localhost
-        'http://192.168.1.143:5173', // Tu IP local
+        'http://192.168.1.143:5173', // IP local
       ]
         .filter(Boolean) // Filtra posibles undefined
         .map((url) => url?.replace(/\/$/, '')); // Quita barra final

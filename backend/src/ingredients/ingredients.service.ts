@@ -1,5 +1,3 @@
-// ingredients.service.ts
-
 // Importamos decoradores y excepciones de NestJS.
 import {
   Injectable,
@@ -52,7 +50,7 @@ export class IngredientsService {
   }
 
   /**
-   * Crea un nuevo ingrediente después de comprobar que no exista uno duplicado (por nombre, ignorando mayúsculas/minúsculas).
+   * Crea un nuevo ingrediente después de comprobar que no exista uno duplicado.
    * 
    * @param createIngredientDto Datos para crear el ingrediente.
    * @returns Una promesa que resuelve al ingrediente creado.

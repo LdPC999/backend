@@ -1,5 +1,3 @@
-// recipes.service.ts
-
 // Importamos decoradores y excepciones de NestJS para el servicio.
 import {
   Injectable,

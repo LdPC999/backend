@@ -1,5 +1,3 @@
-// jwt.strategy.ts
-
 // Importamos los decoradores y clases necesarias.
 import { Injectable } from '@nestjs/common';
 // Importamos el adaptador de estrategia para Passport.
@@ -43,7 +41,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
    * @returns Objeto que representa al usuario autenticado (queda disponible en req.user).
    */
   async validate(payload: any) {
-    // Puedes añadir lógica adicional para cargar más datos del usuario si es necesario.
     // Por defecto, devuelve algunos campos del payload del JWT.
     return { userId: payload.sub, email: payload.email, role: payload.role };
   }
