@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getUserRole } from "../utils/auth"; // Utilidad para obtener el rol del usuario
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"; // Iconos de favoritos
 import "../styles/Recetas.css";
+import { optimizeCloudinaryUrl } from "../utils/CloudinaryUtils";
 
 /**
  * Página de listado de recetas.
@@ -61,7 +62,7 @@ export default function Recetas() {
         });
         if (res.ok) {
           const data = await res.json();
-          setFavoritos(data.map(r => r.id)); // Solo IDs de recetas favoritas
+          setFavoritos(data.map((r) => r.id)); // Solo IDs de recetas favoritas
         }
       } catch {
         setFavoritos([]);
@@ -110,7 +111,7 @@ export default function Recetas() {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
         });
-        setFavoritos(favoritos.filter(favId => favId !== recetaId));
+        setFavoritos(favoritos.filter((favId) => favId !== recetaId));
       } else {
         // Añadir a favoritos
         await fetch(`${API_URL}/users/favoritos/${recetaId}`, {
@@ -157,7 +158,12 @@ export default function Recetas() {
           {recetas
             .slice()
             .sort((a, b) =>
-              a.nombre.trim().toLocaleLowerCase("es").localeCompare(b.nombre.trim().toLocaleLowerCase("es"), "es", { sensitivity: "base" })
+              a.nombre
+                .trim()
+                .toLocaleLowerCase("es")
+                .localeCompare(b.nombre.trim().toLocaleLowerCase("es"), "es", {
+                  sensitivity: "base",
+                })
             )
             .map((r) => (
               <option key={r.id} value={r.id}>
@@ -177,7 +183,11 @@ export default function Recetas() {
           {/* Imagen */}
           <div className="receta-imagen">
             {recetaSeleccionada.imagen ? (
-              <img src={recetaSeleccionada.imagen} alt={recetaSeleccionada.nombre} />
+              <img
+                src={optimizeCloudinaryUrl(recetaSeleccionada.imagen)}
+                alt={recetaSeleccionada.nombre}
+                loading="lazy"
+              />
             ) : (
               <div className="receta-imagen-placeholder">
                 <span>Sin imagen</span>
@@ -187,13 +197,19 @@ export default function Recetas() {
 
           {/* Información principal */}
           <div className="receta-info">
-            <div style={{ display: "flex", alignItems: "center", gap: "0.85em" }}>
+            <div
+              style={{ display: "flex", alignItems: "center", gap: "0.85em" }}
+            >
               <h3 style={{ margin: 0 }}>{recetaSeleccionada.nombre}</h3>
               {/* Icono de favorito si el usuario está logueado */}
               {userRole && (
                 <button
                   className="btn-favorito"
-                  aria-label={favoritos.includes(recetaSeleccionada.id) ? "Quitar de favoritos" : "Añadir a favoritos"}
+                  aria-label={
+                    favoritos.includes(recetaSeleccionada.id)
+                      ? "Quitar de favoritos"
+                      : "Añadir a favoritos"
+                  }
                   onClick={() => toggleFavorito(recetaSeleccionada.id)}
                   style={{
                     background: "none",
@@ -201,18 +217,25 @@ export default function Recetas() {
                     padding: 0,
                     cursor: "pointer",
                     display: "flex",
-                    alignItems: "center"
+                    alignItems: "center",
                   }}
                   tabIndex={0}
                 >
-                  {favoritos.includes(recetaSeleccionada.id)
-                    ? <AiFillHeart size={29} color="#d42332" />
-                    : <AiOutlineHeart size={29} color="#d42332" />}
+                  {favoritos.includes(recetaSeleccionada.id) ? (
+                    <AiFillHeart size={29} color="#d42332" />
+                  ) : (
+                    <AiOutlineHeart size={29} color="#d42332" />
+                  )}
                 </button>
               )}
             </div>
-            <p><strong>Tiempo de preparación:</strong> {recetaSeleccionada.tiempoPreparacion} minutos</p>
-            <p><strong>Dificultad:</strong> {recetaSeleccionada.dificultad}</p>
+            <p>
+              <strong>Tiempo de preparación:</strong>{" "}
+              {recetaSeleccionada.tiempoPreparacion} minutos
+            </p>
+            <p>
+              <strong>Dificultad:</strong> {recetaSeleccionada.dificultad}
+            </p>
           </div>
 
           {/* Ingredientes */}
@@ -248,7 +271,9 @@ export default function Recetas() {
             <div style={{ textAlign: "right", marginTop: "1em" }}>
               <button
                 className="btn btn-admin"
-                onClick={() => navigate(`/recetas/editar/${recetaSeleccionada.id}`)}
+                onClick={() =>
+                  navigate(`/recetas/editar/${recetaSeleccionada.id}`)
+                }
               >
                 Modificar receta
               </button>
